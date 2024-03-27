@@ -1,0 +1,130 @@
+import type { Metadata } from "next";
+import { Catamaran } from "next/font/google";
+import "../globals.css";
+import { cn } from "@/utils/ui";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Menu } from "@/components/layout/menu";
+import Image from "next/image";
+import { Logo } from "@/components/logo";
+import { Github, Instagram, Linkedin, Mail } from "lucide-react";
+import Link from "next/link";
+import { Language } from "@/l10n/types";
+import { L10N_SERVER } from "@/l10n/l10n-server";
+
+const catamaran = Catamaran({ subsets: ["latin"], variable: "--font-sans" });
+
+export const metadata: Metadata = {
+  title: "Innoshare",
+  description: "",
+};
+
+export async function generateStaticParams() {
+  return [{ lang: "en" }, { lang: "sv" }, { lang: "fi" }];
+}
+
+export default function RootLayout({
+  children,
+  params: { lang },
+}: Readonly<{
+  children: React.ReactNode;
+  params: { lang: Language };
+}>) {
+  return (
+    <html lang="en">
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          catamaran.variable
+        )}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Menu lang={lang} />
+          {children}
+          <footer className="lg:ml-auto lg:mr-auto xl:max-w-6xl">
+            <div className="bg-secondary/40 flex flex-col gap-16 lg:flex-row xl:-ml-[2rem] xl:w-[calc(100%+4rem)] xl:px-[2rem] xl:pt-[2rem] xl:pb-[4rem] xl:rounded-t-2xl">
+              <div className="p-8 lg:w-1/2">
+                <div className="flex flex-col md:flex-row gap-8">
+                  <Logo secondary className="min-w-[8rem] h-32" />
+                  <div className="flex flex-col gap-4">
+                    <div>
+                      {L10N_SERVER.joinProjectText[lang][0]}{" "}
+                      <a className="underline" href="https://centria.fi">
+                        {L10N_SERVER.joinProjectText[lang][1]}
+                      </a>{" "}
+                      {L10N_SERVER.joinProjectText[lang][2]}{" "}
+                      <a
+                        className="underline"
+                        href="https://nykarlebyinnovationcenter.fi"
+                      >
+                        {L10N_SERVER.joinProjectText[lang][3]}
+                      </a>
+                    </div>
+                    <div>
+                      {L10N_SERVER.openSourceText[lang][0]}{" "}
+                      <a
+                        className="underline"
+                        href="https://github.com/nykarleby-innovation-center/innoshare"
+                      >
+                        {L10N_SERVER.openSourceText[lang][1]}
+                      </a>
+                      {L10N_SERVER.openSourceText[lang][2]}
+                    </div>
+                    <div className="flex flex-row gap-4">
+                      <div>
+                        <Link href="mailto:info@innoshare.fi">
+                          <Mail />
+                        </Link>
+                      </div>
+                      <div>
+                        <Link href="https://www.instagram.com/innoshare/">
+                          <Instagram />
+                        </Link>
+                      </div>
+                      <div>
+                        <Link href="https://www.linkedin.com/company/101492502">
+                          <Linkedin />
+                        </Link>
+                      </div>
+                      <div>
+                        <Link href="https://github.com/nykarleby-innovation-center/innoshare">
+                          <Github />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 text-sm items-start p-8">
+                {L10N_SERVER.cofinancedText[lang]}
+
+                <div className="flex flex-row gap-4">
+                  <div className="flex items-center bg-white p-2 rounded-md overflow-hidden border-primary/15 border">
+                    <Image
+                      src="/ely.jpg"
+                      width={220}
+                      height={40}
+                      alt="ELY logo"
+                    />
+                  </div>
+                  <div className="flex items-center bg-white p-2 rounded-md overflow-hidden border-primary/15 border">
+                    <Image
+                      src="/eu.png"
+                      width={230}
+                      height={40}
+                      alt="EU-logo"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
