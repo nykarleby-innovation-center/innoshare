@@ -7,4 +7,5 @@ export const interestFormSchema = z.object({
   centriaPrivacyPolicyAccepted: z.boolean().refine((v) => v === true),
   nicPrivacyPolicyAccepted: z.boolean().refine((v) => v === true),
   acceptEmails: z.boolean().refine((v) => v === true),
+  language: z.string()
 });

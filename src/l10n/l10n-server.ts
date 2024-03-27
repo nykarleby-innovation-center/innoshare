@@ -6,7 +6,7 @@ export const L10N_SERVER = {
   heroHeader: {
     en: "Welcome to InnoShare!",
     sv: "Välkommen till InnoShare",
-    fi: "",
+    fi: "Tervetuloa InnoShareen!",
   },
   heroSlogan: {
     en: "Unleashing Collaborative Innovation and Talent Exchange",
@@ -14,14 +14,14 @@ export const L10N_SERVER = {
     fi: "Unleashing Collaborative Innovation and Talent Exchange",
   },
   heroText1: {
-    en: "",
-    sv: "I projektet InnoShare ska man utreda möjligheterna med kompetensdelning, hur företag och organisationer kan dela kompetens med varandra.",
-    fi: "",
+    en: "InnoShare explores the possibilities of competence sharing, how companies and organizations can share competence with each other.",
+    sv: "InnoShare utreder möjligheterna med kompetensdelning, hur företag och organisationer kan dela kompetens med varandra.",
+    fi: "InnoShare tutkii osaamisen jakamisen mahdollisuuksia, miten yritykset ja organisaatiot voivat jakaa osaamista keskenään.",
   },
   heroText2: {
-    en: "",
-    sv: "Projektet kommer att testa det här genom att personer byter arbetsplats för en viss tid. Det kommer att ordnas nätverksträffar för företag och organisationer i Jakobstadsregionen där kompetensdelningstemat behandlas. Utöver detta kommer en ”kompetenspool” och en prototypplattform för att dela och hitta kompetens skapas.",
-    fi: "",
+    en: "The project tests this by having people switch workplaces for a certain period of time. A platform for competence sharing will soon be launched on this page, so please register your interest to receive a notification when the platform is live!",
+    sv: "Projektet testar detta genom att personer byter arbetsplats för en viss tid. På denna sida kommer snart en plattform för kompetensdelning att lanseras, så anmäl gärna ert intresse så får ni ett meddelande då plattformen är live!",
+    fi: "Hanke testaa tätä antamalla ihmisille mahdollisuuden vaihtaa työpaikkaa tietyn aikaa. Tälle sivulle lanseerataan pian alusta osaamisen jakamiseen, joten ilmaise kiinnostuksesi niin saat ilmoituksen, kun alusta on käynnissä!",
   },
   joinProjectText: {
     en: [
@@ -36,7 +36,12 @@ export const L10N_SERVER = {
       "och",
       "Nykarleby Innovation Center r.f.",
     ],
-    fi: [],
+    fi: [
+      "InnoShare on yhteisprojekti, jonka takana ovat",
+      "Centria",
+      "ja",
+      "Nykarleby Innovation Center r.f.",
+    ],
   },
   openSourceText: {
     en: [
@@ -49,11 +54,15 @@ export const L10N_SERVER = {
       "GitHub",
       ". Hittade du en bugg? Skapa en Issue så fixar vi den! (Eller fixa den själv med en Pull Request)",
     ],
-    fi: [],
+    fi: [
+      "Tämän alustan koodi on avoimen lähdekoodin, ja se on saatavilla",
+      "GitHubissa",
+      ". Löysitkö bugin? Luo Issue, niin korjaamme sen! (Tai korjaa se itse Pull Requestin avulla)",
+    ],
   },
   cofinancedText: {
     en: "Co-financed by European Union rural funding through ELY-keskus.",
     sv: "Medfinansieras av Europeiska unionens landsbygdsfinansiering via NTM-centralen.",
-    fi: "",
+    fi: "Euroopan unionin maaseuturahaston rahoittama yhteistyössä ELY-keskuksen kanssa.",
   },
 } satisfies LanguageStrings;

@@ -75,7 +75,7 @@ export default function Home({
             />
           </div>
         </div>
-        <Logo className="w-72 h-72" />
+        <Logo className="w-72 h-72 duration-300 hover:scale-105 hover:rotate-2" />
       </div>
     </main>
   );

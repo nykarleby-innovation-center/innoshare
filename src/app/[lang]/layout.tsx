@@ -47,7 +47,7 @@ export default function RootLayout({
           {children}
           <footer className="lg:ml-auto lg:mr-auto xl:max-w-6xl">
             <div className="bg-secondary/40 flex flex-col gap-16 lg:flex-row xl:-ml-[2rem] xl:w-[calc(100%+4rem)] xl:px-[2rem] xl:pt-[2rem] xl:pb-[4rem] xl:rounded-t-2xl">
-              <div className="p-8 lg:w-1/2">
+              <div className="p-8 lg:w-3/5">
                 <div className="flex flex-col md:flex-row gap-8">
                   <Logo secondary className="min-w-[8rem] h-32" />
                   <div className="flex flex-col gap-4">
@@ -102,21 +102,34 @@ export default function RootLayout({
               <div className="flex flex-col gap-2 text-sm items-start p-8">
                 {L10N_SERVER.cofinancedText[lang]}
 
-                <div className="flex flex-row gap-4">
-                  <div className="flex items-center bg-white p-2 rounded-md overflow-hidden border-primary/15 border">
+                <div className="flex flex-row gap-4 w-full h-36">
+                  <div className="relative flex-grow bg-white rounded-md overflow-hidden border-primary/15 border money">
                     <Image
-                      src="/ely.jpg"
-                      width={220}
-                      height={40}
-                      alt="ELY logo"
+                      src={
+                        {
+                          en: "/eu-en.svg",
+                          sv: "/eu-sv.svg",
+                          fi: "/eu-fi.svg",
+                        }[lang]
+                      }
+                      layout="fill"
+                      alt="EU-logo"
+                      className="p-3"
                     />
                   </div>
-                  <div className="flex items-center bg-white p-2 rounded-md overflow-hidden border-primary/15 border">
+
+                  <div className="relative flex-grow bg-white rounded-md overflow-hidden border-primary/15 border money">
                     <Image
-                      src="/eu.png"
-                      width={230}
-                      height={40}
-                      alt="EU-logo"
+                      src={
+                        {
+                          en: "/ely-en.svg",
+                          sv: "/ely-sv.svg",
+                          fi: "/ely-fi.svg",
+                        }[lang]
+                      }
+                      layout="fill"
+                      alt="ELY logo"
+                      className="p-3"
                     />
                   </div>
                 </div>

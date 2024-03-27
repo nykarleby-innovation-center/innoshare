@@ -23,9 +23,14 @@ import { Checkbox } from "../ui/checkbox";
 import { interestFormSchema } from "../../schemas/interest-form";
 import { L10N_COMMON } from "@/l10n/l10n-common";
 import { Language } from "@/l10n/types";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 export function InterestFormDialog({ lang }: { lang: Language }) {
-  // 1. Define your form.
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
   const form = useForm<z.infer<typeof interestFormSchema>>({
     resolver: zodResolver(interestFormSchema),
 
@@ -36,16 +41,49 @@ export function InterestFormDialog({ lang }: { lang: Language }) {
       centriaPrivacyPolicyAccepted: false,
       nicPrivacyPolicyAccepted: false,
       acceptEmails: false,
+      language: lang
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof interestFormSchema>) {
-    fetch("/api/interest", { method: "POST", body: JSON.stringify(values) });
+  const handleSubmit = async (values: z.infer<typeof interestFormSchema>) => {
+    try {
+      setLoading(true);
+      const res = await fetch("/api/interest", {
+        method: "POST",
+        body: JSON.stringify(values),
+      });
+      if (res.status !== 200) {
+        throw new Error();
+      }
+      setSubmitted(true);
+    } catch (_) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleReset = () => {
+    form.reset();
+    setSubmitted(false);
+  };
+
+  if (submitted) {
+    return (
+      <DialogContent className="sm:max-w-[425px] max-h-screen overflow-y-scroll">
+        <DialogHeader>
+          <DialogTitle>{L10N_COMMON.thankYou[lang]}</DialogTitle>
+          <DialogDescription>
+            {L10N_COMMON.weWillKeepYouUpdated[lang]}
+          </DialogDescription>
+        </DialogHeader>
+        <Button onClick={handleReset}>{L10N_COMMON.submitAgain[lang]}</Button>
+      </DialogContent>
+    );
   }
 
   return (
-    <DialogContent className="sm:max-w-[425px]">
+    <DialogContent className="sm:max-w-[425px] max-h-screen overflow-y-scroll">
       <DialogHeader>
         <DialogTitle> {L10N_COMMON.imInterested[lang]}</DialogTitle>
         <DialogDescription>
@@ -54,7 +92,7 @@ export function InterestFormDialog({ lang }: { lang: Language }) {
       </DialogHeader>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
           <FormField
             control={form.control}
             name="name"
@@ -163,7 +201,22 @@ export function InterestFormDialog({ lang }: { lang: Language }) {
               )}
             />
           </div>
-          <Button type="submit">Anmäl</Button>
+          {error && (
+            <div>
+              {L10N_COMMON.interestErrorText[lang]}{" "}
+              <a href="mailto:info@innoshare.fi" className="underline">
+                info@innoshare.fi
+              </a>
+            </div>
+          )}
+          <Button type="submit" disabled={loading}>
+            {loading && (
+              <span className="mr-2">
+                <Loader2 className="animate-spin" />
+              </span>
+            )}
+            {error ? L10N_COMMON.tryAgain[lang] : L10N_COMMON.submit[lang]}
+          </Button>
         </form>
       </Form>
     </DialogContent>

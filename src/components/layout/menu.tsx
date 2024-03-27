@@ -30,11 +30,11 @@ export function Menu({ lang }: { lang: Language }) {
   return (
     <>
       <Dialog>
-        <nav className="fixed top-0 left-0 right-0 p-4 bg-background/80 backdrop-blur-lg">
+        <nav className="fixed top-0 left-0 right-0 py-2 px-4 md:py-4 bg-background/80 backdrop-blur-lg">
           <div className="max-w-6xl ml-auto mr-auto flex flex-row justify-between">
             <NavigationMenu>
               <NavigationMenuList>
-                <AppLogo className="w-16 h-16" />
+                <AppLogo className="w-8 h-8 md:w-16 md:h-16" />
                 <NavigationMenuItem className="hidden md:block">
                   <Link href="/" legacyBehavior passHref>
                     <NavigationMenuLink
