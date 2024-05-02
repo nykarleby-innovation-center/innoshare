@@ -1,4 +1,4 @@
-import { LanguageStrings } from "./types";
+import { LanguageStrings } from "./types"
 
 export const L10N_COMMON = {
   menuHome: {
@@ -9,7 +9,7 @@ export const L10N_COMMON = {
   menuNeeds: {
     en: "Needs",
     sv: "Behov",
-    fi: "Tarpeet",
+    fi: "Tarve",
   },
   menuSupply: {
     en: "Supply",
@@ -29,7 +29,7 @@ export const L10N_COMMON = {
   interestSubmissionText: {
     en: "Submit your interest in InnoShare to get updates, and to hear when we launch the platform for competence sharing.",
     sv: "Anmäl ert intresse i InnoShare för att få uppdateringar, och höra när vi lanserar plattformen för kompetensdelning.",
-    fi: "Ilmoita kiinnostuksesi InnoSharessa saadaksesi päivityksiä ja kuullaksesi, kun käynnistämme alustan osaamisen jakamiseen.",
+    fi: "Ilmoita kiinnostuksestasi saadaksesi päivityksiä ja kuullaksesi, kun käynnistämme alustan osaamisen jakamiseen.",
   },
   name: {
     en: "Name",
@@ -100,4 +100,4 @@ export const L10N_COMMON = {
     sv: "Skicka",
     fi: "Lähetä",
   },
-} satisfies LanguageStrings;
+} satisfies LanguageStrings

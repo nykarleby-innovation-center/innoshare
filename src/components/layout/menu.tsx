@@ -1,30 +1,30 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import Link from "next/link";
+import * as React from "react"
+import Link from "next/link"
+import { AppLogo } from "../app-logo"
+import { Button } from "../ui/button"
+import { cn } from "@/utils/ui"
+import { Dialog, DialogTrigger } from "../ui/dialog"
+import { InterestFormDialog } from "./interest-form-dialog"
+import { L10N_COMMON } from "@/l10n/l10n-common"
+import { Language } from "@/l10n/types"
+import { Languages, User } from "lucide-react"
+import { ModeToggle } from "../mode-toggle"
 
-import { cn } from "@/utils/ui";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { ModeToggle } from "../mode-toggle";
-import { Button } from "../ui/button";
-import { AppLogo } from "../app-logo";
-import { DialogTrigger, Dialog } from "../ui/dialog";
-import { InterestFormDialog } from "./interest-form-dialog";
-import { Language } from "@/l10n/types";
+} from "@/components/ui/navigation-menu"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Languages, User } from "lucide-react";
-import { L10N_COMMON } from "@/l10n/l10n-common";
+} from "../ui/dropdown-menu"
 
 export function Menu({ lang }: { lang: Language }) {
   return (
@@ -100,7 +100,7 @@ export function Menu({ lang }: { lang: Language }) {
         <InterestFormDialog lang={lang} />
       </Dialog>
     </>
-  );
+  )
 }
 
 const ListItem = React.forwardRef<
@@ -125,6 +125,6 @@ const ListItem = React.forwardRef<
         </a>
       </NavigationMenuLink>
     </li>
-  );
-});
-ListItem.displayName = "ListItem";
+  )
+})
+ListItem.displayName = "ListItem"

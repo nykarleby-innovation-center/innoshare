@@ -1,33 +1,33 @@
-import type { Metadata } from "next";
-import { Catamaran } from "next/font/google";
-import "../globals.css";
-import { cn } from "@/utils/ui";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Menu } from "@/components/layout/menu";
-import Image from "next/image";
-import { Logo } from "@/components/logo";
-import { Github, Instagram, Linkedin, Mail } from "lucide-react";
-import Link from "next/link";
-import { Language } from "@/l10n/types";
-import { L10N_SERVER } from "@/l10n/l10n-server";
+import Image from "next/image"
+import Link from "next/link"
+import { Catamaran } from "next/font/google"
+import { cn } from "@/utils/ui"
+import { Github, Instagram, Linkedin, Mail } from "lucide-react"
+import { L10N_SERVER } from "@/l10n/l10n-server"
+import { Language } from "@/l10n/types"
+import { Logo } from "@/components/logo"
+import { Menu } from "@/components/layout/menu"
+import { ThemeProvider } from "@/components/theme-provider"
+import "../globals.css"
+import type { Metadata } from "next"
 
-const catamaran = Catamaran({ subsets: ["latin"], variable: "--font-sans" });
+const catamaran = Catamaran({ subsets: ["latin"], variable: "--font-sans" })
 
 export const metadata: Metadata = {
-  title: "Innoshare",
+  title: "InnoShare",
   description: "",
-};
+}
 
 export async function generateStaticParams() {
-  return [{ lang: "en" }, { lang: "sv" }, { lang: "fi" }];
+  return [{ lang: "en" }, { lang: "sv" }, { lang: "fi" }]
 }
 
 export default function RootLayout({
   children,
   params: { lang },
 }: Readonly<{
-  children: React.ReactNode;
-  params: { lang: Language };
+  children: React.ReactNode
+  params: { lang: Language }
 }>) {
   return (
     <html lang="en">
@@ -101,7 +101,6 @@ export default function RootLayout({
               </div>
               <div className="flex flex-col gap-2 text-sm items-start p-8">
                 {L10N_SERVER.cofinancedText[lang]}
-
                 <div className="flex flex-row gap-4 w-full h-36">
                   <div className="relative flex-grow bg-white rounded-md overflow-hidden border-primary/15 border money">
                     <Image
@@ -117,7 +116,6 @@ export default function RootLayout({
                       className="p-3"
                     />
                   </div>
-
                   <div className="relative flex-grow bg-white rounded-md overflow-hidden border-primary/15 border money">
                     <Image
                       src={
@@ -139,5 +137,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

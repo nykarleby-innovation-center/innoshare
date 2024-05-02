@@ -1,5 +1,5 @@
+import * as React from "react"
 import { cn } from "@/utils/ui"
-import * as React from "react";
 
 export function Logo(
   props: React.ButtonHTMLAttributes<HTMLOrSVGElement> & { secondary?: true }
@@ -7,7 +7,7 @@ export function Logo(
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox={props.secondary ? "0 20 140 100":"0 0 140 140"}
+      viewBox={props.secondary ? "0 20 140 100" : "0 0 140 140"}
       className={cn(props.className)}
     >
       <g>
@@ -38,5 +38,5 @@ export function Logo(
         </g>
       </g>
     </svg>
-  );
+  )
 }

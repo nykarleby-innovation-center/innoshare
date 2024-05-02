@@ -1,22 +1,34 @@
-import { InterestFormDialog } from "@/components/layout/interest-form-dialog";
-import { Logo } from "@/components/logo";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { L10N_COMMON } from "@/l10n/l10n-common";
-import { L10N_SERVER } from "@/l10n/l10n-server";
-import { Language } from "@/l10n/types";
-import { Mail } from "lucide-react";
-import Image from "next/image";
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogTrigger } from "@/components/ui/dialog"
+import { InterestFormDialog } from "@/components/layout/interest-form-dialog"
+import { L10N_COMMON } from "@/l10n/l10n-common"
+import { L10N_SERVER } from "@/l10n/l10n-server"
+import { Language } from "@/l10n/types"
+import { Logo } from "@/components/logo"
+import { Mail } from "lucide-react"
+import { Metadata } from "next"
 
-export async function generateStaticParams() {
-  return [{ lang: "en" }, { lang: "sv" }, { lang: "fi" }];
+interface Params {
+  lang: Language
 }
 
-export default function Home({
-  params: { lang },
+export async function generateMetadata({
+  params,
 }: {
-  params: { lang: Language };
-}) {
+  params: Params
+}): Promise<Metadata> {
+  return {
+    title: `InnoShare | ${L10N_SERVER.heroSlogan[params.lang]}`,
+    description: L10N_SERVER.heroText1[params.lang],
+  }
+}
+
+export async function generateStaticParams() {
+  return [{ lang: "en" }, { lang: "sv" }, { lang: "fi" }]
+}
+
+export default function Home({ params: { lang } }: { params: Params }) {
   return (
     <main className="max-w-6xl ml-auto mr-auto flex min-h-[90vh] flex-row items-center pt-32">
       <div className="flex flex-col-reverse gap-8 w-full p-8 pb-64 lg:py-32 lg:flex-row">
@@ -78,5 +90,5 @@ export default function Home({
         <Logo className="w-72 h-72 duration-300 hover:scale-105 hover:rotate-2" />
       </div>
     </main>
-  );
+  )
 }

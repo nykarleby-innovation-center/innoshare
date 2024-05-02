@@ -6,8 +6,17 @@ const nextConfig = {
         source: "/",
         destination: "/en",
       },
-    ];
+    ]
   },
-};
+  redirects() {
+    return [
+      {
+        source: "/en",
+        destination: "/",
+        permanent: true,
+      },
+    ]
+  },
+}
 
-export default nextConfig;
+export default nextConfig

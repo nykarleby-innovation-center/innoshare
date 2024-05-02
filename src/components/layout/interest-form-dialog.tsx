@@ -1,8 +1,17 @@
-"use client";
+"use client"
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { Button } from "../ui/button"
+import { Checkbox } from "../ui/checkbox"
+import { Input } from "../ui/input"
+import { interestFormSchema } from "../../schemas/interest-form"
+import { L10N_COMMON } from "@/l10n/l10n-common"
+import { Language } from "@/l10n/types"
+import { Loader2 } from "lucide-react"
+import { useForm } from "react-hook-form"
+import { useState } from "react"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+
 import {
   Form,
   FormControl,
@@ -10,26 +19,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+} from "../ui/form"
 import {
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "../ui/dialog";
-import { Checkbox } from "../ui/checkbox";
-import { interestFormSchema } from "../../schemas/interest-form";
-import { L10N_COMMON } from "@/l10n/l10n-common";
-import { Language } from "@/l10n/types";
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
+} from "../ui/dialog"
 
 export function InterestFormDialog({ lang }: { lang: Language }) {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
   const form = useForm<z.infer<typeof interestFormSchema>>({
     resolver: zodResolver(interestFormSchema),
@@ -41,32 +42,32 @@ export function InterestFormDialog({ lang }: { lang: Language }) {
       centriaPrivacyPolicyAccepted: false,
       nicPrivacyPolicyAccepted: false,
       acceptEmails: false,
-      language: lang
+      language: lang,
     },
-  });
+  })
 
   const handleSubmit = async (values: z.infer<typeof interestFormSchema>) => {
     try {
-      setLoading(true);
+      setLoading(true)
       const res = await fetch("/api/interest", {
         method: "POST",
         body: JSON.stringify(values),
-      });
+      })
       if (res.status !== 200) {
-        throw new Error();
+        throw new Error()
       }
-      setSubmitted(true);
+      setSubmitted(true)
     } catch (_) {
-      setError(true);
+      setError(true)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleReset = () => {
-    form.reset();
-    setSubmitted(false);
-  };
+    form.reset()
+    setSubmitted(false)
+  }
 
   if (submitted) {
     return (
@@ -79,7 +80,7 @@ export function InterestFormDialog({ lang }: { lang: Language }) {
         </DialogHeader>
         <Button onClick={handleReset}>{L10N_COMMON.submitAgain[lang]}</Button>
       </DialogContent>
-    );
+    )
   }
 
   return (
@@ -220,5 +221,5 @@ export function InterestFormDialog({ lang }: { lang: Language }) {
         </form>
       </Form>
     </DialogContent>
-  );
+  )
 }

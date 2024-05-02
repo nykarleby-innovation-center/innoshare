@@ -1,5 +1,5 @@
+import * as React from "react"
 import { cn } from "@/utils/ui"
-import * as React from "react";
 
 export function AppLogo(props: React.ButtonHTMLAttributes<HTMLOrSVGElement>) {
   return (
@@ -31,5 +31,5 @@ export function AppLogo(props: React.ButtonHTMLAttributes<HTMLOrSVGElement>) {
         ])}
       </g>
     </svg>
-  );
+  )
 }

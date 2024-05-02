@@ -1,6 +1,5 @@
-import "server-only";
-
-import { LanguageStrings } from "./types";
+import { LanguageStrings } from "./types"
+import "server-only"
 
 export const L10N_SERVER = {
   heroHeader: {
@@ -21,7 +20,7 @@ export const L10N_SERVER = {
   heroText2: {
     en: "The project tests this by having people switch workplaces for a certain period of time. A platform for competence sharing will soon be launched on this page, so please register your interest to receive a notification when the platform is live!",
     sv: "Projektet testar detta genom att personer byter arbetsplats för en viss tid. På denna sida kommer snart en plattform för kompetensdelning att lanseras, så anmäl gärna ert intresse så får ni ett meddelande då plattformen är live!",
-    fi: "Hanke testaa tätä antamalla ihmisille mahdollisuuden vaihtaa työpaikkaa tietyn aikaa. Tälle sivulle lanseerataan pian alusta osaamisen jakamiseen, joten ilmaise kiinnostuksesi niin saat ilmoituksen, kun alusta on käynnissä!",
+    fi: "Hanke testaa tätä antamalla ihmisille mahdollisuuden vaihtaa työpaikkaa tietyn ajanjakson. Tälle sivulle lanseerataan pian alusta osaamisen jakamiseen, joten ilmaise kiinnostuksesi niin saat ilmoituksen, kun alusta on käyttövalmis!",
   },
   joinProjectText: {
     en: [
@@ -55,7 +54,7 @@ export const L10N_SERVER = {
       ". Hittade du en bugg? Skapa en Issue så fixar vi den! (Eller fixa den själv med en Pull Request)",
     ],
     fi: [
-      "Tämän alustan koodi on avoimen lähdekoodin, ja se on saatavilla",
+      "Tämän alusta käyttää avointa lähdekoodia, ja se on saatavilla",
       "GitHubissa",
       ". Löysitkö bugin? Luo Issue, niin korjaamme sen! (Tai korjaa se itse Pull Requestin avulla)",
     ],
@@ -65,4 +64,4 @@ export const L10N_SERVER = {
     sv: "Medfinansieras av Europeiska unionens landsbygdsfinansiering via NTM-centralen.",
     fi: "Euroopan unionin maaseuturahaston rahoittama yhteistyössä ELY-keskuksen kanssa.",
   },
-} satisfies LanguageStrings;
+} satisfies LanguageStrings
