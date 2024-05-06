@@ -2,7 +2,7 @@ import { globalRateLimit } from "@/utils/rate-limit"
 import { interestFormSchema } from "@/schemas/interest-form"
 import { PrismaClient } from "@prisma/client"
 import { EmailService } from "@/services/email/email-service"
-import { getEnv } from "@/utils/env"
+import { ENVIRONMENT } from "@/utils/env"
 
 export const POST = globalRateLimit(async (req: Request) => {
   const data = interestFormSchema.parse(await req.json())
@@ -18,8 +18,15 @@ export const POST = globalRateLimit(async (req: Request) => {
     },
   })
 
-  EmailService.sendEmail({
-    to: getEnv("INTERNAL_NOTIFICATION_EMAIL"),
+  await EmailService.sendEmail({
+    toType: "internal",
+    to: ENVIRONMENT.INTERNAL_NOTIFICATION_TO,
+    subject: "New interest form submission",
+    message: `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nLanguage: ${data.language}`,
+  })
+
+  await EmailService.sendEmail({
+    to: data.email,
     subject: "New interest form submission",
     message: `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nLanguage: ${data.language}`,
   })

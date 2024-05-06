@@ -114,6 +114,7 @@ export default function RootLayout({
                       layout="fill"
                       alt="EU-logo"
                       className="p-3"
+                      unoptimized
                     />
                   </div>
                   <div className="relative flex-grow bg-white rounded-md overflow-hidden border-primary/15 border money">
@@ -128,6 +129,7 @@ export default function RootLayout({
                       layout="fill"
                       alt="ELY logo"
                       className="p-3"
+                      unoptimized
                     />
                   </div>
                 </div>

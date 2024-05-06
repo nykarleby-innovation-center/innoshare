@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
+  //outputFileTracingRoot: path.join(__dirname, './src//'),
   rewrites() {
     return [
       {

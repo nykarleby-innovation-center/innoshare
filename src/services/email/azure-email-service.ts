@@ -1,6 +1,6 @@
 import { EmailClient, KnownEmailSendStatus } from "@azure/communication-email"
 import { EmailService } from "./email-service"
-import { getEnv } from "@/utils/env"
+import { ENVIRONMENT } from "@/utils/env"
 
 // Pretty much taken directly from Microsoft's documentation
 // https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/email/send-email?tabs=windows%2Cazurekeycredential&pivots=programming-language-javascript
@@ -12,15 +12,18 @@ import { getEnv } from "@/utils/env"
 const POLLER_WAIT_S = 2
 
 export const AzureEmailService: EmailService = {
-  async sendEmail({ to, subject, message }) {
-    const connectionString = getEnv("AZURE_EMAIL_CONNECTION_STRING")
+  async sendEmail({ to, toType = "user", subject, message }) {
+    const connectionString = ENVIRONMENT.AZURE_EMAIL_CONNECTION_STRING
     if (!connectionString) {
       throw new Error("Azure email connection string not set")
     }
 
     const emailClient = new EmailClient(connectionString)
 
-    const senderAddress = getEnv("EMAIL_SENDER_ADDRESS")
+    const senderAddress =
+      toType === "user"
+        ? ENVIRONMENT.EMAIL_FROM
+        : ENVIRONMENT.INTERNAL_NOTIFICATION_FROM
     if (!senderAddress) {
       throw new Error("Email sender address not set")
     }

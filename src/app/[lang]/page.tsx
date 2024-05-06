@@ -60,6 +60,7 @@ export default function Home({ params: { lang } }: { params: Params }) {
               src="/centria-color.svg"
               width={100}
               height={50}
+              unoptimized
               alt="Centria logo"
               className="dark:hidden"
             />
@@ -67,6 +68,7 @@ export default function Home({ params: { lang } }: { params: Params }) {
               src="/centria-white.svg"
               width={100}
               height={50}
+              unoptimized
               alt="Centria logo"
               className="hidden dark:block"
             />
@@ -75,6 +77,7 @@ export default function Home({ params: { lang } }: { params: Params }) {
               src="/nic-color.svg"
               width={100}
               height={50}
+              unoptimized
               alt="NIC logo"
               className="dark:hidden"
             />
@@ -82,6 +85,7 @@ export default function Home({ params: { lang } }: { params: Params }) {
               src="/nic-white.svg"
               width={100}
               height={50}
+              unoptimized
               alt="NIC logo"
               className="hidden dark:block"
             />

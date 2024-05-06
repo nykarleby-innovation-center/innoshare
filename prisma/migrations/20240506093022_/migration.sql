@@ -4,6 +4,7 @@ CREATE TABLE "Interest" (
     "name" TEXT NOT NULL,
     "company" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "language" TEXT NOT NULL,
 
     CONSTRAINT "Interest_pkey" PRIMARY KEY ("id")
 );

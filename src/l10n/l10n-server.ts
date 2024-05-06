@@ -1,5 +1,6 @@
-import { LanguageStrings } from "./types"
 import "server-only"
+
+import { LanguageStrings } from "./types"
 
 export const L10N_SERVER = {
   heroHeader: {

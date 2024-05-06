@@ -36,7 +36,7 @@ export function Menu({ lang }: { lang: Language }) {
               <NavigationMenuList>
                 <AppLogo className="w-8 h-8 md:w-16 md:h-16" />
                 <NavigationMenuItem className="hidden md:block">
-                  <Link href="/" legacyBehavior passHref>
+                  <Link href={`/${lang}`} legacyBehavior passHref locale="false">
                     <NavigationMenuLink
                       className={navigationMenuTriggerStyle()}
                     >
