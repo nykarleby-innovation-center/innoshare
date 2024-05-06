@@ -18,18 +18,23 @@ export const POST = globalRateLimit(async (req: Request) => {
     },
   })
 
-  await EmailService.sendEmail({
-    toType: "internal",
-    to: ENVIRONMENT.INTERNAL_NOTIFICATION_TO,
-    subject: "New interest form submission",
-    message: `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nLanguage: ${data.language}`,
-  })
+  try {
+    await EmailService.sendEmail({
+      toType: "internal",
+      to: ENVIRONMENT.INTERNAL_NOTIFICATION_TO,
+      subject: "New interest form submission",
+      message: `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nLanguage: ${data.language}`,
+    })
 
-  await EmailService.sendEmail({
-    to: data.email,
-    subject: "New interest form submission",
-    message: `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nLanguage: ${data.language}`,
-  })
+    await EmailService.sendEmail({
+      to: data.email,
+      subject: "New interest form submission",
+      message: `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nLanguage: ${data.language}`,
+    })
+  } catch (err) {
+    console.error(err)
+    return Response.json({ success: false }, { status: 500 })
+  }
 
   return Response.json({ success: true })
 })

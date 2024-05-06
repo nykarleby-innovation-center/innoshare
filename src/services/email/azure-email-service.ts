@@ -28,43 +28,37 @@ export const AzureEmailService: EmailService = {
       throw new Error("Email sender address not set")
     }
 
-    try {
-      const poller = await emailClient.beginSend({
-        senderAddress,
-        recipients: {
-          to: [{ address: to }],
-        },
-        content: { subject, plainText: message },
-      })
+    const poller = await emailClient.beginSend({
+      senderAddress,
+      recipients: {
+        to: [{ address: to }],
+      },
+      content: { subject, plainText: message },
+    })
 
-      if (!poller.getOperationState().isStarted) {
-        throw new Error("Poller was not started.")
+    if (!poller.getOperationState().isStarted) {
+      throw new Error("Poller was not started.")
+    }
+
+    let timeElapsed = 0
+    while (!poller.isDone()) {
+      poller.poll()
+
+      await new Promise((resolve) => setTimeout(resolve, POLLER_WAIT_S * 1000))
+      timeElapsed += POLLER_WAIT_S
+
+      if (timeElapsed > 10 * POLLER_WAIT_S) {
+        throw new Error("Polling timed out after 10 tries.")
       }
+    }
 
-      let timeElapsed = 0
-      while (!poller.isDone()) {
-        poller.poll()
+    const result = poller.getResult()
 
-        await new Promise((resolve) =>
-          setTimeout(resolve, POLLER_WAIT_S * 1000)
-        )
-        timeElapsed += POLLER_WAIT_S
-
-        if (timeElapsed > 10 * POLLER_WAIT_S) {
-          throw new Error("Polling timed out after 10 tries.")
-        }
+    if (result?.status !== KnownEmailSendStatus.Succeeded) {
+      console.error("Email send failed.")
+      if (result?.error) {
+        throw result.error
       }
-
-      const result = poller.getResult()
-
-      if (result?.status !== KnownEmailSendStatus.Succeeded) {
-        console.error("Email send failed")
-        if (result?.error) {
-          throw result.error
-        }
-      }
-    } catch (e) {
-      console.error(e)
     }
   },
 }
