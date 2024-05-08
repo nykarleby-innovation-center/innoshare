@@ -10,6 +10,9 @@ import { Menu } from "@/components/layout/menu"
 import { ThemeProvider } from "@/components/theme-provider"
 import "../globals.css"
 import type { Metadata } from "next"
+import { LoginButton } from "@/components/layout/login-button"
+import { AuthService } from "@/services/auth/auth-service"
+import { db } from "@/utils/prisma"
 
 const catamaran = Catamaran({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -22,13 +25,18 @@ export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "sv" }, { lang: "fi" }]
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params: { lang },
 }: Readonly<{
   children: React.ReactNode
   params: { lang: Language }
 }>) {
+  const sessionUser = await AuthService.getSessionUser()
+  const user = sessionUser
+    ? await db.user.findUnique({ where: { authServiceId: sessionUser.id } })
+    : null
+
   return (
     <html lang="en">
       <body
@@ -43,7 +51,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Menu lang={lang} />
+          <Menu lang={lang} user={user} />
           {children}
           <footer className="lg:ml-auto lg:mr-auto xl:max-w-6xl">
             <div className="bg-secondary/40 flex flex-col gap-16 lg:flex-row xl:-ml-[2rem] xl:w-[calc(100%+4rem)] xl:px-[2rem] xl:pt-[2rem] xl:pb-[4rem] xl:rounded-t-2xl">

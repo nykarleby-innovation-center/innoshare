@@ -3,13 +3,12 @@ import { interestFormSchema } from "@/schemas/interest-form"
 import { PrismaClient } from "@prisma/client"
 import { EmailService } from "@/services/email/email-service"
 import { ENVIRONMENT } from "@/utils/env"
+import { db } from "@/utils/prisma"
 
 export const POST = globalRateLimit(async (req: Request) => {
   const data = interestFormSchema.parse(await req.json())
 
-  const prisma = new PrismaClient()
-
-  await prisma.interest.create({
+  await db.interest.create({
     data: {
       name: data.name,
       company: data.company,

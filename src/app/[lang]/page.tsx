@@ -8,6 +8,7 @@ import { Language } from "@/l10n/types"
 import { Logo } from "@/components/logo"
 import { Mail } from "lucide-react"
 import { Metadata } from "next"
+import { AuthService } from "@/services/auth/auth-service"
 
 interface Params {
   lang: Language
@@ -28,13 +29,13 @@ export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "sv" }, { lang: "fi" }]
 }
 
-export default function Home({ params: { lang } }: { params: Params }) {
+export default async function Home({ params: { lang } }: { params: Params }) {
   return (
     <main className="max-w-6xl ml-auto mr-auto flex min-h-[90vh] flex-row items-center pt-32">
       <div className="flex flex-col-reverse gap-8 w-full p-8 pb-64 lg:py-32 lg:flex-row">
         <div className="flex flex-col items-start flex-grow">
           <h1 className="text-4xl font-black uppercase tracking-tighter">
-            {L10N_SERVER.heroHeader[lang]}
+          {L10N_SERVER.heroHeader[lang]}
           </h1>
           <h2 className="text-lg font-semibold mb-8">
             {L10N_SERVER.heroSlogan[lang]}

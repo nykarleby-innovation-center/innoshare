@@ -15,3 +15,18 @@ model Interest {
   email    String
   language String
 }
+
+model User {
+  id             String       @id @default(uuid())
+  authServiceId  String       @unique
+  email          String       @unique
+  name           String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+}
+
+model Organization {
+  id    String @id @default(uuid())
+  name  String
+  users User[]
+}

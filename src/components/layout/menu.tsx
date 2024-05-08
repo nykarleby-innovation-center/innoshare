@@ -25,8 +25,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
+import * as DB from "@prisma/client"
 
-export function Menu({ lang }: { lang: Language }) {
+export function Menu({ lang, user }: { lang: Language; user: DB.User | null }) {
   return (
     <>
       <Dialog>
@@ -36,7 +37,12 @@ export function Menu({ lang }: { lang: Language }) {
               <NavigationMenuList>
                 <AppLogo className="w-8 h-8 md:w-16 md:h-16" />
                 <NavigationMenuItem className="hidden md:block">
-                  <Link href={`/${lang}`} legacyBehavior passHref locale="false">
+                  <Link
+                    href={`/${lang}`}
+                    legacyBehavior
+                    passHref
+                    locale="false"
+                  >
                     <NavigationMenuLink
                       className={navigationMenuTriggerStyle()}
                     >
@@ -63,12 +69,17 @@ export function Menu({ lang }: { lang: Language }) {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <DialogTrigger asChild>
-                    <Button variant="ghost">
+                  <Link
+                    href={user ?`/api/auth/logout`: `/api/auth/login`}
+                    legacyBehavior
+                    passHref
+                    locale="false"
+                  >
+                    <NavigationMenuLink>
                       <User className="mr-2" />
-                      {L10N_COMMON.logIn[lang]}
-                    </Button>
-                  </DialogTrigger>
+                      {user ? user.name : L10N_COMMON.logIn[lang]}
+                    </NavigationMenuLink>
+                  </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <DropdownMenu>
