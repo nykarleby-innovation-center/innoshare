@@ -4,12 +4,12 @@
     {
       "label": "Run Postgres",
       "type": "shell",
-      "command": "docker run -itd -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /Users/franksandqvist/Documents/Code/innoshare/.postgres:/var/lib/postgresql/data --name innoshare-db postgres",
+      "command": "docker run -itd -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v ${workspaceRoot}/.postgres:/var/lib/postgresql/data --name innoshare-db postgres"
     },
     {
       "label": "Build Docker image",
       "type": "shell",
-      "command": "docker build --platform=linux/amd64 . -t ghcr.io/nykarleby-innovation-center/innoshare:latest",
-    },
+      "command": "docker build --platform=linux/amd64 . -t ghcr.io/nykarleby-innovation-center/innoshare:latest"
+    }
   ]
 }
