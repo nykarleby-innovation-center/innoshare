@@ -1,6 +1,5 @@
 import "server-only"
-
-import { LanguageStrings } from "./types"
+import { L10nTranslationStrings } from "@/types/l10n"
 
 export const L10N_SERVER = {
   heroHeader: {
@@ -16,12 +15,89 @@ export const L10N_SERVER = {
   heroText1: {
     en: "InnoShare explores the possibilities of competence sharing, how companies and organizations can share competence with each other.",
     sv: "InnoShare utreder möjligheterna med kompetensdelning, hur företag och organisationer kan dela kompetens med varandra.",
-    fi: "InnoShare tutkii osaamisen jakamisen mahdollisuuksia, miten yritykset ja organisaatiot voivat jakaa osaamista keskenään.",
+    fi: "InnoShare tutkii kompetenssin jakamisen mahdollisuuksia, miten yritykset ja organisaatiot voivat jakaa kompetenssista keskenään.",
   },
   heroText2: {
-    en: "The project tests this by having people switch workplaces for a certain period of time. A platform for competence sharing will soon be launched on this page, so please register your interest to receive a notification when the platform is live!",
-    sv: "Projektet testar detta genom att personer byter arbetsplats för en viss tid. På denna sida kommer snart en plattform för kompetensdelning att lanseras, så anmäl gärna ert intresse så får ni ett meddelande då plattformen är live!",
-    fi: "Hanke testaa tätä antamalla ihmisille mahdollisuuden vaihtaa työpaikkaa tietyn ajanjakson. Tälle sivulle lanseerataan pian alusta osaamisen jakamiseen, joten ilmaise kiinnostuksesi niin saat ilmoituksen, kun alusta on käyttövalmis!",
+    en: "The project tests this by having people switch workplaces for a certain period of time. This open-source platform is a tool for managing these exchanges. Feel free to browse around, or even sign up if your company is interested in participating!",
+    sv: "",
+    fi: "Projekti testaa tätä vaihtamalla ihmisten työpaikkoja tietyn ajanjakson ajaksi. Tämä avoimen lähdekoodin alusta on työkalu näiden vaihtojen hallintaan. Voit selailla alustaa tai jopa rekisteröityä, jos yrityksesi on kiinnostunut osallistumaan!",
+  },
+  browseNeeds: {
+    en: "Browse needs",
+    sv: "Bläddra behov",
+    fi: "Selaa tarpeita",
+  },
+  browseSupply: {
+    en: "Browse supply",
+    sv: "Bläddra utbud",
+    fi: "Selaa tarjontaa",
+  },
+  itsLive: {
+    en: "It's live!",
+    sv: "Den är live!",
+    fi: "Se on livenä!",
+  },
+  nowPublicText: {
+    en: "The competence need/supply is now public. Your company's and contact information is not publicly visible, but must be unlocked by those who want to see it.",
+    sv: "Kompetensbehovet/utbudet är nu offentligt. Era företags- och kontaktuppgifter är inte offentligt synliga, utan måste låsas upp av de som vill se.",
+    fi: "Kompetenssitarve/-tarjonta on nyt julkinen. Yrityksenne ja yhteystietonne eivät ole julkisesti näkyvissä, vaan ne täytyy avata niitä haluaville.",
+  },
+  noOneUnlockedText: {
+    en: "No one has unlocked the contact information for this yet.",
+    sv: "Ingen har ännu låst upp kontaktinformationen till denna.",
+    fi: "Kukaan ei ole vielä avannut tämän yhteystietoja.",
+  },
+  peopleAreInterested: {
+    en: "People are interested",
+    sv: "Folk är intresserade",
+    fi: "Ihmiset ovat kiinnostuneita",
+  },
+  unlockersText: {
+    en: "Here are the people who have unlocked the contact information for this competence need/supply.",
+    sv: "Här är de som har låst upp kontaktuppgifterna till detta kompetensbehov/utbud.",
+    fi: "Tässä ovat ne, jotka ovat avanneet tämän kompetenssitarpeen/-tarjonnan yhteystiedot.",
+  },
+  contactInformationUnlockedText: {
+    en: "The contact information for this company is now unlocked.",
+    sv: "Kontaktuppgifterna till detta företag är nu upplåsta.",
+    fi: "Tämän yrityksen yhteystiedot on nyt avattu.",
+  },
+  youUnlockedForText: {
+    en: [
+      "You unlocked the contact information at ",
+      "for",
+      ". Your contact information is now also visible to them.",
+    ],
+    sv: [
+      "Du låste upp kontaktinformationen",
+      "för",
+      ". Era kontaktuppgifter är nu även synliga för dem.",
+    ],
+    fi: [
+      "Avasit yhteystiedot",
+      "puolesta",
+      ". Yhteystietosi ovat nyt myös näkyvissä heille.",
+    ],
+  },
+  canYouFillThisNeed: {
+    en: "Can you fill this need?",
+    sv: "Kan ni fylla detta behov?",
+    fi: "Voitteko täyttää tämän tarpeen?",
+  },
+  areYouInNeedOfThis: {
+    en: "Are you in need of this?",
+    sv: "Har ni behov av detta?",
+    fi: "Tarvitsetteko tätä?",
+  },
+  newOrganization: {
+    en: "New organization",
+    sv: "Ny organisation",
+    fi: "Uusi organisaatio",
+  },
+  pleaseConfirmYourInformation: {
+    en: "Please confirm your information",
+    sv: "Vänligen bekräfta er information",
+    fi: "Vahvistakaa tietonne",
   },
   joinProjectText: {
     en: [
@@ -65,4 +141,4 @@ export const L10N_SERVER = {
     sv: "Medfinansieras av Europeiska unionens landsbygdsfinansiering via NTM-centralen.",
     fi: "Euroopan unionin maaseuturahaston rahoittama yhteistyössä ELY-keskuksen kanssa.",
   },
-} satisfies LanguageStrings
+} satisfies L10nTranslationStrings

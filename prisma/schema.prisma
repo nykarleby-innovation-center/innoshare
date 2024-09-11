@@ -8,6 +8,93 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  email              String          @unique
+  firstName          String
+  lastName           String
+  phoneNumber        String?
+  onboarded          Boolean         @default(false)
+  organizations      Organization[]
+  competencesCreated Competence[]
+  balancesCreated    Balance[]       @relation(name: "BalanceCreatedByUsers")
+  balanceUnlocks     BalanceUnlock[]
+}
+
+model Organization {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  name            String
+  website         String
+  l10nDescription Json
+  onboarded       Boolean         @default(false)
+  competences     Competence[]
+  users           User[]
+  regions         Region[]
+  balances        Balance[]
+  balanceUnlocks  BalanceUnlock[]
+}
+
+model Competence {
+  id              String   @id @default(uuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now()) @updatedAt
+  createdByUser   User     @relation(fields: [createdByUserId], references: [id])
+  createdByUserId String
+
+  iconUrl        String?
+  normalizedName String         @unique
+  l10nName       Json
+  organizations  Organization[]
+  balances       Balance[]
+}
+
+model Balance {
+  id              String   @id @default(uuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now()) @updatedAt
+  createdByUser   User     @relation(name: "BalanceCreatedByUsers", fields: [createdByUserId], references: [id])
+  createdByUserId String
+
+  organization    Organization    @relation(fields: [organizationId], references: [id])
+  organizationId  String
+  competence      Competence      @relation(fields: [competenceId], references: [id])
+  competenceId    String
+  region          Region          @relation(fields: [regionId], references: [id])
+  regionId        String
+  amount          Int
+  startDate       DateTime
+  endDate         DateTime
+  l10nDescription Json?
+  balanceUnlocks  BalanceUnlock[]
+}
+
+model BalanceUnlock {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  user           User          @relation(fields: [userId], references: [id])
+  userId         String
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
+  balance        Balance       @relation(fields: [balanceId], references: [id])
+  balanceId      String
+
+  @@unique([userId, balanceId])
+}
+
+model Region {
+  id            String         @id @default(uuid())
+  l10nName      Json
+  organizations Organization[]
+  balances      Balance[]
+}
+
 model Interest {
   id       String @id @default(uuid())
   name     String

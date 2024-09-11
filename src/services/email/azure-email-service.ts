@@ -9,6 +9,8 @@ import { ENVIRONMENT } from "@/utils/env"
 //
 // @FrankSandqvist
 
+export type AzureEmailServiceEnvironmentVariables =  { AZURE_EMAIL_CONNECTION_STRING: string }
+
 const POLLER_WAIT_S = 2
 
 export const AzureEmailService: EmailService = {

@@ -19,6 +19,9 @@ const nextConfig = {
       },
     ]
   },
+  images: {
+    domains: ["innosharestorage.blob.core.windows.net"],
+  },
 }
 
 export default nextConfig

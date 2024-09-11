@@ -9,7 +9,7 @@ const globalRateLimitMap = new Map()
 export const globalRateLimit = (handler: Handler): Handler => {
   return (req, res) => {
     const ip = req.headers.get("x-forwarded-for")
-    const limit = 5
+    const limit = 20
     const windowMs = 60 * 1000
 
     if (!globalRateLimitMap.has(ip)) {

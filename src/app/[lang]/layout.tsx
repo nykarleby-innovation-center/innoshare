@@ -1,17 +1,23 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Catamaran } from "next/font/google"
+import { Catamaran, VT323 } from "next/font/google"
 import { cn } from "@/utils/ui"
 import { Github, Instagram, Linkedin, Mail } from "lucide-react"
 import { L10N_SERVER } from "@/l10n/l10n-server"
-import { Language } from "@/l10n/types"
-import { Logo } from "@/components/logo"
-import { Menu } from "@/components/layout/menu"
-import { ThemeProvider } from "@/components/theme-provider"
+import { Language } from "@/types/language"
+import { Logo } from "@/components/server/logo"
+import { Menu } from "@/components/client/menu"
+import { ThemeProvider } from "@/components/client/theme-provider"
 import "../globals.css"
 import type { Metadata } from "next"
+import { decodeUnverifiedSessionCookie } from "@/utils/session"
 
 const catamaran = Catamaran({ subsets: ["latin"], variable: "--font-sans" })
+const vt323 = VT323({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-pixel",
+})
 
 export const metadata: Metadata = {
   title: "InnoShare",
@@ -22,19 +28,22 @@ export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "sv" }, { lang: "fi" }]
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params: { lang },
 }: Readonly<{
   children: React.ReactNode
   params: { lang: Language }
 }>) {
+  const unverifiedSession = decodeUnverifiedSessionCookie()
+
   return (
     <html lang="en">
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          catamaran.variable
+          catamaran.variable,
+          vt323.variable
         )}
       >
         <ThemeProvider
@@ -43,7 +52,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Menu lang={lang} />
+          <Menu
+            lang={lang}
+            unverifiedUserFirstName={unverifiedSession?.firstName ?? null}
+            unverifedOrganizations={unverifiedSession?.organizations ?? []}
+          />
           {children}
           <footer className="lg:ml-auto lg:mr-auto xl:max-w-6xl">
             <div className="bg-secondary/40 flex flex-col gap-16 lg:flex-row xl:-ml-[2rem] xl:w-[calc(100%+4rem)] xl:px-[2rem] xl:pt-[2rem] xl:pb-[4rem] xl:rounded-t-2xl">
