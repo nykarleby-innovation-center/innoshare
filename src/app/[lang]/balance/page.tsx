@@ -100,3 +100,5 @@ export default async function BalanceListingPage({
     </PageWrapper>
   )
 }
+
+export const dynamic = "force-dynamic"

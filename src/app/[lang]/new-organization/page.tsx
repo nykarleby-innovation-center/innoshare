@@ -74,3 +74,5 @@ export default async function NewOrganizationPage({
     </PageWrapper>
   )
 }
+
+export const dynamic = "force-dynamic"

@@ -71,3 +71,5 @@ export default async function UserSettingsPage({
     </PageWrapper>
   )
 }
+
+export const dynamic = "force-dynamic"

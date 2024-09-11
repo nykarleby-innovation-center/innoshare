@@ -31,7 +31,7 @@ export default async function OrganizationSettingsPage({
     return redirect("/api/auth/login")
   }
 
-  if(session.organizations.length === 0) {
+  if (session.organizations.length === 0) {
     return redirect("/sv/new-organization")
   }
 
@@ -63,3 +63,5 @@ export default async function OrganizationSettingsPage({
     />
   )
 }
+
+export const dynamic = "force-dynamic"
