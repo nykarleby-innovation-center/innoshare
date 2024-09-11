@@ -124,6 +124,15 @@ export function UpsertBalancePage({
     return () => subscription.unsubscribe()
   }, [form.watch, form.resetField])
 
+  useEffect(() => {
+    form.setValue(
+      "amount",
+      mode === "supply"
+        ? Math.abs(form.getValues().amount)
+        : -Math.abs(form.getValues().amount)
+    )
+  }, [mode])
+
   const handleSubmit: SubmitHandler<
     z.infer<typeof upsertBalanceFormSchema>
   > = async (v) => {
@@ -474,7 +483,9 @@ export function UpsertBalancePage({
                         )}
                       />
                     </FormControl>
-                    <div className="text-lg font-black">{field.value}</div>
+                    <div className="text-lg font-black">
+                      {Math.abs(field.value)}
+                    </div>
                   </div>
                   <FormMessage />
                 </FormItem>

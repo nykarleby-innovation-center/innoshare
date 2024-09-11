@@ -208,9 +208,11 @@ export default async function BalancePage({
         {balance.l10nDescription && (
           <p className="mb-12">{(balance.l10nDescription as L10nText)[lang]}</p>
         )}
-        {unverifiedSession && (
-          <UnlockBalanceSection balance={balance} lang={lang} />
-        )}
+        <UnlockBalanceSection
+          balance={balance}
+          lang={lang}
+          guest={!unverifiedSession}
+        />
       </PageWrapper>
     </>
   )

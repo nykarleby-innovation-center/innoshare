@@ -29,11 +29,13 @@ import Link from "next/link"
 export async function UnlockBalanceSection({
   balance,
   lang,
+  guest,
 }: {
   balance: Pick<Prisma.Balance, "id" | "amount" | "organizationId">
   lang: Language
+  guest: boolean
 }) {
-  const verifiedSession = await checkSessionCookie()
+  const verifiedSession = guest ? null : await checkSessionCookie()
 
   const ownBalance =
     verifiedSession &&
