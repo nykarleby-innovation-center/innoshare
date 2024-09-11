@@ -298,6 +298,7 @@ export function UpsertBalancePage({
                 render={({ field }) => {
                   return (
                     <RadioGroup
+                      key={form.getValues().organizationId}
                       onValueChange={(v) => {
                         console.log(v)
                         form.setValue("regionId", v)

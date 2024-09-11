@@ -4,7 +4,8 @@ import sharp from "sharp"
 import { iteratorToStream } from "@/utils/stream"
 import { ScrapeStep } from "@/types/scrape"
 import { scrapeSchema } from "@/schemas/scrape"
-import { NextResponse } from "next/server"
+import { checkSessionCookie } from "@/utils/session"
+import { globalRateLimit } from "@/utils/rate-limit"
 
 const screenshotPage = async (url: string) => {
   const res = await fetch(
@@ -18,7 +19,7 @@ const screenshotPage = async (url: string) => {
   )
 
   if (res.status !== 200) {
-    console.log(await res.text())
+    console.error(await res.text())
     throw new Error()
   }
   const blob = await res.blob()
@@ -33,18 +34,24 @@ interface PageInformation {
   competences: string[]
 }
 
-export const POST = async (req: Request, res: Response) => {
+export const POST = globalRateLimit(async (req: Request, res: Response) => {
+  const session = await checkSessionCookie()
+
+  if (!session) {
+    return Response.error()
+  }
+
   const body = scrapeSchema.safeParse(await req.json())
 
   if (!body.success) {
-    return NextResponse.error()
+    return Response.error()
   }
 
   const responseGenerator = scrapeGenerator(body.data)
   const stream = iteratorToStream(responseGenerator)
 
   return new Response(stream)
-}
+})
 
 async function* scrapeGenerator({
   url,
@@ -86,13 +93,11 @@ async function* scrapeGenerator({
   const resolvedUrl = linksScrapeRes.headers.get("Resolved-Url")!
 
   if (linksScrapeRes.status !== 200) {
-    console.log(await linksScrapeRes.text())
+    console.error(await linksScrapeRes.text())
     throw new Error()
   }
 
   const scrape = await linksScrapeRes.json()
-
-  console.log(scrape)
 
   const allLinks = Array.from(
     new Set([
@@ -188,7 +193,6 @@ ${allLinks
       continue
     }
 
-    console.log("Preview", screenshotBuffer)
     const previewResized = await sharp(screenshotBuffer)
       .resize({
         withoutEnlargement: true,
@@ -204,8 +208,6 @@ ${allLinks
       linkIndex: nextIndexToBrowse,
       screenshotData: previewResized.toString("base64"),
     } as const
-
-    console.log("Resize")
 
     const resized = await sharp(screenshotBuffer)
       .resize({
@@ -311,8 +313,6 @@ ${allLinks
     } else {
       nextIndexToBrowse = null
     }
-
-    console.log(pageInformation)
   } while (nextIndexToBrowse !== null && pageInformation.length < 5)
 
   const summaryGenerator = AiService.chatCompletion({
@@ -336,9 +336,6 @@ RESPONSE LANGUAGE: ${
       chunk,
     }
   }
-
-  console.log("satisfied")
-  console.log(pageInformation)
 
   yield { step: "done" }
 

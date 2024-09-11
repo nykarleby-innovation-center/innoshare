@@ -19,7 +19,7 @@ export const L10N_SERVER = {
   },
   heroText2: {
     en: "The project tests this by having people switch workplaces for a certain period of time. This open-source platform is a tool for managing these exchanges. Feel free to browse around, or even sign up if your company is interested in participating!",
-    sv: "",
+    sv: "Projektet testar detta genom att låta människor byta arbetsplatser under en viss tidsperiod. Denna plattform med öppen källkod är ett verktyg för att hantera dessa utbyten. Du kan bläddra runt eller till och med registrera dig om ditt företag är intresserat av att delta!",
     fi: "Projekti testaa tätä vaihtamalla ihmisten työpaikkoja tietyn ajanjakson ajaksi. Tämä avoimen lähdekoodin alusta on työkalu näiden vaihtojen hallintaan. Voit selailla alustaa tai jopa rekisteröityä, jos yrityksesi on kiinnostunut osallistumaan!",
   },
   browseNeeds: {

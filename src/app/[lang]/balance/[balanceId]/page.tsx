@@ -206,7 +206,7 @@ export default async function BalancePage({
           ) : null}
         </div>
         {balance.l10nDescription && (
-          <p className="mb-12">{(balance.l10nDescription as L10nText)[lang]}</p>
+          <p className="mb-12 whitespace-pre-wrap">{(balance.l10nDescription as L10nText)[lang]}</p>
         )}
         <UnlockBalanceSection
           balance={balance}
