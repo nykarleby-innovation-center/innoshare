@@ -82,7 +82,7 @@ export function UpsertBalancePage({
 
   const [mode, setMode] = useState<"need" | "supply" | null>(
     editingBalance?.amount
-      ? editingBalance.amount > 1
+      ? editingBalance.amount > 0
         ? "supply"
         : "need"
       : null
@@ -99,7 +99,7 @@ export function UpsertBalancePage({
       organizationId: editingBalance?.organizationId ?? organizations[0]?.id,
       regionId: editingBalance?.regionId,
       competenceId: editingBalance?.competenceId,
-      amount: editingBalance ? Math.abs(editingBalance.amount) : 1,
+      amount: editingBalance ? editingBalance.amount : 1,
       l10nDescription: (editingBalance?.l10nDescription as L10nText) ?? null,
       dateRange: editingBalance
         ? [+editingBalance.startDate, +editingBalance.endDate]
@@ -449,11 +449,6 @@ export function UpsertBalancePage({
               name="amount"
               render={({ field }) => (
                 <FormItem className="">
-                  <input
-                    type="hidden"
-                    {...field}
-                    value={mode === "supply" ? field.value : -field.value}
-                  />
                   <FormLabel>
                     {mode === "need"
                       ? L10N_COMMON.howManyDoYouNeed[lang]
@@ -465,8 +460,14 @@ export function UpsertBalancePage({
                         min={1}
                         max={10}
                         step={1}
-                        defaultValue={[field.value]}
-                        onValueChange={(v) => form.setValue("amount", v[0])}
+                        value={[Math.abs(field.value)]}
+                        defaultValue={[Math.abs(field.value)]}
+                        onValueChange={(v) =>
+                          form.setValue(
+                            "amount",
+                            mode === "need" ? -v[0] : v[0]
+                          )
+                        }
                         rangeClassName={cn(
                           "transition-colors duration-300",
                           mode === "need" ? "bg-orange-400" : "bg-teal-400"
