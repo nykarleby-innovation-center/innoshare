@@ -178,8 +178,6 @@ export function UpsertOrganizationForm({
       await updateOrganization({ id: editingOrganization.id, ...v })
     } else {
       await createOrganization(v)
-
-      router.push(`/${lang}/balance`)
     }
   }
 

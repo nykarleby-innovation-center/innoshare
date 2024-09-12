@@ -54,5 +54,5 @@ export async function createOrganization(
   })
 
   revalidatePath(`/${getLanguageFromHeaders()}/new-balance`)
-  redirect(`/${getLanguageFromHeaders()}/edit-organization/${org.id}`)
+  redirect(`/${getLanguageFromHeaders()}/new-balance`)
 }
