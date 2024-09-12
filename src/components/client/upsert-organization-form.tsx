@@ -37,6 +37,7 @@ import { updateOrganization } from "@/actions/update-organization"
 import { LANGUAGE_NAMES_L10N } from "@/utils/language"
 import { Language } from "@/types/language"
 import { HtmlForm } from "../server/html-form"
+import { useRouter } from "next/navigation"
 
 export function UpsertOrganizationForm({
   lang,
@@ -57,6 +58,8 @@ export function UpsertOrganizationForm({
   regions: Array<Pick<Prisma.Region, "id" | "l10nName">>
   competences: Array<Pick<Prisma.Competence, "id" | "l10nName">>
 }) {
+  const router = useRouter()
+
   const [competencesAndNew, setCompetencesAndNew] =
     useState<typeof competences>(competences)
 
@@ -86,7 +89,7 @@ export function UpsertOrganizationForm({
       },
       regionIds: editingOrganization?.regionIds ?? [],
       competenceIds: editingOrganization?.competenceIds ?? [],
-      website: editingOrganization?.website ?? "",
+      website: editingOrganization?.website ?? "https://",
     },
   })
 
@@ -175,6 +178,8 @@ export function UpsertOrganizationForm({
       await updateOrganization({ id: editingOrganization.id, ...v })
     } else {
       await createOrganization(v)
+
+      router.push(`/${lang}/balance`)
     }
   }
 

@@ -5,6 +5,18 @@ import { UpsertBalancePage } from "@/components/client/upsert-balance-page"
 import { checkSessionCookie } from "@/utils/session"
 import { prismaClient } from "@/utils/prisma"
 import { redirect } from "next/navigation"
+import { PageWrapper } from "@/components/server/page-wrapper"
+import { PageHeader } from "@/components/server/page-header"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { L10N_COMMON } from "@/l10n/l10n-common"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 interface Params {
   lang: Language
@@ -32,6 +44,34 @@ export default async function OrganizationSettingsPage({
   }
 
   if (session.organizations.length === 0) {
+    return (
+      <PageWrapper
+        breadcrumb={
+          <Breadcrumb className="mb-4">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href={`/${lang}/balance/`}>
+                  {L10N_COMMON.competenceBalance[lang]}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+            </BreadcrumbList>
+          </Breadcrumb>
+        }
+        header={
+          <PageHeader>{L10N_SERVER.createCompetenceBalance[lang]}</PageHeader>
+        }
+      >
+        {
+          <div className="flex flex-col gap-4 items-start">
+            <p>{L10N_SERVER.youNeedToCreateOrganizationText[lang]}</p>
+            <Link href={`/${lang}/new-organization`} passHref legacyBehavior>
+              <Button>{L10N_COMMON.newOrganization[lang]}</Button>
+            </Link>
+          </div>
+        }
+      </PageWrapper>
+    )
     return redirect("/sv/new-organization")
   }
 

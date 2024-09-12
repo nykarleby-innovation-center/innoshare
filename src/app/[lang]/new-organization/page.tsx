@@ -63,7 +63,7 @@ export default async function NewOrganizationPage({
           </BreadcrumbList>
         </Breadcrumb>
       }
-      header={<PageHeader>{L10N_SERVER.newOrganization[lang]}</PageHeader>}
+      header={<PageHeader>{L10N_COMMON.newOrganization[lang]}</PageHeader>}
     >
       <UpsertOrganizationForm
         lang={lang}

@@ -89,11 +89,6 @@ export const L10N_SERVER = {
     sv: "Har ni behov av detta?",
     fi: "Tarvitsetteko tätä?",
   },
-  newOrganization: {
-    en: "New organization",
-    sv: "Ny organisation",
-    fi: "Uusi organisaatio",
-  },
   pleaseConfirmYourInformation: {
     en: "Please confirm your information",
     sv: "Vänligen bekräfta er information",
@@ -140,5 +135,15 @@ export const L10N_SERVER = {
     en: "Co-financed by European Union rural funding through ELY-keskus.",
     sv: "Medfinansieras av Europeiska unionens landsbygdsfinansiering via NTM-centralen.",
     fi: "Euroopan unionin maaseuturahaston rahoittama yhteistyössä ELY-keskuksen kanssa.",
+  },
+  createCompetenceBalance: {
+    en: "Create competence balance",
+    sv: "Skapa kompetensbalans",
+    fi: "Luo kompetenssitasapaino",
+  },
+  youNeedToCreateOrganizationText: {
+    en: "You need to create an organization before you can create a competence balance.",
+    sv: "Ni behöver skapa en organisation innan ni kan skapa en kompetensbalans.",
+    fi: "Sinun täytyy luoda organisaatio ennen kuin voit luoda kompetenssitasapaino.",
   },
 } satisfies L10nTranslationStrings

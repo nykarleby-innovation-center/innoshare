@@ -65,7 +65,7 @@ export default async function UserSettingsPage({
       }
     >
       {!session.userOnboarded && (
-        <div>{L10N_SERVER.pleaseConfirmYourInformation[lang]}</div>
+        <div className="mb-8">{L10N_SERVER.pleaseConfirmYourInformation[lang]}</div>
       )}
       <UpdateUserForm lang={lang} user={user} />
     </PageWrapper>

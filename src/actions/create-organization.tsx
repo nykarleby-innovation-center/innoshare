@@ -8,6 +8,7 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { z } from "zod"
 import "server-only"
+import { revalidatePath } from "next/cache"
 
 export async function createOrganization(
   data: z.infer<typeof createOrganizationSchema>
@@ -52,5 +53,6 @@ export async function createOrganization(
     expires: session.exp * 1000,
   })
 
+  revalidatePath(`/${getLanguageFromHeaders()}/new-balance`)
   redirect(`/${getLanguageFromHeaders()}/edit-organization/${org.id}`)
 }
