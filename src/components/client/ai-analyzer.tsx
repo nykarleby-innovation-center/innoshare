@@ -52,7 +52,7 @@ export const AiAnalyzer = ({
   const scrape = () => {
     setStage("browsing")
 
-    fetch("/api/scrape", {
+    fetch("/images/api/scrape", {
       method: "POST",
       body: JSON.stringify({
         url: url,
@@ -142,7 +142,7 @@ export const AiAnalyzer = ({
       <div className="fixed left-24 top-24 bottom-24 right-24 z-50 bg-gradient-to-br from-orange-500 via-black to-teal-400 animate-ai-appear-1">
         <div className="absolute left-0.5 right-0.5 top-0.5 bottom-0.5 bg-black/100 font-pixel text-white p-8 text-lg">
           <Image
-            src="/arbeit-light.svg"
+            src="/images/arbeit-light.svg"
             alt="Arbeit"
             width={200}
             height={100}
@@ -302,7 +302,7 @@ export const AiAnalyzer = ({
                       >
                         <Image
                           alt="Browsing..."
-                          src="/browsing.webp"
+                          src="/images/browsing.webp"
                           width={64}
                           height={64}
                           className=""
@@ -329,7 +329,7 @@ export const AiAnalyzer = ({
                       <>
                         <Image
                           alt="Browsing..."
-                          src="/browsing.webp"
+                          src="/images/browsing.webp"
                           width={128}
                           height={128}
                           style={{ imageRendering: "pixelated" }}
@@ -345,7 +345,7 @@ export const AiAnalyzer = ({
                       <>
                         <Image
                           alt="Analyzing..."
-                          src="/analyzing.gif"
+                          src="/images/analyzing.gif"
                           width={544}
                           height={120}
                           style={{ imageRendering: "pixelated" }}

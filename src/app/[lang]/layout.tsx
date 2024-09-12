@@ -121,9 +121,9 @@ export default async function RootLayout({
                     <Image
                       src={
                         {
-                          en: "/eu-en.svg",
-                          sv: "/eu-sv.svg",
-                          fi: "/eu-fi.svg",
+                          en: "/images/eu-en.svg",
+                          sv: "/images/eu-sv.svg",
+                          fi: "/images/eu-fi.svg",
                         }[lang]
                       }
                       layout="fill"
@@ -136,9 +136,9 @@ export default async function RootLayout({
                     <Image
                       src={
                         {
-                          en: "/ely-en.svg",
-                          sv: "/ely-sv.svg",
-                          fi: "/ely-fi.svg",
+                          en: "/images/ely-en.svg",
+                          sv: "/images/ely-sv.svg",
+                          fi: "/images/ely-fi.svg",
                         }[lang]
                       }
                       layout="fill"

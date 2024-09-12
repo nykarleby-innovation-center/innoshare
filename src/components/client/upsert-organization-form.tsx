@@ -469,20 +469,20 @@ function ArbeitButton(
           <div className="relative w-72 h-16">
             <Image
               alt="Arbeit"
-              src="/arbeit-light.svg"
+              src="/images/arbeit-light.svg"
               fill
               className="opacity-0 duration-300 blur-sm group-hover:opacity-100"
             />
             <Image
               alt="Arbeit"
               className="dark:invisible"
-              src="/arbeit-dark.svg"
+              src="/images/arbeit-dark.svg"
               fill
             />
             <Image
               alt="Arbeit"
               className=" invisible dark:visible"
-              src="/arbeit-light.svg"
+              src="/images/arbeit-light.svg"
               fill
             />
           </div>

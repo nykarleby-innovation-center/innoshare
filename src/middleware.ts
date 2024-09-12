@@ -1,35 +1,51 @@
 // middleware.js
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest } from "next/server"
 import { decodeUnverifiedSessionCookie } from "./utils/session"
-import { ENVIRONMENT } from "./utils/env"
 import { Language } from "./types/language"
+import Negotiator from "negotiator"
+import { match } from "@formatjs/intl-localematcher"
+import { languageSchema } from "./schemas/language"
+
+const defaultLanguage: Language = "sv"
+
+function getLocale(request: NextRequest): Language {
+  let languages = new Negotiator({
+    headers: Object.fromEntries(request.headers.entries()),
+  }).languages()
+
+  return match(languages, languageSchema.options, defaultLanguage) as Language
+}
 
 export function middleware(request: NextRequest) {
   const unverifiedSession = decodeUnverifiedSessionCookie()
 
-  const origin = request.headers.get("origin")
-  const referer = request.headers.get("referer")
+  const { pathname } = request.nextUrl
+  if (pathname === "/") return
 
-  let lang: Language = "en"
-  if (origin && referer) {
-    const path = referer.replace(origin, "")
-    lang = path.split("/")[1] as Language
-  }
+  const pathnameHasLocale = languageSchema.options.find(
+    (lang) => pathname.startsWith(`/${lang}/`) || pathname === `/${lang}`
+  )
+
+  const lang = getLocale(request)
 
   if (
     unverifiedSession?.userOnboarded === false &&
     request.nextUrl.pathname !== `/${lang}/user-settings`
   ) {
-    return NextResponse.redirect(
-      new URL(`/${lang}/user-settings`, ENVIRONMENT.HOST)
-    )
+    request.nextUrl.pathname = `/${lang}/user-settings`
+
+    return Response.redirect(request.nextUrl)
   }
 
-  return NextResponse.next()
+  if (pathnameHasLocale) return
+
+  request.nextUrl.pathname = `/${lang}${pathname}`
+
+  return Response.redirect(request.nextUrl)
 }
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/((?!api|images|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
   ],
 }

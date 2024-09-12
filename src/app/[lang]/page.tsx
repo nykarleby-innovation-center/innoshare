@@ -72,7 +72,7 @@ export default async function Home({ params: { lang } }: { params: Params }) {
 
           <div className="flex flex-row gap-8 items-stretch h-16">
             <Image
-              src="/centria-color.svg"
+              src="/images/centria-color.svg"
               width={100}
               height={50}
               unoptimized
@@ -80,7 +80,7 @@ export default async function Home({ params: { lang } }: { params: Params }) {
               className="dark:hidden"
             />
             <Image
-              src="/centria-white.svg"
+              src="/images/centria-white.svg"
               width={100}
               height={50}
               unoptimized
@@ -89,7 +89,7 @@ export default async function Home({ params: { lang } }: { params: Params }) {
             />
             <div className="w-[1px] bg-primary opacity-20" />
             <Image
-              src="/nic-color.svg"
+              src="/images/nic-color.svg"
               width={100}
               height={50}
               unoptimized
@@ -97,7 +97,7 @@ export default async function Home({ params: { lang } }: { params: Params }) {
               className="dark:hidden"
             />
             <Image
-              src="/nic-white.svg"
+              src="/images/nic-white.svg"
               width={100}
               height={50}
               unoptimized

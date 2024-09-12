@@ -6,14 +6,14 @@ const nextConfig = {
     return [
       {
         source: "/",
-        destination: "/en",
+        destination: "/sv",
       },
     ]
   },
   redirects() {
     return [
       {
-        source: "/en",
+        source: "/sv",
         destination: "/",
         permanent: true,
       },
