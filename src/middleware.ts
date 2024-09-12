@@ -26,7 +26,7 @@ export function middleware(request: NextRequest) {
     (lang) => pathname.startsWith(`/${lang}/`) || pathname === `/${lang}`
   )
 
-  const lang = getLocale(request)
+  const lang = pathnameHasLocale ?? getLocale(request)
 
   if (
     unverifiedSession?.userOnboarded === false &&
