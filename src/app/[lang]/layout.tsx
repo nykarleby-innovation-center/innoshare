@@ -11,6 +11,7 @@ import { ThemeProvider } from "@/components/client/theme-provider"
 import "../globals.css"
 import type { Metadata } from "next"
 import { decodeUnverifiedSessionCookie } from "@/utils/session"
+import { FooterLanguageLinks } from "@/components/client/footer-language-links"
 
 const catamaran = Catamaran({ subsets: ["latin"], variable: "--font-sans" })
 const vt323 = VT323({
@@ -113,6 +114,7 @@ export default async function RootLayout({
                 </div>
               </div>
               <div className="flex flex-col gap-2 text-sm items-start p-8">
+                <FooterLanguageLinks lang={lang} />
                 {L10N_SERVER.cofinancedText[lang]}
                 <div className="flex flex-row gap-4 w-full h-36">
                   <div className="relative flex-grow bg-white rounded-md overflow-hidden border-primary/15 border money">

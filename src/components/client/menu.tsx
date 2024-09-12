@@ -6,7 +6,6 @@ import { Button } from "../ui/button"
 import { L10N_COMMON } from "@/l10n/l10n-common"
 import { Language } from "@/types/language"
 import {
-  ArrowLeftIcon,
   ArrowRightIcon,
   BuildingIcon,
   Languages,
@@ -36,6 +35,7 @@ import {
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { cn } from "@/utils/ui"
+import { getPageWithoutLanguage } from "@/utils/language"
 
 export function Menu({
   lang,
@@ -48,7 +48,7 @@ export function Menu({
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathname = usePathname()
-  const pageWithoutLanguage = pathname.split("/").slice(2).join("/")
+  const pageWithoutLanguage = getPageWithoutLanguage(pathname)
 
   return (
     <>

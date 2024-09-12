@@ -73,7 +73,9 @@ export default async function BalanceListingPage({
         <Breadcrumb className="mb-4">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/">{L10N_COMMON.home[lang]}</BreadcrumbLink>
+              <BreadcrumbLink href={`/${lang}`}>
+                {L10N_COMMON.home[lang]}
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
           </BreadcrumbList>

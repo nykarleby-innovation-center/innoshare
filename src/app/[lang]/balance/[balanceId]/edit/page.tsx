@@ -73,7 +73,7 @@ export default async function EditBalancePage({
   })
 
   if (!balance) {
-    return redirect("/")
+    return redirect(`/${lang}`)
   }
 
   return (

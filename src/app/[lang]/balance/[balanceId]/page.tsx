@@ -104,7 +104,7 @@ export default async function BalancePage({
           <Breadcrumb className="mb-12">
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/">
+                <BreadcrumbLink href={`/${lang}`}>
                   {L10N_COMMON.home[lang]}
                 </BreadcrumbLink>
               </BreadcrumbItem>
@@ -206,7 +206,9 @@ export default async function BalancePage({
           ) : null}
         </div>
         {balance.l10nDescription && (
-          <p className="mb-12 whitespace-pre-wrap">{(balance.l10nDescription as L10nText)[lang]}</p>
+          <p className="mb-12 whitespace-pre-wrap">
+            {(balance.l10nDescription as L10nText)[lang]}
+          </p>
         )}
         <UnlockBalanceSection
           balance={balance}
