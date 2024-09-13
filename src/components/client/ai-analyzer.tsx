@@ -52,7 +52,7 @@ export const AiAnalyzer = ({
   const scrape = () => {
     setStage("browsing")
 
-    fetch("/images/api/scrape", {
+    fetch("/api/scrape", {
       method: "POST",
       body: JSON.stringify({
         url: url,
