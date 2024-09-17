@@ -9,7 +9,9 @@ import { ENVIRONMENT } from "@/utils/env"
 //
 // @FrankSandqvist
 
-export type AzureEmailServiceEnvironmentVariables =  { AZURE_EMAIL_CONNECTION_STRING: string }
+export type AzureEmailServiceEnvironmentVariables = {
+  AZURE_EMAIL_CONNECTION_STRING: string
+}
 
 const POLLER_WAIT_S = 2
 
@@ -31,6 +33,12 @@ export const AzureEmailService: EmailService = {
     }
 
     const poller = await emailClient.beginSend({
+      headers:
+        toType === "user"
+          ? {
+              "Reply-To": ENVIRONMENT.NOTIFICATIONS_REPLY_TO,
+            }
+          : {},
       senderAddress,
       recipients: {
         to: [{ address: to }],

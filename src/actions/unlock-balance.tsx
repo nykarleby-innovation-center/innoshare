@@ -10,6 +10,7 @@ import "server-only"
 import { EmailService } from "@/services/email/email-service"
 import { L10N_SERVER } from "@/l10n/l10n-server"
 import { L10nText } from "@/types/l10n"
+import { ENVIRONMENT } from "@/utils/env"
 
 export async function unlockBalance(data: z.infer<typeof unlockBalanceSchema>) {
   const session = await checkSessionCookie()
@@ -49,6 +50,7 @@ export async function unlockBalance(data: z.infer<typeof unlockBalanceSchema>) {
       },
       balance: {
         select: {
+          id: true,
           competence: {
             select: {
               l10nName: true,
@@ -65,17 +67,35 @@ export async function unlockBalance(data: z.infer<typeof unlockBalanceSchema>) {
   })
 
   // Todo, language support in database.
-  await EmailService.sendEmail({
-    to: res.balance.createdByUser.email,
-    subject: L10N_SERVER.yourCompetenceBalanceContactDetailsWereUnlocked.sv,
-    message: L10N_SERVER.unlockedEmailText(
-      res.balance.competence.l10nName as L10nText,
-      `${res.user.firstName} ${res.user.lastName}
+  Promise.all([
+    EmailService.sendEmail({
+      to: res.balance.createdByUser.email,
+      subject: L10N_SERVER.yourCompetenceBalanceContactDetailsWereUnlocked.sv,
+      message: L10N_SERVER.unlockedEmailText(
+        res.balance.competence.l10nName as L10nText,
+        `${res.user.firstName} ${res.user.lastName}
 ${res.user.email}
 ${res.user.phoneNumber ?? ""}
 ${res.organization?.name ?? ""}`
-    ).sv,
-  })
+      ).sv,
+    }),
+    ...(ENVIRONMENT.ENABLE_SEND_NOTIFICATIONS_TO_INTERNAL === "true"
+      ? [
+          EmailService.sendEmail({
+            toType: "internal",
+            to: ENVIRONMENT.INTERNAL_NOTIFICATION_TO,
+            subject: "[Innoshare] Balance unlocked",
+            message: `Balance unlocked: ${res.balance.id}`,
+          }),
+        ]
+      : []),
+  ])
+    .then(() => {
+      console.log("Emails successfully sent")
+    })
+    .catch((e) => {
+      console.error("Failed to send email", e)
+    })
 
   revalidatePath(`/sv/balance/${parsed.data.id}`)
   redirect(`/sv/balance/${parsed.data.id}`)
