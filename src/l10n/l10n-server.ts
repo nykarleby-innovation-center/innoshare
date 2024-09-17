@@ -1,5 +1,5 @@
 import "server-only"
-import { L10nTranslationStrings } from "@/types/l10n"
+import { L10nText, L10nTranslationStrings } from "@/types/l10n"
 
 export const L10N_SERVER = {
   heroHeader: {
@@ -146,4 +146,35 @@ export const L10N_SERVER = {
     sv: "Ni behöver skapa en organisation innan ni kan skapa en kompetensbalans.",
     fi: "Sinun täytyy luoda organisaatio ennen kuin voit luoda kompetenssitasapaino.",
   },
+  yourCompetenceBalanceContactDetailsWereUnlocked: {
+    en: "Your competence balance contact details were unlocked",
+    sv: "Dina kompetensbalans kontaktuppgifter låstes upp",
+    fi: "Kompetenssitasosi yhteystiedot on avattu",
+  },
+  unlockedEmailText: (
+    competenceNameL10n: L10nText,
+    contactDetails: string
+  ) => ({
+    en: `Your contact details on your "${competenceNameL10n.en}" competence balance were unlocked.
+    
+This is who unlocked it:
+${contactDetails}
+
+Best regards,
+Innoshare`,
+    sv: `Dina kontaktuppgifter på din "${competenceNameL10n.sv}" kompetensbalans låstes upp.
+
+Upplåstes av:
+${contactDetails}
+
+Med vänliga hälsningar,
+Innoshare`,
+    fi: `Yhteystietosi pätevyystasolla "${competenceNameL10n.fi}" on avattu.
+
+Sen avasi:
+${contactDetails}
+    
+Ystävällisin terveisin,
+Innoshare`,
+  }),
 } satisfies L10nTranslationStrings

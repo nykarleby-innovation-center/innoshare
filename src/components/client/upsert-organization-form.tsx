@@ -5,9 +5,9 @@ import { Checkbox } from "../ui/checkbox"
 import { Input } from "../ui/input"
 import { AutoTranslatingFormTextboxes } from "../server/auto-translating-form-textboxes"
 import { L10N_COMMON } from "@/l10n/l10n-common"
-import { Loader2, PlusIcon, Sparkles, XIcon } from "lucide-react"
+import { Sparkles, XIcon } from "lucide-react"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -24,20 +24,17 @@ import { Prisma } from "@/utils/prisma"
 import Image from "next/image"
 import { cn } from "@/utils/ui"
 import { AiAnalyzer } from "./ai-analyzer"
-import { languageSchema } from "@/schemas/language"
 import { Card, CardContent, CardFooter } from "../ui/card"
 import { Badge } from "../ui/badge"
 import { useAutoTranslateFormFields } from "../../hooks/auto-translate-form-fields"
-import { translateText } from "@/actions/translate-text"
 import { createCompetences } from "@/actions/create-competences"
 import { createCompetencesSchema } from "@/schemas/competence"
 import { upsertOrganizationFormSchema } from "@/schemas/organization"
 import { createOrganization } from "@/actions/create-organization"
 import { updateOrganization } from "@/actions/update-organization"
-import { LANGUAGE_NAMES_L10N } from "@/utils/language"
 import { Language } from "@/types/language"
 import { HtmlForm } from "../server/html-form"
-import { useRouter } from "next/navigation"
+import { CompetenceCombobox } from "./competence-combobox"
 
 export function UpsertOrganizationForm({
   lang,
@@ -58,24 +55,10 @@ export function UpsertOrganizationForm({
   regions: Array<Pick<Prisma.Region, "id" | "l10nName">>
   competences: Array<Pick<Prisma.Competence, "id" | "l10nName">>
 }) {
-  const router = useRouter()
-
   const [competencesAndNew, setCompetencesAndNew] =
     useState<typeof competences>(competences)
 
   const [aiAnalyzeActive, setAiAnalyzeActive] = useState(false)
-
-  const [newCompetenceInput, setNewCompetenceInput] = useState<
-    Record<Language, string>
-  >({
-    sv: "",
-    fi: "",
-    en: "",
-  })
-  const [
-    autoTranslatingNewCompetenceInput,
-    setAutoTranslatingNewCompetenceInput,
-  ] = useState<Language[]>([])
 
   const form = useForm<z.infer<typeof upsertOrganizationFormSchema>>({
     resolver: zodResolver(upsertOrganizationFormSchema),
@@ -93,8 +76,6 @@ export function UpsertOrganizationForm({
     },
   })
 
-  const translationTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
-
   const {
     translate: translateDescription,
     setAutoTranslateLanguages: setAutoTranslateDescription,
@@ -104,59 +85,6 @@ export function UpsertOrganizationForm({
     form,
     l10nFieldName: "l10nDescription",
   })
-
-  useEffect(() => {
-    if (!newCompetenceInput[lang]) {
-      return
-    }
-
-    if (translationTimer.current) {
-      clearTimeout(translationTimer.current)
-    }
-
-    const toLanguages = languageSchema.options.filter((o) => o !== lang)
-    setAutoTranslatingNewCompetenceInput(toLanguages)
-
-    translationTimer.current = setTimeout(() => {
-      translateText({
-        text: newCompetenceInput[lang],
-        fromLanguage: lang,
-        toLanguages,
-      })
-        .then((res) => {
-          if (!res.translation) {
-            return
-          }
-
-          setNewCompetenceInput((c) => ({
-            ...c,
-            ...res.translation,
-          }))
-        })
-        .finally(() => {
-          setAutoTranslatingNewCompetenceInput([])
-        })
-    }, 2000)
-  }, [lang, newCompetenceInput[lang]])
-
-  const handleAddCompetence = async () => {
-    setNewCompetenceInput({
-      sv: "",
-      fi: "",
-      en: "",
-    })
-
-    addCompetences([
-      {
-        type: "translated",
-        name: {
-          en: newCompetenceInput.en,
-          sv: newCompetenceInput.sv,
-          fi: newCompetenceInput.fi,
-        },
-      },
-    ])
-  }
 
   const addCompetences = async (data: typeof createCompetencesSchema._type) => {
     const res = await createCompetences(data)
@@ -353,75 +281,18 @@ export function UpsertOrganizationForm({
                     )}
                   </CardContent>
                   <CardFooter>
-                    <div className="flex flex-row gap-2 mr-4">
-                      <Input
-                        className={cn(
-                          "min-w-16 w-1/3 duration-300 focus:w-full",
-                          lang === "sv" ? "w-2/3 order-1" : "order-2"
-                        )}
-                        placeholder={LANGUAGE_NAMES_L10N.sv[lang]}
-                        value={newCompetenceInput.sv}
-                        disabled={autoTranslatingNewCompetenceInput.includes(
-                          "sv"
-                        )}
-                        onChange={(e) =>
-                          setNewCompetenceInput((v) => ({
-                            ...v,
-                            sv: e.target.value,
-                          }))
+                    <CompetenceCombobox
+                      lang={lang}
+                      onPickCompetence={(competenceId, newlyCreated) => {
+                        field.onChange([...field.value, competenceId])
+                        if (newlyCreated) {
+                          setCompetencesAndNew((c) => [...c, newlyCreated])
                         }
-                      />
-                      <Input
-                        className={cn(
-                          "min-w-16 w-1/3 duration-300 focus:w-full",
-                          lang === "fi" ? "w-2/3 order-1" : "order-2"
-                        )}
-                        placeholder={LANGUAGE_NAMES_L10N.fi[lang]}
-                        value={newCompetenceInput.fi}
-                        disabled={autoTranslatingNewCompetenceInput.includes(
-                          "fi"
-                        )}
-                        onChange={(e) =>
-                          setNewCompetenceInput((v) => ({
-                            ...v,
-                            fi: e.target.value,
-                          }))
-                        }
-                      />
-                      <Input
-                        className={cn(
-                          "min-w-16 w-1/3 duration-300 focus:w-full",
-                          lang === "en" ? "w-2/3 order-1" : "order-2"
-                        )}
-                        placeholder={LANGUAGE_NAMES_L10N.en[lang]}
-                        value={newCompetenceInput.en}
-                        disabled={autoTranslatingNewCompetenceInput.includes(
-                          "en"
-                        )}
-                        onChange={(e) =>
-                          setNewCompetenceInput((v) => ({
-                            ...v,
-                            en: e.target.value,
-                          }))
-                        }
-                      />
-                    </div>
-                    <Button
-                      size="icon"
-                      type="button"
-                      disabled={
-                        Object.values(newCompetenceInput).some(
-                          (c) => c === ""
-                        ) || autoTranslatingNewCompetenceInput.length > 0
-                      }
-                      onClick={handleAddCompetence}
-                    >
-                      {autoTranslatingNewCompetenceInput.length > 0 ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                      ) : (
-                        <PlusIcon className="w-4 h-4" />
+                      }}
+                      competences={competencesAndNew.filter(
+                        (c) => !field.value.includes(c.id)
                       )}
-                    </Button>
+                    />
                   </CardFooter>
                 </Card>
                 <FormMessage />

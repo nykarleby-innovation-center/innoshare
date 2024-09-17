@@ -410,4 +410,9 @@ export const L10N_COMMON = {
     sv: "Skapa",
     fi: "Luo",
   },
+  searchOrCreateByTyping: {
+    en: "Search or create by typing...",
+    sv: "Sök eller skapa genom att skriva...",
+    fi: "Etsi tai luo kirjoittamalla...",
+  },
 } satisfies L10nTranslationStrings

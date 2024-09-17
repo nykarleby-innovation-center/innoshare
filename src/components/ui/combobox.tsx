@@ -20,6 +20,8 @@ import { Drawer, DrawerContent, DrawerTrigger } from "./drawer"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { CheckIcon, PlusIcon } from "lucide-react"
 import { cn } from "@/utils/ui"
+import { L10N_COMMON } from "@/l10n/l10n-common"
+import { Language } from "@/types/language"
 
 interface Option {
   value: string
@@ -31,7 +33,8 @@ export function ComboBox({
   options,
   selectedOptionValue,
   onPickOptionValue,
-  disabled
+  disabled,
+  lang,
 }: {
   allowArbitraryValue?: {
     onPickArbitraryValue: (value: string) => void
@@ -40,6 +43,7 @@ export function ComboBox({
   selectedOptionValue: string | null
   onPickOptionValue: (option: string | null) => void
   disabled?: boolean
+  lang: Language
 }) {
   const [open, setOpen] = useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
@@ -51,8 +55,19 @@ export function ComboBox({
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline" className="w-full justify-start" disabled={disabled}>
-            {selectedOption ? <>{selectedOption.label}</> : <>+ Set option</>}
+          <Button
+            variant="outline"
+            className="w-full justify-start"
+            disabled={disabled}
+          >
+            <PlusIcon className="mr-2 w-4 h-4" />
+            {selectedOption ? (
+              <>{selectedOption.label}</>
+            ) : allowArbitraryValue ? (
+              L10N_COMMON.searchOrCreateByTyping[lang]
+            ) : (
+              L10N_COMMON.searchEllipsis[lang]
+            )}
           </Button>
         </PopoverTrigger>
         <PopoverContent className=" p-0" align="start">
@@ -62,6 +77,7 @@ export function ComboBox({
             selectedOptionValue={selectedOptionValue}
             setOpen={setOpen}
             onPickOptionValue={onPickOptionValue}
+            lang={lang}
           />
         </PopoverContent>
       </Popover>
@@ -71,8 +87,19 @@ export function ComboBox({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="w-full justify-start" disabled={disabled}>
-          {selectedOption ? <>{selectedOption.label}</> : <>+ Set option</>}
+        <Button
+          variant="outline"
+          className="w-full justify-start"
+          disabled={disabled}
+        >
+          <PlusIcon className="mr-2 w-4 h-4" />
+          {selectedOption ? (
+            <>{selectedOption.label}</>
+          ) : allowArbitraryValue ? (
+            L10N_COMMON.searchOrCreateByTyping[lang]
+          ) : (
+            L10N_COMMON.searchEllipsis[lang]
+          )}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
@@ -83,6 +110,7 @@ export function ComboBox({
             selectedOptionValue={selectedOptionValue}
             setOpen={setOpen}
             onPickOptionValue={onPickOptionValue}
+            lang={lang}
           />
         </div>
       </DrawerContent>
@@ -96,6 +124,7 @@ function OptionList({
   selectedOptionValue,
   setOpen,
   onPickOptionValue,
+  lang,
 }: {
   allowArbitraryValue?: {
     onPickArbitraryValue: (value: string) => void
@@ -104,6 +133,7 @@ function OptionList({
   setOpen: (open: boolean) => void
   selectedOptionValue: string | null
   onPickOptionValue: (option: string | null) => void
+  lang: Language
 }) {
   const [searchValue, setSearchValue] = useState("")
 
@@ -116,20 +146,7 @@ function OptionList({
         onValueChange={(v) => setSearchValue(v)}
       />
       <CommandList>
-        <CommandEmpty>
-          {allowArbitraryValue ? (
-            <Button
-              onClick={() => {
-                allowArbitraryValue.onPickArbitraryValue(searchValue)
-                setOpen(false)
-              }}
-            >
-              <PlusIcon className="mr-4" /> Skapa {'"'}{searchValue}{'"'}
-            </Button>
-          ) : (
-            "No results found."
-          )}
-        </CommandEmpty>
+        <CommandEmpty>"No results found."</CommandEmpty>
         <CommandGroup>
           {selectedOptionValue && (
             <CommandItem key={selectedOptionValue}>
@@ -166,6 +183,22 @@ function OptionList({
             )
           )}
         </CommandGroup>
+        {allowArbitraryValue && searchValue.length > 2 ? (
+          <div className="w-full p-2">
+            <Button
+              onClick={() => {
+                allowArbitraryValue.onPickArbitraryValue(searchValue)
+                setOpen(false)
+              }}
+              variant="ghost"
+              className="justify-start w-full"
+            >
+              <PlusIcon className="mr-4" /> {L10N_COMMON.create[lang]} {'"'}
+              {searchValue}
+              {'"'}
+            </Button>
+          </div>
+        ) : null}
       </CommandList>
     </Command>
   )

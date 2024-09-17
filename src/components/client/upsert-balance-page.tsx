@@ -32,7 +32,6 @@ import { HtmlForm } from "../server/html-form"
 import { PageHeader } from "../server/page-header"
 import { cn } from "@/utils/ui"
 import { Prisma } from "@/utils/prisma"
-import { ComboBox } from "../ui/combobox"
 import {
   Select,
   SelectContent,
@@ -51,6 +50,7 @@ import { updateBalance } from "@/actions/update-balance"
 import { createBalance } from "@/actions/create-balance"
 import { Language } from "@/types/language"
 import { L10N_COMMON } from "@/l10n/l10n-common"
+import { CompetenceCombobox } from "./competence-combobox"
 
 export function UpsertBalancePage({
   lang,
@@ -341,39 +341,16 @@ export function UpsertBalancePage({
                     </FormLabel>
                     <FormControl>
                       <div className="flex flex-col gap-4 lg:flex-row">
-                        <ComboBox
-                          allowArbitraryValue={{
-                            onPickArbitraryValue: async (value) => {
-                              const res = await createCompetences([
-                                {
-                                  type: "untranslated",
-                                  name: value,
-                                  originalLanguage: lang,
-                                },
-                              ])
-
-                              if (!res.createdCompetences) {
-                                return
-                              }
-
-                              setCompetencesAndNew((c) => [
-                                ...c,
-                                res.createdCompetences[0],
-                              ])
-                              form.setValue(
-                                "competenceId",
-                                res.createdCompetences[0].id
-                              )
-                            },
+                        <CompetenceCombobox
+                          lang={lang}
+                          selectedCompetence={field.value}
+                          onPickCompetence={(competenceId, newlyCreated) => {
+                            if (newlyCreated) {
+                              setCompetencesAndNew((c) => [...c, newlyCreated])
+                            }
+                            form.setValue("competenceId", competenceId)
                           }}
-                          options={competencesAndNew.map((o) => ({
-                            label: (o.l10nName as L10nText)[lang],
-                            value: o.id,
-                          }))}
-                          selectedOptionValue={field.value ?? null}
-                          onPickOptionValue={(v) =>
-                            v && form.setValue("competenceId", v)
-                          }
+                          competences={competencesAndNew}
                           disabled={editingBalance !== null}
                         />
                         {includeDescription ? (
