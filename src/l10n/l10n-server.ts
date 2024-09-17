@@ -155,21 +155,27 @@ export const L10N_SERVER = {
     competenceNameL10n: L10nText,
     contactDetails: string
   ) => ({
-    en: `Your contact details on your "${competenceNameL10n.en}" competence balance were unlocked.
+    en: `Hi!
+    
+The contact details on your "${competenceNameL10n.en}" competence balance were unlocked.
     
 This is who unlocked it:
 ${contactDetails}
 
 Best regards,
 Innoshare`,
-    sv: `Dina kontaktuppgifter på din "${competenceNameL10n.sv}" kompetensbalans låstes upp.
+    sv: `Hej!
+    
+Kontaktuppgifterna på din "${competenceNameL10n.sv}" kompetensbalans låstes upp.
 
 Upplåstes av:
 ${contactDetails}
 
 Med vänliga hälsningar,
 Innoshare`,
-    fi: `Yhteystietosi pätevyystasolla "${competenceNameL10n.fi}" on avattu.
+    fi: `Moi!
+    
+Yhteystietosi pätevyystasolla "${competenceNameL10n.fi}" on avattu.
 
 Sen avasi:
 ${contactDetails}

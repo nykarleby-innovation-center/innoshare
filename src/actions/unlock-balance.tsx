@@ -64,16 +64,17 @@ export async function unlockBalance(data: z.infer<typeof unlockBalanceSchema>) {
     },
   })
 
+  // Todo, language support in database.
   await EmailService.sendEmail({
     to: res.balance.createdByUser.email,
-    subject: L10N_SERVER.yourCompetenceBalanceContactDetailsWereUnlocked.en,
+    subject: L10N_SERVER.yourCompetenceBalanceContactDetailsWereUnlocked.sv,
     message: L10N_SERVER.unlockedEmailText(
       res.balance.competence.l10nName as L10nText,
       `${res.user.firstName} ${res.user.lastName}
 ${res.user.email}
 ${res.user.phoneNumber ?? ""}
 ${res.organization?.name ?? ""}`
-    ).en,
+    ).sv,
   })
 
   revalidatePath(`/sv/balance/${parsed.data.id}`)
