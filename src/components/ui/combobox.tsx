@@ -146,7 +146,7 @@ function OptionList({
         onValueChange={(v) => setSearchValue(v)}
       />
       <CommandList>
-        <CommandEmpty>"No results found."</CommandEmpty>
+        <CommandEmpty>{L10N_COMMON.noResultsFound[lang]}</CommandEmpty>
         <CommandGroup>
           {selectedOptionValue && (
             <CommandItem key={selectedOptionValue}>

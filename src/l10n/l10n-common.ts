@@ -415,4 +415,9 @@ export const L10N_COMMON = {
     sv: "Sök eller skapa genom att skriva...",
     fi: "Etsi tai luo kirjoittamalla...",
   },
+  noResultsFound: {
+    en: "No results found",
+    sv: "Inga resultat hittades",
+    fi: "Ei tuloksia",
+  },
 } satisfies L10nTranslationStrings
