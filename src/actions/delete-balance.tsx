@@ -25,6 +25,16 @@ export async function deleteBalance(
   }
 
   try {
+    await prismaClient.balanceUnlock.deleteMany({
+      where: {
+        balance: {
+          id: parsed.data.id,
+          organization: {
+            id: { in: session.organizations.map((org) => org.id) },
+          },
+        },
+      },
+    })
     await prismaClient.balance.delete({
       where: {
         id: parsed.data.id,
