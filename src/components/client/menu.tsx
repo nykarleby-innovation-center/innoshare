@@ -98,7 +98,7 @@ export function Menu({
           >
             <NavigationMenuList>
               <NavigationMenuItem>
-                {unverifiedUserFirstName ? (
+                {unverifiedUserFirstName !== null ? (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost">
