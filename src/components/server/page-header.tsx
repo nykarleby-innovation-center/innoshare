@@ -7,7 +7,7 @@ export function PageHeader(props: {
   return (
     <h1
       className={cn(
-        "text-3xl font-black uppercase tracking-tighter mb-16 lg:text-4xl ",
+        "text-2xl font-black uppercase tracking-tighter hyphens-auto break-words mb-16 sm:text-3xl lg:text-4xl ",
         props.className
       )}
     >

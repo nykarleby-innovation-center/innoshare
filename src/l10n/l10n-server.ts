@@ -32,6 +32,11 @@ export const L10N_SERVER = {
     sv: "Bläddra utbud",
     fi: "Selaa tarjontaa",
   },
+  watchTheVideo: {
+    en: "Watch the video",
+    sv: "Se videon",
+    fi: "Katso video",
+  },
   itsLive: {
     en: "It's live!",
     sv: "Den är live!",

@@ -14,6 +14,9 @@ import { decodeUnverifiedSessionCookie } from "@/utils/session"
 import { L10N_COMMON } from "@/l10n/l10n-common"
 import { PageWrapper } from "@/components/server/page-wrapper"
 import { PageHeader } from "@/components/server/page-header"
+import { PlusIcon } from "lucide-react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 interface Params {
   lang: Language
@@ -81,7 +84,18 @@ export default async function BalanceListingPage({
           </BreadcrumbList>
         </Breadcrumb>
       }
-      header={<PageHeader>{L10N_COMMON.competenceBalance[lang]}</PageHeader>}
+      header={
+        <div className="flex flex-col gap-4 mb-8 sm:mb-16 sm:items-center sm:flex-row ">
+          <PageHeader className="mb-0">
+            {L10N_COMMON.competenceBalance[lang]}
+          </PageHeader>
+          <Link href={`/${lang}/new-balance`}>
+            <Button variant="ghost">
+              <PlusIcon className="mr-2 w-4 h-4" /> {L10N_COMMON.create[lang]}
+            </Button>
+          </Link>
+        </div>
+      }
     >
       <BalanceListing
         lang={lang}

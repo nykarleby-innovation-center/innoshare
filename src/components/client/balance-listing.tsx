@@ -71,11 +71,6 @@ export const BalanceListing = ({
 
   return (
     <>
-      <Link href={`/${lang}/new-balance`}>
-        <Button className="absolute top-0 right-0">
-          <PlusIcon className="mr-2 w-4 h-4" /> {L10N_COMMON.create[lang]}
-        </Button>
-      </Link>
       <div className="flex flex-col items-start w-full">
         <div className="flex flex-col items-stretch gap-4 w-full mb-8 lg:flex-row">
           <ToggleGroup
