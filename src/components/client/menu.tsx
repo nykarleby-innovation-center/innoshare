@@ -6,16 +6,15 @@ import { Button } from "../ui/button"
 import { L10N_COMMON } from "@/l10n/l10n-common"
 import { Language } from "@/types/language"
 import {
-  ArrowRightIcon,
   BuildingIcon,
   Languages,
   LogIn,
   LogOutIcon,
-  MenuIcon,
   Plus,
   PlusIcon,
   User,
   UserIcon,
+  XIcon,
 } from "lucide-react"
 import { ModeToggle } from "./mode-toggle"
 
@@ -201,9 +200,9 @@ export function Menu({
             className="flex md:hidden"
           >
             {mobileMenuOpen ? (
-              <ArrowRightIcon className="h-5 w-5" />
+              <XIcon className="h-5 w-5" />
             ) : (
-              <MenuIcon className="h-5 w-5" />
+              <UserIcon className="h-5 w-5" />
             )}
           </Button>
         </div>
