@@ -35,6 +35,7 @@ import { updateOrganization } from "@/actions/update-organization"
 import { Language } from "@/types/language"
 import { HtmlForm } from "../server/html-form"
 import { CompetenceCombobox } from "./competence-combobox"
+import { useToast } from "@/hooks/use-toast"
 
 export function UpsertOrganizationForm({
   lang,
@@ -55,6 +56,8 @@ export function UpsertOrganizationForm({
   regions: Array<Pick<Prisma.Region, "id" | "l10nName">>
   competences: Array<Pick<Prisma.Competence, "id" | "l10nName">>
 }) {
+  const { toast } = useToast()
+
   const [competencesAndNew, setCompetencesAndNew] =
     useState<typeof competences>(competences)
 
@@ -104,8 +107,14 @@ export function UpsertOrganizationForm({
   > = async (v) => {
     if (editingOrganization) {
       await updateOrganization({ id: editingOrganization.id, ...v })
+      toast({
+        title: L10N_COMMON.organizationUpdated[lang],
+      })
     } else {
       await createOrganization(v)
+      toast({
+        title: L10N_COMMON.organizationCreated[lang],
+      })
     }
   }
 

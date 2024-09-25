@@ -40,7 +40,6 @@ import {
   SelectValue,
 } from "../ui/select"
 import { DateRangePicker } from "../ui/date-range-picker"
-import { createCompetences } from "@/actions/create-competences"
 import { upsertBalanceFormSchema } from "@/schemas/balance"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { useAutoTranslateFormFields } from "@/hooks/auto-translate-form-fields"
@@ -51,6 +50,7 @@ import { createBalance } from "@/actions/create-balance"
 import { Language } from "@/types/language"
 import { L10N_COMMON } from "@/l10n/l10n-common"
 import { CompetenceCombobox } from "./competence-combobox"
+import { useToast } from "@/hooks/use-toast"
 
 export function UpsertBalancePage({
   lang,
@@ -77,6 +77,8 @@ export function UpsertBalancePage({
     | "organizationId"
   > | null
 }) {
+  const { toast } = useToast()
+
   const [competencesAndNew, setCompetencesAndNew] =
     useState<typeof competences>(competences)
 
@@ -138,6 +140,9 @@ export function UpsertBalancePage({
   > = async (v) => {
     if (editingBalance) {
       await updateBalance({ id: editingBalance.id, ...v })
+      toast({
+        title: L10N_COMMON.competenceBalanceUpdated[lang],
+      })
     } else {
       await createBalance(v)
     }

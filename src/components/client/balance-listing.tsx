@@ -3,11 +3,11 @@
 import {
   ArrowRightIcon,
   Calendar,
+  CheckIcon,
   ChevronsLeftRight,
   ChevronsRightLeft,
   MapPin,
   Plus,
-  PlusIcon,
   SmileIcon,
   Star,
   UserRound,
@@ -81,14 +81,22 @@ export const BalanceListing = ({
               pressed={showNeeds}
               onPressedChange={() => setShowNeeds(!showNeeds)}
             >
-              <ChevronsRightLeft className="mr-2 h-4 w-4 text-orange-700 dark:text-orange-400" />
+              {showNeeds ? (
+                <CheckIcon className="mr-2 h-4 w-4 text-orange-700 dark:text-orange-400 mb-0.5" />
+              ) : (
+                <ChevronsRightLeft className="mr-2 h-4 w-4 mb-0.5" />
+              )}
               {L10N_COMMON.showNeeds[lang]}
             </Toggle>
             <Toggle
               pressed={showSupply}
               onPressedChange={() => setShowSupply(!showSupply)}
             >
-              <ChevronsLeftRight className="mr-2 h-4 w-4 text-teal-700 dark:text-teal-400" />
+              {showSupply ? (
+                <CheckIcon className="mr-2 h-4 w-4 text-teal-700 dark:text-teal-400 mb-0.5" />
+              ) : (
+                <ChevronsLeftRight className="mr-2 h-4 w-4 mb-0.5" />
+              )}
               {L10N_COMMON.showSupply[lang]}
             </Toggle>
             {balances.some((b) => b.own) && (

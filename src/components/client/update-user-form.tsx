@@ -20,8 +20,11 @@ import { updateUser } from "@/actions/update-user"
 import { User } from "@prisma/client"
 import { HtmlForm } from "../server/html-form"
 import { L10N_COMMON } from "@/l10n/l10n-common"
+import { useToast } from "@/hooks/use-toast"
 
 export function UpdateUserForm({ lang, user }: { lang: Language; user: User }) {
+  const { toast } = useToast()
+
   const form = useForm<z.infer<typeof updateUserFormSchema>>({
     resolver: zodResolver(updateUserFormSchema),
 
@@ -37,6 +40,9 @@ export function UpdateUserForm({ lang, user }: { lang: Language; user: User }) {
     z.infer<typeof updateUserFormSchema>
   > = async (v) => {
     await updateUser(v)
+    toast({
+      title: L10N_COMMON.userUpdated[lang],
+    })
   }
 
   return (

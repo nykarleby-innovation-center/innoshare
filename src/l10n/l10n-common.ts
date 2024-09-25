@@ -420,4 +420,24 @@ export const L10N_COMMON = {
     sv: "Inga resultat hittades",
     fi: "Ei tuloksia",
   },
+  userUpdated: {
+    en: "User updated",
+    sv: "Användare uppdaterad",
+    fi: "Käyttäjä päivitetty",
+  },
+  organizationCreated: {
+    en: "Organization created",
+    sv: "Organisation skapad",
+    fi: "Organisaatio luotu",
+  },
+  organizationUpdated: {
+    en: "Organization updated",
+    sv: "Organisation uppdaterad",
+    fi: "Organisaatio päivitetty",
+  },
+  competenceBalanceUpdated: {
+    en: "Competence balance updated",
+    sv: "Kompetensbalans uppdaterad",
+    fi: "Kompetenssitasapaino päivitetty",
+  },
 } satisfies L10nTranslationStrings

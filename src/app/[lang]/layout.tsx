@@ -12,6 +12,7 @@ import "../globals.css"
 import type { Metadata } from "next"
 import { decodeUnverifiedSessionCookie } from "@/utils/session"
 import { FooterLanguageLinks } from "@/components/client/footer-language-links"
+import { Toaster } from "@/components/ui/toaster"
 
 const catamaran = Catamaran({ subsets: ["latin"], variable: "--font-sans" })
 const vt323 = VT323({
@@ -58,6 +59,7 @@ export default async function RootLayout({
             unverifiedUserFirstName={unverifiedSession?.firstName ?? null}
             unverifedOrganizations={unverifiedSession?.organizations ?? []}
           />
+          <Toaster />
           {children}
           <footer className="lg:ml-auto lg:mr-auto xl:max-w-6xl">
             <div className="bg-secondary/40 flex flex-col gap-16 lg:flex-row xl:-ml-[2rem] xl:w-[calc(100%+4rem)] xl:px-[2rem] xl:pt-[2rem] xl:pb-[4rem] xl:rounded-t-2xl">
