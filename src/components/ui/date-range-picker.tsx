@@ -61,7 +61,9 @@ export function DateRangePicker({
             onSelect={(v) => v && onPickDateRange(v)}
             numberOfMonths={2}
             showWeekNumber
-            fromDate={new Date()}
+            fromDate={
+              new Date(+new Date() - 1000 * 60 * 60 * 24 * 365)
+            }
           />
         </PopoverContent>
       </Popover>
