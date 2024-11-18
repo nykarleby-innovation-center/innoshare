@@ -116,10 +116,15 @@ export const L10N_COMMON = {
     sv: "Lägg till extra beskrivning",
     fi: "Lisää lisäkuvaus",
   },
-  onlyShowOwn: {
-    en: "Only show own",
-    sv: "Visa endast egna",
-    fi: "Näytä vain omat",
+  showMine: {
+    en: "Show mine",
+    sv: "Visa egna",
+    fi: "Näytä omat",
+  },
+  showAll: {
+    en: "Show all",
+    sv: "Visa alla",
+    fi: "Näytä kaikki",
   },
   searchEllipsis: {
     en: "Search...",
@@ -439,5 +444,85 @@ export const L10N_COMMON = {
     en: "Competence balance updated",
     sv: "Kompetensbalans uppdaterad",
     fi: "Kompetenssitasapaino päivitetty",
+  },
+  completed: {
+    en: "Completed",
+    sv: "Slutförd",
+    fi: "Valmis",
+  },
+  complete: {
+    en: "Complete",
+    sv: "Slutför",
+    fi: "Valmistele",
+  },
+  editResult: {
+    en: "Edit result",
+    sv: "Redigera resultat",
+    fi: "Muokkaa tulosta",
+  },
+  showCompleted: {
+    en: "Show completed",
+    sv: "Visa slutförda",
+    fi: "Näytä valmiit",
+  },
+  completedNeed: {
+    en: "Completed need",
+    sv: "Slutfört behov",
+    fi: "Valmis tarve",
+  },
+  completedSupply: {
+    en: "Completed supply",
+    sv: "Slutfört utbud",
+    fi: "Valmis tarjonta",
+  },
+  hereYouCanCompleteText: {
+    en: "Here you can complete the competence sharing and tell how it went.",
+    sv: "Här kan ni färdigställa kompetensdelningen och berätta hur det gick.",
+    fi: "Täällä voit valmistella kompetenssien jakamisen ja kertoa, miten se meni.",
+  },
+  partnerCompanyAndCommentCanBePublic: {
+    en: "Partner company and comment can be publicly visible",
+    sv: "Partnerföretaget och kommentar får vara offentligt synliga",
+    fi: "Kumppaniyritys ja kommentti voivat olla julkisia",
+  },
+  theCompetenceSharingWasSuccessful: {
+    en: "The competence sharing was successful",
+    sv: "Kompetensdelningen var lyckad",
+    fi: "Kompetenssien jakaminen onnistui",
+  },
+  optional: {
+    en: "Optional",
+    sv: "Valfritt",
+    fi: "Valinnainen",
+  },
+  partnerCompany: {
+    en: "Partner company",
+    sv: "Partnerföretag",
+    fi: "Kumppaniyritys",
+  },
+  comment: {
+    en: "Comment",
+    sv: "Kommentar",
+    fi: "Kommentti",
+  },
+  deleteInstead: {
+    en: "Delete instead",
+    sv: "Ta bort istället",
+    fi: "Poista sen sijaan",
+  },
+  competenceWasSharedBetweenText: {
+    en: ["The competence was shared between", "and"],
+    sv: ["Kompetensen delades mellan", "och"],
+    fi: ["Kompetenssi jaettiin", "ja"],
+  },
+  successfullyShared: {
+    en: "Successfully shared",
+    sv: "Framgångsrik kompetensdelning",
+    fi: "Onnistunut kompetenssien jakaminen",
+  },
+  competenceSharingCompleted: {
+    en: "Competence sharing completed",
+    sv: "Kompetensdelning avslutad",
+    fi: "Kompetenssien jakaminen valmistui",
   },
 } satisfies L10nTranslationStrings

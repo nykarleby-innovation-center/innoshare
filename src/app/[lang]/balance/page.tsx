@@ -10,7 +10,10 @@ import {
 } from "@/components/ui/breadcrumb"
 import { BalanceListing } from "@/components/client/balance-listing"
 import { prismaClient } from "@/utils/prisma"
-import { decodeUnverifiedSessionCookie } from "@/utils/session"
+import {
+  checkSessionCookie,
+  decodeUnverifiedSessionCookie,
+} from "@/utils/session"
 import { L10N_COMMON } from "@/l10n/l10n-common"
 import { PageWrapper } from "@/components/server/page-wrapper"
 import { PageHeader } from "@/components/server/page-header"
@@ -45,8 +48,30 @@ export default async function BalanceListingPage({
   searchParams: SearchParams
 }) {
   const unverifiedSession = decodeUnverifiedSessionCookie()
+  const verifiedSession = unverifiedSession && (await checkSessionCookie())
 
   const balances = await prismaClient.balance.findMany({
+    where: verifiedSession
+      ? {
+          OR: [
+            {
+              completedBalanceId: null,
+            },
+            {
+              organizationId: {
+                in: verifiedSession.organizations.map((o) => o.id) ?? [],
+              },
+            },
+          ],
+        }
+      : {
+          OR: [
+            {
+              completedBalance: { public: true },
+            },
+            { completedBalanceId: null },
+          ],
+        },
     select: {
       id: true,
       createdAt: true,
@@ -54,6 +79,7 @@ export default async function BalanceListingPage({
       organizationId: true,
       startDate: true,
       endDate: true,
+      completedBalanceId: true,
       competence: {
         select: {
           id: true,
@@ -106,12 +132,7 @@ export default async function BalanceListingPage({
               (o) => b.organizationId === o.id
             ) ?? false,
         }))}
-        defaultShowNeeds={
-          searchParams.viewOnly ? searchParams.viewOnly === "need" : null
-        }
-        defaultShowSupply={
-          searchParams.viewOnly ? searchParams.viewOnly === "supply" : null
-        }
+        defaultShow={searchParams.viewOnly}
       />
     </PageWrapper>
   )

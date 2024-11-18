@@ -10,9 +10,9 @@ import {
 import {
   ArrowRightIcon,
   Calendar,
+  CheckIcon,
   MapPin,
   PenIcon,
-  TrashIcon,
   User,
 } from "lucide-react"
 import Image from "next/image"
@@ -24,12 +24,14 @@ import { decodeUnverifiedSessionCookie } from "@/utils/session"
 import Link from "next/link"
 import { Skeleton } from "@/components/ui/skeleton"
 import { L10nText } from "@/types/l10n"
-import { ConfirmDeleteBalanceDialog } from "@/components/client/confirm-delete-balance-dialog"
 import { L10N_COMMON } from "@/l10n/l10n-common"
 import { cn } from "@/utils/ui"
 import { Language } from "@/types/language"
 import { PageWrapper } from "@/components/server/page-wrapper"
 import { UnlockBalanceSection } from "@/components/server/unlock-balance-section"
+import { CompleteBalanceDialog } from "@/components/client/upsert-complete-balance-dialog"
+import { CompletedBalanceSection } from "@/components/server/completed-balance-section"
+import { Badge } from "@/components/ui/badge"
 
 interface Params {
   lang: Language
@@ -84,6 +86,7 @@ export default async function BalancePage({
           l10nName: true,
         },
       },
+      completedBalance: true,
     },
   })
 
@@ -159,6 +162,20 @@ export default async function BalancePage({
           )}
         </div>
         <div className="flex flex-col gap-6 mb-8 mt-4 lg:mt-0 lg:h-12 lg:flex-row">
+          {balance.completedBalance && (
+            <>
+              <Badge
+                variant="secondary"
+                className={cn(
+                  "flex flex-row gap-2 items-center text-sm px-4 py-2 lg:self-center",
+                  balance.amount < 0 ? "text-orange-500" : "text-teal-500"
+                )}
+              >
+                <CheckIcon className="w-5 h-5" />
+                <div>{L10N_COMMON.completed[lang]}</div>
+              </Badge>
+            </>
+          )}
           <div className="flex flex-row gap-2 items-center">
             <MapPin className="w-5 h-5" />
             <div>{(balance.region.l10nName as L10nText)[lang]}</div>
@@ -191,15 +208,18 @@ export default async function BalancePage({
                 </Button>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="place-self-center"
-                    >
-                      <TrashIcon className="w-4 h-4" />
+                    <Button variant="outline" className="place-self-center">
+                      <CheckIcon className="mr-4 w-4 h-4" />
+                      {balance.completedBalance
+                        ? L10N_COMMON.editResult[lang]
+                        : L10N_COMMON.complete[lang]}
                     </Button>
                   </DialogTrigger>
-                  <ConfirmDeleteBalanceDialog lang={lang} id={balance.id} />
+                  <CompleteBalanceDialog
+                    lang={lang}
+                    id={balance.id}
+                    updatingCompletedBalance={balance.completedBalance}
+                  />
                 </Dialog>
               </div>
             </>
@@ -210,6 +230,13 @@ export default async function BalancePage({
             {(balance.l10nDescription as L10nText)[lang]}
           </p>
         )}
+        {balance.completedBalance ? (
+          <CompletedBalanceSection
+            balance={balance}
+            lang={lang}
+            guest={!unverifiedSession}
+          />
+        ) : null}
         <UnlockBalanceSection
           balance={balance}
           lang={lang}

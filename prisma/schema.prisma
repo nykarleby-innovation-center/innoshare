@@ -72,6 +72,21 @@ model Balance {
   endDate         DateTime
   l10nDescription Json?
   balanceUnlocks  BalanceUnlock[]
+
+  completedBalance   CompletedBalance? @relation(fields: [completedBalanceId], references: [id])
+  completedBalanceId String?           @unique
+}
+
+model CompletedBalance {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  balance Balance?
+
+  public         Boolean
+  success        Boolean
+  partnerCompany String
+  comment        String
 }
 
 model BalanceUnlock {

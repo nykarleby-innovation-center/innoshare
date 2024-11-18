@@ -31,7 +31,9 @@ export async function UnlockBalanceSection({
   lang,
   guest,
 }: {
-  balance: Pick<Prisma.Balance, "id" | "amount" | "organizationId">
+  balance: Pick<Prisma.Balance, "id" | "amount" | "organizationId"> & {
+    completedBalance: Prisma.CompletedBalance | null
+  }
   lang: Language
   guest: boolean
 }) {
@@ -66,6 +68,10 @@ export async function UnlockBalanceSection({
     })
 
     if (unlocks.length === 0) {
+      if (balance.completedBalance) {
+        return null
+      }
+
       return (
         <Card className="max-w-xl">
           <CardHeader>
@@ -128,6 +134,10 @@ export async function UnlockBalanceSection({
         </Card>
       )
     }
+  }
+
+  if (balance.completedBalance) {
+    return null
   }
 
   const unlocked =
