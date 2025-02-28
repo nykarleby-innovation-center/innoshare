@@ -49,7 +49,7 @@ export const POST = globalRateLimit(async (req) => {
     }
   }
 
-  let body = `
+  let partialBody = `
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,7 +62,7 @@ export const POST = globalRateLimit(async (req) => {
     <p>Här är de senaste uppdateringarna från plattformen!</p>`
 
   if (updatedLines.length > 0) {
-    body += `
+    partialBody += `
 
     <h2>Nya kompetensbalanser:</h2>
     <ul>
@@ -74,7 +74,7 @@ export const POST = globalRateLimit(async (req) => {
   }
 
   if (completedLines.length > 0) {
-    body += `
+    partialBody += `
 
     <h2>Färdigställda kompetensbalanser:</h2>
     <ul>
@@ -85,21 +85,27 @@ export const POST = globalRateLimit(async (req) => {
 `
   }
 
-  body += `
-    <p style="opacity: 50%; font-size: 75%; margin-top: 30px;">Detta är ett automatiskt mailutskick. Du kan justera mailinställningar genom att <a href="${ENVIRONMENT.HOST}">logga in på plattformen</a>. Du kan också avprenumerera från InnoShare Weekly direkt genom att <a href="${ENVIRONMENT.HOST}/sv/interests/unsubscribe">klicka här</a>.</p>
-  </body>
-</html>
-`
-
   const interests = await prismaClient.interest.findMany({
     where: { receiveDigest: true },
   })
 
-  await EmailService.sendEmails({
-    to: interests.map((interest) => interest.email),
-    subject: "Innoshare Weekly",
-    message: body,
-    messageType: "html",
+  await EmailService.sendMultipleEmails({
+    emails: interests.map((i) => {
+      const body =
+        partialBody +
+        `
+    <p style="opacity: 50%; font-size: 75%; margin-top: 30px;">Detta är ett automatiskt mailutskick. Du kan justera mailinställningar genom att <a href="${ENVIRONMENT.HOST}">logga in på plattformen</a>. Du kan också avprenumerera från InnoShare Weekly direkt genom att <a href="${ENVIRONMENT.HOST}/${i.language}/unsubscribe/${i.id}">klicka här</a>.</p>
+  </body>
+</html>
+`
+
+      return {
+        to: i.email,
+        subject: "Innoshare Weekly",
+        message: body,
+        messageType: "html",
+      }
+    }),
   })
 
   return NextResponse.json({ success: true })

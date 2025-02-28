@@ -79,7 +79,7 @@ export const AzureEmailService: EmailService = {
       }
     }
   },
-  async sendEmails({ to, subject, message, messageType = "text" }) {
+  async sendMultipleEmails({ emails }) {
     const connectionString = ENVIRONMENT.AZURE_EMAIL_CONNECTION_STRING
     if (!connectionString) {
       throw new Error("Azure email connection string not set")
@@ -87,42 +87,53 @@ export const AzureEmailService: EmailService = {
 
     const emailClient = new EmailClient(connectionString)
 
-    const poller = await emailClient.beginSend({
-      senderAddress: ENVIRONMENT.EMAIL_FROM,
-      recipients: {
-        to: to.map((address) => ({ address })),
-      },
-      replyTo: [{ address: ENVIRONMENT.NOTIFICATIONS_REPLY_TO }],
-      content: {
-        subject,
-        plainText: message,
-        html: messageType === "html" ? message : undefined,
-      },
-    })
-
-    if (!poller.getOperationState().isStarted) {
-      throw new Error("Poller was not started.")
+    const pollers = []
+    for (const { to, subject, message, messageType = "text" } of emails) {
+      pollers.push(
+        await emailClient.beginSend({
+          senderAddress: ENVIRONMENT.EMAIL_FROM,
+          recipients: {
+            to: [{ address: to }],
+          },
+          replyTo: [{ address: ENVIRONMENT.NOTIFICATIONS_REPLY_TO }],
+          content: {
+            subject,
+            plainText: message,
+            html: messageType === "html" ? message : undefined,
+          },
+        })
+      )
     }
 
-    let timeElapsed = 0
-    while (!poller.isDone()) {
-      poller.poll()
+    await Promise.allSettled(
+      pollers.map(async (poller) => {
+        if (!poller.getOperationState().isStarted) {
+          throw new Error("Poller was not started.")
+        }
 
-      await new Promise((resolve) => setTimeout(resolve, POLLER_WAIT_S * 1000))
-      timeElapsed += POLLER_WAIT_S
+        let timeElapsed = 0
+        while (!poller.isDone()) {
+          poller.poll()
 
-      if (timeElapsed > 10 * POLLER_WAIT_S) {
-        throw new Error("Polling timed out after 10 tries.")
-      }
-    }
+          await new Promise((resolve) =>
+            setTimeout(resolve, POLLER_WAIT_S * 1000)
+          )
+          timeElapsed += POLLER_WAIT_S
 
-    const result = poller.getResult()
+          if (timeElapsed > 10 * POLLER_WAIT_S) {
+            throw new Error("Polling timed out after 10 tries.")
+          }
+        }
 
-    if (result?.status !== KnownEmailSendStatus.Succeeded) {
-      console.error("Email send failed.")
-      if (result?.error) {
-        throw result.error
-      }
-    }
+        const result = poller.getResult()
+
+        if (result?.status !== KnownEmailSendStatus.Succeeded) {
+          console.error("Email send failed.")
+          if (result?.error) {
+            throw result.error
+          }
+        }
+      })
+    )
   },
 }

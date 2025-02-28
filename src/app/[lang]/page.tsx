@@ -15,7 +15,6 @@ import { PageHeader } from "@/components/server/page-header"
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog"
 import { UpsertInterestFormDialog } from "@/components/client/upsert-interest-form-dialog"
 import { L10N_COMMON } from "@/l10n/l10n-common"
-import { UnsubscribeToast } from "@/components/client/unsubscribe-toast"
 import { decodeUnverifiedSessionCookie } from "@/utils/session"
 
 interface Params {
@@ -43,7 +42,6 @@ export default async function Home(props: { params: Promise<Params> }) {
 
   return (
     <main className="max-w-6xl ml-auto mr-auto flex flex-col pt-32">
-      <UnsubscribeToast />
       <div className="flex flex-row items-center">
         <div className="flex flex-col-reverse gap-8 w-full p-8 lg:py-32 lg:flex-row">
           <div className="flex flex-col items-start flex-grow">

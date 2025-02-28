@@ -8,11 +8,13 @@ export interface EmailService {
     message: string
     messageType?: "html" | "text"
   }): Promise<void>
-  sendEmails(args: {
-    to: string[]
-    subject: string
-    message: string
-    messageType?: "html" | "text"
+  sendMultipleEmails(args: {
+    emails: Array<{
+      to: string
+      subject: string
+      message: string
+      messageType?: "html" | "text"
+    }>
   }): Promise<void>
 }
 
