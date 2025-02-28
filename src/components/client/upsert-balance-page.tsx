@@ -102,7 +102,7 @@ export function UpsertBalancePage({
       regionId: editingBalance?.regionId,
       competenceId: editingBalance?.competenceId,
       amount: editingBalance ? editingBalance.amount : 1,
-      l10nDescription: (editingBalance?.l10nDescription as L10nText) ?? null,
+      l10nDescription: (editingBalance?.l10nDescription as L10nText) ?? undefined,
       dateRange: editingBalance
         ? [+editingBalance.startDate, +editingBalance.endDate]
         : undefined,
@@ -193,12 +193,15 @@ export function UpsertBalancePage({
               )}
             >
               {L10N_COMMON.newCompetenceBalanceDynamic[lang][2]}
-              <Button size="icon" variant="outline" className="ml-4 h-9 w-9 ">
-                <ChevronsRightLeftIcon
-                  onClick={() => {
-                    setMode(mode === "need" ? "supply" : "need")
-                  }}
-                />
+              <Button
+                size="icon"
+                variant="outline"
+                className="ml-4 h-9 w-9 "
+                onClick={() => {
+                  setMode(mode === "need" ? "supply" : "need")
+                }}
+              >
+                <ChevronsRightLeftIcon />
               </Button>
             </span>
             <span
@@ -210,12 +213,15 @@ export function UpsertBalancePage({
               )}
             >
               {L10N_COMMON.newCompetenceBalanceDynamic[lang][1]}
-              <Button size="icon" variant="outline" className="ml-4 h-9 w-9 ">
-                <ChevronsLeftRightIcon
-                  onClick={() => {
-                    setMode(mode === "need" ? "supply" : "need")
-                  }}
-                />
+              <Button
+                size="icon"
+                variant="outline"
+                className="ml-4 h-9 w-9 "
+                onClick={() => {
+                  setMode(mode === "need" ? "supply" : "need")
+                }}
+              >
+                <ChevronsLeftRightIcon />
               </Button>
             </span>
             <span

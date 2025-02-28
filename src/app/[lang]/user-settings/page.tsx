@@ -13,27 +13,27 @@ import {
 import { Language } from "@/types/language"
 import { PageHeader } from "@/components/server/page-header"
 import { PageWrapper } from "@/components/server/page-wrapper"
+import { L10N_COMMON } from "@/l10n/l10n-common"
 
 interface Params {
   lang: Language
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Params
+export async function generateMetadata(props: {
+  params: Promise<Params>
 }): Promise<Metadata> {
+  const { lang } = await props.params
   return {
-    title: `InnoShare | ${L10N_SERVER.heroSlogan[params.lang]}`,
-    description: L10N_SERVER.heroText1[params.lang],
+    title: `InnoShare | ${L10N_SERVER.heroSlogan[lang]}`,
+    description: L10N_SERVER.heroText1[lang],
   }
 }
 
-export default async function UserSettingsPage({
-  params: { lang },
-}: {
-  params: Params
+export default async function UserSettingsPage(props: {
+  params: Promise<Params>
 }) {
+  const { lang } = await props.params
+
   const session = await checkSessionCookie()
 
   if (!session) {
@@ -53,7 +53,7 @@ export default async function UserSettingsPage({
       breadcrumb={
         <Breadcrumb className="mb-4">
           <BreadcrumbList>
-            <BreadcrumbItem>Min profil</BreadcrumbItem>
+            <BreadcrumbItem>{L10N_COMMON.myProfile[lang]}</BreadcrumbItem>
             <BreadcrumbSeparator />
           </BreadcrumbList>
         </Breadcrumb>
@@ -65,7 +65,9 @@ export default async function UserSettingsPage({
       }
     >
       {!session.userOnboarded && (
-        <div className="mb-8">{L10N_SERVER.pleaseConfirmYourInformation[lang]}</div>
+        <div className="mb-8">
+          {L10N_SERVER.pleaseConfirmYourInformation[lang]}
+        </div>
       )}
       <UpdateUserForm lang={lang} user={user} />
     </PageWrapper>

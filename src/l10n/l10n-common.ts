@@ -336,29 +336,43 @@ export const L10N_COMMON = {
     sv: "Analysera med",
     fi: "Analysoi",
   },
-  iHaveReadCentriasPrivacyPolicy: {
-    en: ["I have read, and accept", "Centria's Privacy Policy"],
-    sv: ["Jag har läst, och accepterar", "Centrias dataskyddspolicy"],
-    fi: ["Olen lukenut ja hyväksyn", "Centrian tietosuojaselosteen"],
-  },
-  iHaveReadNicPrivacyPolicy: {
+  iHaveReadPrivacyPolicy: {
     en: [
       "I have read, and accept",
-      "Nykarleby Innovation Center r.f.'s Privacy Policy",
+      "Centria's",
+      "and",
+      "Nykarleby Innovation Center r.f.'s",
+      "Privacy Policy",
     ],
     sv: [
       "Jag har läst, och accepterar",
-      "Nykarleby Innovation Center r.f.:s dataskyddspolicy",
+      "Centrias",
+      "och",
+      "Nykarleby Innovation Center r.f.:s",
+      "dataskyddspolicy",
     ],
     fi: [
       "Olen lukenut ja hyväksyn",
-      "Nykarleby Innovation Center r.f.:n tietosuojaselosteen",
+      "Centrian",
+      "ja",
+      "Nykarleby Innovation Center r.f.:n",
+      "tietosuojaselosteen",
     ],
   },
-  iAcceptEmails: {
-    en: "I accept that emails will be sent to me, with updates regarding the InnoShare project, and the InnoShare platform, until I unsubscribe from them.",
-    sv: "Jag godkänner att email skickas till mig, med uppdateringar gällande InnoShare-projektet, och InnoShare-plattformen, tills jag avbeställer dessa.",
-    fi: "Hyväksyn, että minulle lähetetään sähköpostia InnoShare-projektin ja InnoShare-alustan päivityksistä, kunnes peruutan tilaukseni.",
+  innoshareWeeklyDescription: {
+    en: "I wish to receive a weekly digest of the latest needs and supplies on the InnoShare platform.",
+    sv: "Jag vill få ett veckobrev med de senaste behoven och utbuden på InnoShare-plattformen.",
+    fi: "Haluan vastaanottaa viikottaisen yhteenvedon uusimmista tarpeista ja tarjonnasta InnoShare-alustalla.",
+  },
+  newsletter: {
+    en: "Newsletter & invites",
+    sv: "Nyhetsbrev & inbjudningar",
+    fi: "Uutiskirje & kutsut",
+  },
+  newsletterDescription: {
+    en: "I wish to receive updates regarding the InnoShare project, and invites to our events, until I unsubscribe from them.",
+    sv: "Jag vill få uppdateringar gällande InnoShare-projektet, och få inbjudningar till våra event, tills jag avbeställer dessa.",
+    fi: "Haluan vastaanottaa päivityksiä InnoShare-projektista ja kutsuja tapahtumiimme, kunnes peruutan tilauksen.",
   },
   thankYou: {
     en: "Thank you!",
@@ -524,5 +538,25 @@ export const L10N_COMMON = {
     en: "Competence sharing completed",
     sv: "Kompetensdelning avslutad",
     fi: "Kompetenssien jakaminen valmistui",
+  },
+  imInterested: {
+    en: "I'm interested",
+    sv: "Jag är intresserad",
+    fi: "Olen kiinnostunut",
+  },
+  company: {
+    en: "Company",
+    sv: "Företag",
+    fi: "Yritys",
+  },
+  interestSubmissionText: {
+    en: "Keep up to date what's happening on the platform and in the project.",
+    sv: "Håll dig uppdaterad om vad som händer på plattformen och i projektet.",
+    fi: "Pysy ajan tasalla siitä, mitä alustalla ja projektissa tapahtuu.",
+  },
+  mailSettings: {
+    en: "Mail settings",
+    sv: "Mailinställningar",
+    fi: "Sähköpostiasetukset",
   },
 } satisfies L10nTranslationStrings

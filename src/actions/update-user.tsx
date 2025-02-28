@@ -34,7 +34,8 @@ export async function updateUser(data: typeof updateUserSchema._type) {
     userOnboarded: true,
   })
 
-  cookies().set("session", signedSessionToken!, {
+  const c = await cookies()
+  c.set("session", signedSessionToken!, {
     expires: session.exp * 1000,
   })
 

@@ -1,11 +1,11 @@
 import { z } from "zod"
 
 export const interestFormSchema = z.object({
-  name: z.string(),
+  name: z.string().min(2),
   company: z.string(),
   email: z.string().email(),
-  centriaPrivacyPolicyAccepted: z.boolean().refine((v) => v === true),
-  nicPrivacyPolicyAccepted: z.boolean().refine((v) => v === true),
-  acceptEmails: z.boolean().refine((v) => v === true),
+  privacyPolicyAccepted: z.boolean().refine((v) => v === true),
+  acceptDigest: z.boolean(),
+  acceptNewsletter: z.boolean(),
   language: z.string(),
-})
+});

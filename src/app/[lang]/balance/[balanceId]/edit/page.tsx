@@ -11,22 +11,21 @@ interface Params {
   lang: Language
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Params
+export async function generateMetadata(props: {
+  params: Promise<Params>
 }): Promise<Metadata> {
+  const params = await props.params
   return {
     title: `InnoShare | ${L10N_SERVER.heroSlogan[params.lang]}`,
     description: L10N_SERVER.heroText1[params.lang],
   }
 }
 
-export default async function EditBalancePage({
-  params: { lang, balanceId },
-}: {
-  params: Params
+export default async function EditBalancePage(props: {
+  params: Promise<Params>
 }) {
+  const { lang, balanceId } = await props.params
+
   const session = await checkSessionCookie()
   if (!session) {
     return redirect("/api/auth/login")

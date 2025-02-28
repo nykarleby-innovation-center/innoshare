@@ -50,5 +50,5 @@ export async function upsertCompletedBalance(
     },
   })
 
-  revalidatePath(`/${getLanguageFromHeaders()}/balance/${parsed.data.id}`)
+  revalidatePath(`/${await getLanguageFromHeaders()}/balance/${parsed.data.id}`)
 }

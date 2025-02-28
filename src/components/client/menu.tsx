@@ -10,6 +10,7 @@ import {
   Languages,
   LogIn,
   LogOutIcon,
+  MailIcon,
   Plus,
   PlusIcon,
   User,
@@ -115,6 +116,17 @@ export function Menu({
                         <DropdownMenuItem className="cursor-pointer">
                           <UserIcon className="w-4 h-4 mr-2" />
                           {L10N_COMMON.myProfile[lang]}
+                        </DropdownMenuItem>
+                      </Link>
+                      <Link
+                        href={`/${lang}/mail-settings`}
+                        legacyBehavior
+                        passHref
+                        locale="false"
+                      >
+                        <DropdownMenuItem className="cursor-pointer">
+                          <MailIcon className="w-4 h-4 mr-2" />
+                          {L10N_COMMON.mailSettings[lang]}
                         </DropdownMenuItem>
                       </Link>
                       {unverifedOrganizations.map((org) => (

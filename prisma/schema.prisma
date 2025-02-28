@@ -111,9 +111,11 @@ model Region {
 }
 
 model Interest {
-  id       String @id @default(uuid())
-  name     String
-  company  String
-  email    String
-  language String
+  id                String  @id @default(uuid())
+  name              String
+  company           String
+  email             String  @unique()
+  language          String
+  receiveNewsletter Boolean @default(false)
+  receiveDigest     Boolean @default(false)
 }

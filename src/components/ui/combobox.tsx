@@ -28,7 +28,7 @@ interface Option {
   label: string
 }
 
-export function ComboBox({
+export const ComboBox = ({
   allowArbitraryValue,
   options,
   selectedOptionValue,
@@ -44,7 +44,7 @@ export function ComboBox({
   onPickOptionValue: (option: string | null) => void
   disabled?: boolean
   lang: Language
-}) {
+}) => {
   const [open, setOpen] = useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
@@ -118,7 +118,7 @@ export function ComboBox({
   )
 }
 
-function OptionList({
+const OptionList = ({
   allowArbitraryValue,
   options,
   selectedOptionValue,
@@ -134,10 +134,8 @@ function OptionList({
   selectedOptionValue: string | null
   onPickOptionValue: (option: string | null) => void
   lang: Language
-}) {
+}) => {
   const [searchValue, setSearchValue] = useState("")
-
-  console.log(searchValue)
 
   return (
     <Command>

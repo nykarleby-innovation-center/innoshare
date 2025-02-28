@@ -13,6 +13,7 @@ type Environment = {
   OPENID_CLIENT_ID: string
   OPENID_CLIENT_SECRET: string
   SESSION_SECRET: string
+  CRON_SECRET: string
 } & AzureEmailServiceEnvironmentVariables &
   AzureStorageServiceEnvironmentVariables &
   OpenAiAiServiceVariables

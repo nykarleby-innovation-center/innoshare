@@ -6,6 +6,7 @@ import { ScrapeStep } from "@/types/scrape"
 import { scrapeSchema } from "@/schemas/scrape"
 import { checkSessionCookie } from "@/utils/session"
 import { globalRateLimit } from "@/utils/rate-limit"
+import { NextResponse } from "next/server"
 
 const screenshotPage = async (url: string) => {
   const res = await fetch(
@@ -34,23 +35,23 @@ interface PageInformation {
   competences: string[]
 }
 
-export const POST = globalRateLimit(async (req: Request, res: Response) => {
+export const POST = globalRateLimit(async (req) => {
   const session = await checkSessionCookie()
 
   if (!session) {
-    return Response.error()
+    return NextResponse.error()
   }
 
   const body = scrapeSchema.safeParse(await req.json())
 
   if (!body.success) {
-    return Response.error()
+    return NextResponse.error()
   }
 
   const responseGenerator = scrapeGenerator(body.data)
   const stream = iteratorToStream(responseGenerator)
 
-  return new Response(stream)
+  return new NextResponse(stream)
 })
 
 async function* scrapeGenerator({

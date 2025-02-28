@@ -70,5 +70,5 @@ export async function createBalance(data: z.infer<typeof createBalanceSchema>) {
     })
   }
 
-  redirect(`/${getLanguageFromHeaders()}/balance/${balance.id}`)
+  redirect(`/${await getLanguageFromHeaders()}/balance/${balance.id}`)
 }

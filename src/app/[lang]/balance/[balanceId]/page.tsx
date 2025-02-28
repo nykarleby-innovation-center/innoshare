@@ -38,23 +38,20 @@ interface Params {
   balanceId: string
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Params
+export async function generateMetadata(props: {
+  params: Promise<Params>
 }): Promise<Metadata> {
+  const params = await props.params
   return {
     title: `InnoShare | ${L10N_SERVER.heroSlogan[params.lang]}`,
     description: L10N_SERVER.heroText1[params.lang],
   }
 }
 
-export default async function BalancePage({
-  params: { lang, balanceId },
-}: {
-  params: Params
-}) {
-  const unverifiedSession = decodeUnverifiedSessionCookie()
+export default async function BalancePage(props: { params: Promise<Params> }) {
+  const { lang, balanceId } = await props.params
+
+  const unverifiedSession = await decodeUnverifiedSessionCookie()
 
   const balance = await prismaClient.balance.findUnique({
     where: {

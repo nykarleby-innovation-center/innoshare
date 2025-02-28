@@ -16,8 +16,8 @@ function getLocale(request: NextRequest): Language {
   return match(languages, languageSchema.options, defaultLanguage) as Language
 }
 
-export function middleware(request: NextRequest) {
-  const unverifiedSession = decodeUnverifiedSessionCookie()
+export async function middleware(request: NextRequest) {
+  const unverifiedSession = await decodeUnverifiedSessionCookie()
 
   const { pathname } = request.nextUrl
   if (pathname === "/") return

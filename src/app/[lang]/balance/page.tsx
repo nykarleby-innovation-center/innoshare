@@ -29,25 +29,24 @@ interface SearchParams {
   viewOnly?: "need" | "supply"
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Params
+export async function generateMetadata(props: {
+  params: Promise<Params>
 }): Promise<Metadata> {
+  const { lang } = await props.params
   return {
-    title: `InnoShare | ${L10N_SERVER.heroSlogan[params.lang]}`,
-    description: L10N_SERVER.heroText1[params.lang],
+    title: `InnoShare | ${L10N_SERVER.heroSlogan[lang]}`,
+    description: L10N_SERVER.heroText1[lang],
   }
 }
 
-export default async function BalanceListingPage({
-  params: { lang },
-  searchParams,
-}: {
-  params: Params
-  searchParams: SearchParams
+export default async function BalanceListingPage(props: {
+  params: Promise<Params>
+  searchParams: Promise<SearchParams>
 }) {
-  const unverifiedSession = decodeUnverifiedSessionCookie()
+  const searchParams = await props.searchParams
+  const { lang } = await props.params
+
+  const unverifiedSession = await decodeUnverifiedSessionCookie()
   const verifiedSession = unverifiedSession && (await checkSessionCookie())
 
   const balances = await prismaClient.balance.findMany({

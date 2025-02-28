@@ -54,14 +54,10 @@ export async function updateOrganization(
     organizations: modifiedSessionOrgs,
   })
 
-  console.log({
-    ...session,
-    organizations: modifiedSessionOrgs,
-  })
-
-  cookies().set("session", signedSessionToken!, {
+  const c = await cookies()
+  c.set("session", signedSessionToken!, {
     expires: session.exp * 1000,
   })
 
-  revalidatePath(`/${getLanguageFromHeaders()}/update-organization/${org.id}`)
+  revalidatePath(`/${await getLanguageFromHeaders()}/update-organization/${org.id}`)
 }

@@ -49,10 +49,11 @@ export async function createOrganization(
     ],
   })
 
-  cookies().set("session", signedSessionToken!, {
+  const c = await cookies()
+  c.set("session", signedSessionToken!, {
     expires: session.exp * 1000,
   })
 
-  revalidatePath(`/${getLanguageFromHeaders()}/new-balance`)
-  redirect(`/${getLanguageFromHeaders()}/new-balance`)
+  revalidatePath(`/${await getLanguageFromHeaders()}/new-balance`)
+  redirect(`/${await getLanguageFromHeaders()}/new-balance`)
 }

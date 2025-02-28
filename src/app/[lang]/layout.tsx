@@ -30,17 +30,21 @@ export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "sv" }, { lang: "fi" }]
 }
 
-export default async function RootLayout({
-  children,
-  params: { lang },
-}: Readonly<{
-  children: React.ReactNode
-  params: { lang: Language }
-}>) {
-  const unverifiedSession = decodeUnverifiedSessionCookie()
+export default async function RootLayout(
+  props: Readonly<{
+    children: React.ReactNode
+    params: Promise<{ lang: Language }>
+  }>
+) {
+  const params = await props.params
+
+  const { lang } = params
+  const { children } = props
+
+  const unverifiedSession = await decodeUnverifiedSessionCookie()
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",

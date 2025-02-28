@@ -1,8 +1,8 @@
 import { Language } from "@/types/language"
 import { headers } from "next/headers"
 
-export const getLanguageFromHeaders = () => {
-  const h = headers()
+export const getLanguageFromHeaders = async () => {
+  const h = await headers()
 
   const origin = h.get("origin")
   const referer = h.get("referer")

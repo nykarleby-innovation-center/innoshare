@@ -6,6 +6,13 @@ export interface EmailService {
     toType?: "user" | "internal"
     subject: string
     message: string
+    messageType?: "html" | "text"
+  }): Promise<void>
+  sendEmails(args: {
+    to: string[]
+    subject: string
+    message: string
+    messageType?: "html" | "text"
   }): Promise<void>
 }
 

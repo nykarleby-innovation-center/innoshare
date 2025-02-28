@@ -44,7 +44,8 @@ export const GET = async (req: NextRequest) => {
     })),
   })
 
-  cookies().set("session", signedSessionToken!, {
+  const c = await cookies()
+  c.set("session", signedSessionToken!, {
     expires: +new Date() + 1000 * 60 * 60 * 24 * 2,
   })
 

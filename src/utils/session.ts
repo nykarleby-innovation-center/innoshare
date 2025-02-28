@@ -1,3 +1,5 @@
+"use server"
+
 import jsonwebtoken from "jsonwebtoken"
 import { ENVIRONMENT } from "./env"
 import { cookies } from "next/headers"
@@ -33,7 +35,7 @@ export async function verifySession(
 }
 
 export async function checkSessionCookie(): Promise<AuthSession | null> {
-  const token = cookies().get("session")
+  const token = (await cookies()).get("session")
 
   if (!token?.value) {
     return null
@@ -46,8 +48,8 @@ export async function checkSessionCookie(): Promise<AuthSession | null> {
   }
 }
 
-export function decodeUnverifiedSessionCookie(): AuthSession | null {
-  const token = cookies().get("session")
+export async function decodeUnverifiedSessionCookie(): Promise<AuthSession | null> {
+  const token = (await cookies()).get("session")
 
   if (!token?.value) {
     return null

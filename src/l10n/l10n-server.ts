@@ -4,9 +4,14 @@ import { L10nText, L10nTranslationStrings } from "@/types/l10n"
 export const L10N_SERVER = {
   heroHeader: {
     en: "Welcome to InnoShare!",
-    sv: "Välkommen till InnoShare",
+    sv: "Välkommen till InnoShare!",
     fi: "Tervetuloa InnoShareen!",
   },
+  heroHeaderNamed: (name: string) => ({
+    en: `Welcome to InnoShare, ${name}!`,
+    sv: `Välkommen till InnoShare, ${name}!`,
+    fi: `Tervetuloa InnoShareen, ${name}!`,
+  }),
   heroSlogan: {
     en: "Unleashing Collaborative Innovation and Talent Exchange",
     sv: "Unleashing Collaborative Innovation and Talent Exchange",

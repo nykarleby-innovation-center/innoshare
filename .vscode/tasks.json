@@ -10,6 +10,11 @@
       "label": "Build Docker image",
       "type": "shell",
       "command": "docker build --platform=linux/amd64 . -t ghcr.io/nykarleby-innovation-center/innoshare:latest"
+    },
+    {
+      "label": "Run Docker image",
+      "type": "shell",
+      "command": "docker run --env-file=.env.local -e DATABASE_URL=\"postgresql://postgres:postgres@172.17.0.1:5432\" -p:3000:3000 ghcr.io/nykarleby-innovation-center/innoshare:latest"
     }
   ]
 }
