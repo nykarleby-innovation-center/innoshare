@@ -31,6 +31,7 @@ export async function generateMetadata(props: {
 
 export default async function UserSettingsPage(props: {
   params: Promise<Params>
+  searchParams: Promise<{ redirect?: string }>
 }) {
   const { lang } = await props.params
 
@@ -47,6 +48,8 @@ export default async function UserSettingsPage(props: {
   if (!user) {
     return redirect("/api/auth/login")
   }
+
+  const searchParams = await props.searchParams
 
   return (
     <PageWrapper
@@ -69,7 +72,19 @@ export default async function UserSettingsPage(props: {
           {L10N_SERVER.pleaseConfirmYourInformation[lang]}
         </div>
       )}
-      <UpdateUserForm lang={lang} user={user} />
+      <UpdateUserForm
+        lang={lang}
+        user={user}
+        redirectAfter={
+          !session.userOnboarded
+            ? !!searchParams.redirect
+              ? `/${lang}/mail-settings?${new URLSearchParams({
+                  redirect: searchParams.redirect!,
+                }).toString()}`
+              : null
+            : searchParams.redirect ?? null
+        }
+      />
     </PageWrapper>
   )
 }

@@ -32,12 +32,13 @@ export function UpsertInterestFormDialog({ lang }: { lang: Language }) {
   return (
     <DialogContent className="sm:max-w-[425px] max-h-screen overflow-y-scroll">
       <DialogHeader>
-        <DialogTitle> {L10N_COMMON.imInterested[lang]}</DialogTitle>
+        <DialogTitle> {L10N_COMMON.keepMeUpdated[lang]}</DialogTitle>
         <DialogDescription>
           {L10N_COMMON.interestSubmissionText[lang]}
         </DialogDescription>
       </DialogHeader>
       <UpsertInterestForm
+        redirectAfter={null}
         interest={null}
         lang={lang}
         onSubmit={() => setSubmitted(true)}

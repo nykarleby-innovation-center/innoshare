@@ -2,7 +2,6 @@ import { L10N_SERVER } from "@/l10n/l10n-server"
 import { Metadata } from "next"
 import { prismaClient } from "@/utils/prisma"
 import { checkSessionCookie } from "@/utils/session"
-import { redirect } from "next/navigation"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,6 +13,7 @@ import { PageHeader } from "@/components/server/page-header"
 import { PageWrapper } from "@/components/server/page-wrapper"
 import { L10N_COMMON } from "@/l10n/l10n-common"
 import { UpsertInterestForm } from "@/components/client/upsert-interest-form"
+import { redirect } from "next/navigation"
 
 interface Params {
   lang: Language
@@ -31,6 +31,7 @@ export async function generateMetadata(props: {
 
 export default async function UserSettingsPage(props: {
   params: Promise<Params>
+  searchParams: Promise<{ redirect?: string }>
 }) {
   const { lang } = await props.params
 
@@ -51,6 +52,8 @@ export default async function UserSettingsPage(props: {
   const interest = await prismaClient.interest.findUnique({
     where: { email: user.email },
   })
+
+  const searchParams = await props.searchParams
 
   return (
     <PageWrapper
@@ -76,9 +79,10 @@ export default async function UserSettingsPage(props: {
           ...interest,
           email: user.email,
           name: user.firstName,
-          company: session.organizations[0].name,
+          company: session.organizations?.[0]?.name,
           language: lang,
         }}
+        redirectAfter={searchParams.redirect ?? null}
       />
     </PageWrapper>
   )

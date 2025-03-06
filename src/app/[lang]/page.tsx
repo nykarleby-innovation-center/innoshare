@@ -6,6 +6,7 @@ import { Logo } from "@/components/server/logo"
 import {
   ChevronsLeftRightIcon,
   ChevronsRightLeftIcon,
+  LogInIcon,
   Mail,
 } from "lucide-react"
 import { Metadata } from "next"
@@ -16,6 +17,13 @@ import { Dialog, DialogTrigger } from "@radix-ui/react-dialog"
 import { UpsertInterestFormDialog } from "@/components/client/upsert-interest-form-dialog"
 import { L10N_COMMON } from "@/l10n/l10n-common"
 import { decodeUnverifiedSessionCookie } from "@/utils/session"
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 interface Params {
   lang: Language
@@ -50,54 +58,10 @@ export default async function Home(props: { params: Promise<Params> }) {
                 ? L10N_SERVER.heroHeaderNamed(session.firstName)[lang]
                 : L10N_SERVER.heroHeader[lang]}
             </PageHeader>
-            <h2 className="text-lg font-semibold mb-8">
+            <h2 className="text-lg font-semibold mb-4">
               {L10N_SERVER.heroSlogan[lang]}
             </h2>
-            <p className="mb-4 max-w-xl">{L10N_SERVER.heroText1[lang]}</p>
-            <p className="mb-8 max-w-xl">{L10N_SERVER.heroText2[lang]}</p>
-            <div className="flex gap-4 mb-12 flex-col w-full sm:flex-row">
-              {session === null && (
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="outline" className="justify-start">
-                      <Mail className="h-5 w-5 mr-4" />
-                      {L10N_COMMON.imInterested[lang]}
-                    </Button>
-                  </DialogTrigger>
-                  <UpsertInterestFormDialog lang={lang} />
-                </Dialog>
-              )}
-              <Link
-                href={
-                  `/${lang}/balance/?` +
-                  new URLSearchParams({ viewOnly: "supply" }).toString()
-                }
-                legacyBehavior
-                passHref
-                locale="false"
-              >
-                <Button variant="ghost" className=" justify-start">
-                  <ChevronsLeftRightIcon className="h-5 w-5 mr-4 text-teal-400" />
-                  {L10N_SERVER.browseSupply[lang]}
-                </Button>
-              </Link>
-              <Link
-                href={
-                  `/${lang}/balance/?` +
-                  new URLSearchParams({ viewOnly: "need" }).toString()
-                }
-                legacyBehavior
-                passHref
-                locale="false"
-              >
-                <Button variant="ghost" className=" justify-start">
-                  <ChevronsRightLeftIcon className="h-5 w-5 mr-4 text-orange-400" />
-                  {L10N_SERVER.browseNeeds[lang]}
-                </Button>
-              </Link>
-            </div>
-
-            <div className="flex flex-row gap-8 items-stretch h-16">
+            <div className="flex flex-row gap-8 items-stretch h-16 mb-4">
               <Image
                 src="/images/centria-color.svg"
                 width={100}
@@ -132,6 +96,85 @@ export default async function Home(props: { params: Promise<Params> }) {
                 className="hidden dark:block"
               />
             </div>
+            <p className="mb-4 max-w-xl">{L10N_SERVER.heroText1[lang]}</p>
+            <p className="mb-8 max-w-xl">{L10N_SERVER.heroText2[lang]}</p>
+            <div className="flex gap-4 mb-12 flex-col w-full sm:flex-row">
+              {session == null ? (
+                <Link
+                  href={`/api/auth/login`}
+                  legacyBehavior
+                  passHref
+                  locale="false"
+                >
+                  <Button variant="outline" className=" justify-start">
+                    <LogInIcon className="h-5 w-5 mr-4" />
+                    {L10N_COMMON.logIn[lang]}
+                  </Button>
+                </Link>
+              ) : null}
+
+              <Link
+                href={
+                  `/${lang}/balance/?` +
+                  new URLSearchParams({ viewOnly: "supply" }).toString()
+                }
+                legacyBehavior
+                passHref
+                locale="false"
+              >
+                <Button variant="outline" className=" justify-start">
+                  <ChevronsLeftRightIcon className="h-5 w-5 mr-4 text-teal-400" />
+                  {L10N_SERVER.browseSupply[lang]}
+                </Button>
+              </Link>
+              <Link
+                href={
+                  `/${lang}/balance/?` +
+                  new URLSearchParams({ viewOnly: "need" }).toString()
+                }
+                legacyBehavior
+                passHref
+                locale="false"
+              >
+                <Button variant="outline" className=" justify-start">
+                  <ChevronsRightLeftIcon className="h-5 w-5 mr-4 text-orange-400" />
+                  {L10N_SERVER.browseNeeds[lang]}
+                </Button>
+              </Link>
+            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>{L10N_COMMON.keepMeUpdated[lang]}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>{L10N_SERVER.areYouInterestedText[lang]}</p>
+              </CardContent>
+              <CardFooter>
+                {session ? (
+                  <Link
+                    href={`/${lang}/mail-settings `}
+                    legacyBehavior
+                    passHref
+                    locale="false"
+                  >
+                    <Button variant="default" className="justify-start">
+                      <Mail className="h-5 w-5 mr-4" />
+                      {L10N_COMMON.mailSettings[lang]}
+                    </Button>
+                  </Link>
+                ) : (
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="default" className="justify-start">
+                        <Mail className="h-5 w-5 mr-4" />
+                        {L10N_SERVER.yesPlease[lang]}
+                      </Button>
+                    </DialogTrigger>
+                    <UpsertInterestFormDialog lang={lang} />
+                  </Dialog>
+                )}
+              </CardFooter>
+            </Card>
           </div>
           <Logo className="w-72 h-72 duration-300 hover:scale-105 hover:rotate-2" />
         </div>

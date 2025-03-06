@@ -24,16 +24,20 @@ import { updateInterest } from "@/actions/upsert-interest"
 import { Interest } from "@prisma/client"
 import { HtmlForm } from "../server/html-form"
 import { useToast } from "@/hooks/use-toast"
+import { useRouter } from "next/navigation"
 
 export function UpsertInterestForm({
   interest,
   lang,
   onSubmit,
+  redirectAfter,
 }: {
   interest: Omit<Interest, "id"> | null
   lang: Language
   onSubmit?: () => any
+  redirectAfter: string | null
 }) {
+  const router = useRouter()
   const { toast } = useToast()
 
   const [loading, setLoading] = useState(false)
@@ -84,6 +88,10 @@ export function UpsertInterestForm({
         onSubmit()
       } else {
         toast({ title: "Intresse uppdaterat!" })
+
+        if (redirectAfter) {
+          router.push(redirectAfter)
+        }
       }
     } catch (_) {
       setError(true)
@@ -233,7 +241,11 @@ export function UpsertInterestForm({
               <Loader2 className="animate-spin" />
             </span>
           )}
-          {error ? L10N_COMMON.tryAgain[lang] : L10N_COMMON.submit[lang]}
+          {error
+            ? L10N_COMMON.tryAgain[lang]
+            : interest
+            ? L10N_COMMON.update[lang]
+            : L10N_COMMON.submit[lang]}
         </Button>
       </HtmlForm>
     </Form>

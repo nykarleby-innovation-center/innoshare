@@ -539,10 +539,10 @@ export const L10N_COMMON = {
     sv: "Kompetensdelning avslutad",
     fi: "Kompetenssien jakaminen valmistui",
   },
-  imInterested: {
-    en: "I'm interested",
-    sv: "Jag är intresserad",
-    fi: "Olen kiinnostunut",
+  keepMeUpdated: {
+    en: "Keep me updated",
+    sv: "Håll mig uppdaterad",
+    fi: "Pysy ajan tasalla",
   },
   company: {
     en: "Company",

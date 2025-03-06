@@ -21,8 +21,18 @@ import { User } from "@prisma/client"
 import { HtmlForm } from "../server/html-form"
 import { L10N_COMMON } from "@/l10n/l10n-common"
 import { useToast } from "@/hooks/use-toast"
+import { useRouter } from "next/navigation"
 
-export function UpdateUserForm({ lang, user }: { lang: Language; user: User }) {
+export function UpdateUserForm({
+  lang,
+  user,
+  redirectAfter,
+}: {
+  lang: Language
+  user: User
+  redirectAfter: string | null
+}) {
+  const router = useRouter()
   const { toast } = useToast()
 
   const form = useForm<z.infer<typeof updateUserFormSchema>>({
@@ -43,6 +53,9 @@ export function UpdateUserForm({ lang, user }: { lang: Language; user: User }) {
     toast({
       title: L10N_COMMON.userUpdated[lang],
     })
+    if (redirectAfter) {
+      router.push(redirectAfter)
+    }
   }
 
   return (

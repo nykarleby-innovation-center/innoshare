@@ -27,6 +27,16 @@ export const L10N_SERVER = {
     sv: "Projektet testar detta genom att låta människor byta arbetsplatser under en viss tidsperiod. Denna plattform med öppen källkod är ett verktyg för att hantera dessa utbyten. Du kan bläddra runt eller till och med registrera dig om ditt företag är intresserat av att delta!",
     fi: "Projekti testaa tätä vaihtamalla ihmisten työpaikkoja tietyn ajanjakson ajaksi. Tämä avoimen lähdekoodin alusta on työkalu näiden vaihtojen hallintaan. Voit selailla alustaa tai jopa rekisteröityä, jos yrityksesi on kiinnostunut osallistumaan!",
   },
+  areYouInterestedText: {
+    en: "Are you interested in receiving email updates regarding InnoShare's activities?",
+    sv: "Är du intresserad av att få mejluppdateringar angående InnoShares verksamhet?",
+    fi: "Oletko kiiinnostunut vastaanottamaan sähköpostipäivityksiä InnoSharen toiminnasta?",
+  },
+  yesPlease: {
+    en: "Yes, please!",
+    sv: "Ja, tack!",
+    fi: "Kyllä!",
+  },
   browseNeeds: {
     en: "Browse needs",
     sv: "Bläddra behov",

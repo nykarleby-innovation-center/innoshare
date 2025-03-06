@@ -30,9 +30,10 @@ export async function middleware(request: NextRequest) {
 
   if (
     unverifiedSession?.userOnboarded === false &&
-    request.nextUrl.pathname !== `/${lang}/user-settings`
+    pathname !== `/${lang}/user-settings`
   ) {
     request.nextUrl.pathname = `/${lang}/user-settings`
+    request.nextUrl.searchParams.set("redirect", pathname)
 
     return Response.redirect(request.nextUrl)
   }
