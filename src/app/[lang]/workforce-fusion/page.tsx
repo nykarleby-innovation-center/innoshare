@@ -66,30 +66,34 @@ export default async function WorkforceFusionPage(props: {
     EmailService.sendEmail({
       messageType: "text",
       toType: "internal",
-      subject: "Anmälan till WorkforceFusion",
+      subject: "Anmälan till Workforce Fusion",
       to: ENVIRONMENT.INTERNAL_NOTIFICATION_TO,
       message: `
-Tack för er anmälan till InnoShare Workforce Fusion!
+Anmälan till Workforce Fusion
 
 Namn: ${data.get("Namn")}
 Företag: ${data.get("Företag")}
 E-post: ${email}
-Potentiella allergier: ${data.get("Allergier")}
+Eventuella allergier: ${data.get("Allergier")}
 Intresse: ${data.get("Intresse")}`,
     })
 
     EmailService.sendEmail({
       messageType: "text",
       toType: "user",
-      subject: "Anmälan till WorkforceFusion",
+      subject: "Anmälan till Workforce Fusion",
       to: email,
       message: `
-Tack för er anmälan till InnoShare Workforce Fusion!
+Tack för er anmälan till InnoShare Workforce Fusion.
+
+Välkommen!
+Plats: After Eight, Jakobstad
+Tid: 10 April, 14:00
 
 Namn: ${data.get("Namn")}
 Företag: ${data.get("Företag")}
 E-post: ${email}
-Potentiella allergier: ${data.get("Allergier")}
+Eventuella allergier: ${data.get("Allergier")}
 Intresse: ${data.get("Intresse")}
         `,
     })
@@ -236,7 +240,7 @@ Intresse: ${data.get("Intresse")}
                     />
                   </div>
                   <div>
-                    <Label>Potentiella allergier</Label>
+                    <Label>Eventuella allergier</Label>
                     <Input name="Allergier" type="text" />
                   </div>
                   <div>

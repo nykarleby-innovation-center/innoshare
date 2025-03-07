@@ -86,7 +86,7 @@ export function Menu({
                   locale="false"
                 >
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Workspace Fusion
+                    Workforce Fusion
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
