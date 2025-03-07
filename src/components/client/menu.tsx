@@ -80,6 +80,18 @@ export function Menu({
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link
+                  href={`/${lang}/workforce-fusion`}
+                  legacyBehavior
+                  passHref
+                  locale="false"
+                >
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Workspace Fusion
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link
                   href={`/${lang}/new-balance`}
                   legacyBehavior
                   passHref
