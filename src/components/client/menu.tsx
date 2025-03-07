@@ -86,7 +86,8 @@ export function Menu({
                   locale="false"
                 >
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Workforce Fusion
+                  <span className="hidden sm:block">Workforce Fusion</span>
+                  <span className="block sm:hidden">Event</span>
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
