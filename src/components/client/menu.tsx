@@ -72,7 +72,12 @@ export function Menu({
                   locale="false"
                 >
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    {L10N_COMMON.competenceBalance[lang]}
+                    <span className="hidden xl:block">
+                      {L10N_COMMON.competenceBalance[lang]}
+                    </span>
+                    <span className="block xl:hidden">
+                      {L10N_COMMON.competences[lang]}
+                    </span>
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
