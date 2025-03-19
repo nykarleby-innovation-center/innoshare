@@ -7,13 +7,11 @@ import { L10N_COMMON } from "@/l10n/l10n-common"
 import { Language } from "@/types/language"
 import {
   BuildingIcon,
-  Languages,
-  LogIn,
+  LanguagesIcon,
+  LogInIcon,
   LogOutIcon,
   MailIcon,
-  Plus,
   PlusIcon,
-  User,
   UserIcon,
   XIcon,
 } from "lucide-react"
@@ -80,14 +78,26 @@ export function Menu({
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link
+                  href={`/${lang}/new-balance`}
+                  legacyBehavior
+                  passHref
+                  locale="false"
+                >
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <PlusIcon className="w-5 h-5" />
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link
                   href={`/${lang}/workforce-fusion`}
                   legacyBehavior
                   passHref
                   locale="false"
                 >
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  <span className="hidden sm:block">Workforce Fusion</span>
-                  <span className="block sm:hidden">Event</span>
+                    <span className="hidden sm:block">Workforce Fusion</span>
+                    <span className="block sm:hidden">Event</span>
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
@@ -99,20 +109,12 @@ export function Menu({
                   locale="false"
                 >
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  <span className="hidden lg:block">{L10N_COMMON.contactUs[lang]}</span>
-                  <span className="block lg:hidden"><MailIcon className="w-5 h-5" /></span>
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link
-                  href={`/${lang}/new-balance`}
-                  legacyBehavior
-                  passHref
-                  locale="false"
-                >
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    <Plus className="w-5 h-5" />
+                    <span className="hidden xl:block">
+                      {L10N_COMMON.contactUs[lang]}
+                    </span>
+                    <span className="block xl:hidden">
+                      <MailIcon className="w-5 h-5" />
+                    </span>
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
@@ -128,7 +130,7 @@ export function Menu({
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost">
-                        <User className="h-5 w-5 mr-4" />
+                        <UserIcon className="h-5 w-5 mr-4" />
                         {unverifiedUserFirstName ?? "User"}
                       </Button>
                     </DropdownMenuTrigger>
@@ -200,7 +202,7 @@ export function Menu({
                     locale="false"
                   >
                     <Button variant="ghost">
-                      <LogIn className="h-5 w-5 mr-4" />
+                      <LogInIcon className="h-5 w-5 mr-4" />
                       {L10N_COMMON.logIn[lang]}
                     </Button>
                   </Link>
@@ -210,7 +212,7 @@ export function Menu({
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon">
-                      <Languages className="h-5 w-5" />
+                      <LanguagesIcon className="h-5 w-5" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
