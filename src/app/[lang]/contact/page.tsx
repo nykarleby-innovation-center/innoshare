@@ -88,10 +88,17 @@ export default async function WorkforceFusionPage(props: {
                 </Link>
               </div>
               <h2 className="text-xl font-bold mb-2">Johnny Finne</h2>
-              <div className="flex items-center gap-4 mb-12">
+              <div className="flex items-center gap-4 mb-8">
                 <MailIcon className="w-5 h-5" />
                 <Link href="mailto:johnny.finne@centria.fi">
                   johnny.finne@centria.fi
+                </Link>
+              </div>
+              <h2 className="text-xl font-bold mb-2">Pia Forsman</h2>
+              <div className="flex items-center gap-4 mb-12">
+                <MailIcon className="w-5 h-5" />
+                <Link href="mailto:pia.forsman@centria.fi">
+                  pia.forsman@centria.fi
                 </Link>
               </div>
               <Image
