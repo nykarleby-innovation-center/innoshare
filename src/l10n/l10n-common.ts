@@ -559,4 +559,9 @@ export const L10N_COMMON = {
     sv: "Mailinställningar",
     fi: "Sähköpostiasetukset",
   },
+  contactUs: {
+    en: "Contact us",
+    sv: "Kontakta oss",
+    fi: "Ota yhteyttä",
+  }
 } satisfies L10nTranslationStrings

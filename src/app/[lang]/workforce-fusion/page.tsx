@@ -162,11 +162,14 @@ Intresse: ${data.get("Intresse")}
               vad som bidrog till att det lyckades. Ni kan även hitta nya
               samarbetspartners.
             </p>
-            <p className="mb-8 max-w-xl">
+            <p className="mb-4 max-w-xl">
               När ni anmäler er uppmanas ni meddela om ni är endast allmänt
               intresserade, om ni har ett arbetskraftsbehov eller ett
               arbetskraftsutbud. Detta så att vi på förhand kan matcha ihop
               företag som kan ha nytta av att diskutera med varandra.
+            </p>
+            <p className="mb-8 max-w-xl">
+              Anmäl er senast den 2 april.
             </p>
             <div className="flex gap-4 mb-4">
               <MapPin /> After Eight, Jakobstad

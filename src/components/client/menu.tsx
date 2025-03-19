@@ -93,6 +93,19 @@ export function Menu({
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link
+                  href={`/${lang}/contact`}
+                  legacyBehavior
+                  passHref
+                  locale="false"
+                >
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <span className="hidden lg:block">{L10N_COMMON.contactUs[lang]}</span>
+                  <span className="block lg:hidden"><MailIcon className="w-5 h-5" /></span>
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link
                   href={`/${lang}/new-balance`}
                   legacyBehavior
                   passHref
