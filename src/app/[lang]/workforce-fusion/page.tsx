@@ -9,17 +9,7 @@ import {
 } from "lucide-react"
 import { Metadata } from "next"
 import { PageHeader } from "@/components/server/page-header"
-import { checkSessionCookie } from "@/utils/session"
-import { HtmlForm } from "@/components/server/html-form"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { prismaClient } from "@/utils/prisma"
-import { EmailService } from "@/services/email/email-service"
-import { ENVIRONMENT } from "@/utils/env"
-import { redirect } from "next/navigation"
+import { Card, CardHeader } from "@/components/ui/card"
 
 interface Params {
   lang: Language
@@ -43,64 +33,6 @@ export default async function WorkforceFusionPage(props: {
   params: Promise<Params>
   searchParams: Promise<{ Namn: string }>
 }) {
-  const searchParams = await props.searchParams
-
-  const session = await checkSessionCookie()
-  const user =
-    session &&
-    (await prismaClient.user.findUnique({
-      where: { id: session.userId },
-      select: {
-        firstName: true,
-        lastName: true,
-        email: true,
-        organizations: { select: { name: true } },
-      },
-    }))
-
-  const submitForm = async (data: FormData) => {
-    "use server"
-
-    const email = data.get("Email") as string
-
-    EmailService.sendEmail({
-      messageType: "text",
-      toType: "internal",
-      subject: "Anmälan till Workforce Fusion",
-      to: ENVIRONMENT.INTERNAL_NOTIFICATION_TO,
-      message: `
-Anmälan till Workforce Fusion
-
-Namn: ${data.get("Namn")}
-Företag: ${data.get("Företag")}
-E-post: ${email}
-Eventuella allergier: ${data.get("Allergier")}
-Intresse: ${data.get("Intresse")}`,
-    })
-
-    EmailService.sendEmail({
-      messageType: "text",
-      toType: "user",
-      subject: "Anmälan till Workforce Fusion",
-      to: email,
-      message: `
-Tack för er anmälan till InnoShare Workforce Fusion.
-
-Välkommen!
-Plats: After Eight, Jakobstad
-Tid: 10 April, 14:00
-
-Namn: ${data.get("Namn")}
-Företag: ${data.get("Företag")}
-E-post: ${email}
-Eventuella allergier: ${data.get("Allergier")}
-Intresse: ${data.get("Intresse")}
-        `,
-    })
-
-    redirect("/workforce-fusion?Namn=" + data.get("Namn"))
-  }
-
   return (
     <main className="max-w-6xl ml-auto mr-auto flex flex-col pt-32">
       <div className="flex flex-row items-center">
@@ -168,9 +100,7 @@ Intresse: ${data.get("Intresse")}
               arbetskraftsutbud. Detta så att vi på förhand kan matcha ihop
               företag som kan ha nytta av att diskutera med varandra.
             </p>
-            <p className="mb-8 max-w-xl">
-              Anmäl er senast den 2 april.
-            </p>
+            <p className="mb-8 max-w-xl">Anmäl er senast den 2 april.</p>
             <div className="flex gap-4 mb-4">
               <MapPin /> After Eight, Jakobstad
             </div>
@@ -202,77 +132,9 @@ Intresse: ${data.get("Intresse")}
           <Card>
             <CardHeader>
               <h3 className="text-2xl mb-4 uppercase font-black">
-                Anmäl er här
+                Anmälning stängd
               </h3>
             </CardHeader>
-            <CardContent>
-              {searchParams.Namn ? (
-                <p>
-                  Tack {searchParams.Namn}! Ni är anmäld. Kontrollera er inbox
-                  för bekräftelse.
-                </p>
-              ) : (
-                <HtmlForm className="w-96" action={submitForm}>
-                  <div>
-                    <Label>Namn</Label>
-                    <Input
-                      type="text"
-                      required
-                      name="Namn"
-                      defaultValue={
-                        user ? `${user.firstName} ${user.lastName}` : undefined
-                      }
-                    />
-                  </div>
-                  <div>
-                    <Label>Företag</Label>
-                    <Input
-                      type="text"
-                      required
-                      name="Företag"
-                      defaultValue={user?.organizations.at(0)?.name}
-                    />
-                  </div>
-                  <div>
-                    <Label>E-post</Label>
-                    <Input
-                      type="email"
-                      name="Email"
-                      required
-                      defaultValue={user?.email}
-                    />
-                  </div>
-                  <div>
-                    <Label>Eventuella allergier</Label>
-                    <Input name="Allergier" type="text" />
-                  </div>
-                  <div>
-                    <Label>
-                      Är ni behov av arbetskraft, eller har ni extra utbud,
-                      eller bara annars intressererad?
-                    </Label>
-                    <div className="mt-4">
-                      <RadioGroup name="Intresse" required>
-                        <div className="flex gap-2">
-                          <RadioGroupItem required value="Utbud" /> Utbud
-                        </div>
-                        <div className="flex gap-2">
-                          <RadioGroupItem required value="Behov" /> Behov
-                        </div>
-                        <div className="flex gap-2">
-                          <RadioGroupItem
-                            required
-                            value="Allmänt intresserad"
-                          />{" "}
-                          Allmänt intresserad
-                        </div>
-                      </RadioGroup>
-                    </div>
-                  </div>
-                  <Button>Skicka</Button>
-                </HtmlForm>
-              )}
-            </CardContent>
           </Card>
         </div>
       </div>
