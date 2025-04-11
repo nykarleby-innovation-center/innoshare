@@ -95,19 +95,6 @@ export function Menu({
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link
-                  href={`/${lang}/workforce-fusion`}
-                  legacyBehavior
-                  passHref
-                  locale="false"
-                >
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    <span className="hidden sm:block">Workforce Fusion</span>
-                    <span className="block sm:hidden">Event</span>
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link
                   href={`/${lang}/contact`}
                   legacyBehavior
                   passHref
