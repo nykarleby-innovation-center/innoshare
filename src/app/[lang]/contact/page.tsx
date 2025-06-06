@@ -1,26 +1,9 @@
 import Image from "next/image"
 import { L10N_SERVER } from "@/l10n/l10n-server"
 import { Language } from "@/types/language"
-import {
-  CalendarIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  MailIcon,
-  MapPin,
-} from "lucide-react"
+import { MailIcon } from "lucide-react"
 import { Metadata } from "next"
 import { PageHeader } from "@/components/server/page-header"
-import { checkSessionCookie } from "@/utils/session"
-import { HtmlForm } from "@/components/server/html-form"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { prismaClient } from "@/utils/prisma"
-import { EmailService } from "@/services/email/email-service"
-import { ENVIRONMENT } from "@/utils/env"
-import { redirect } from "next/navigation"
 import { L10N_COMMON } from "@/l10n/l10n-common"
 import Link from "next/link"
 
@@ -42,9 +25,7 @@ export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "sv" }, { lang: "fi" }]
 }
 
-export default async function WorkforceFusionPage(props: {
-  params: Promise<Params>
-}) {
+export default async function ContactPage(props: { params: Promise<Params> }) {
   const { lang } = await props.params
 
   return (

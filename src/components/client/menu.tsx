@@ -8,6 +8,8 @@ import { Language } from "@/types/language"
 import {
   BuildingIcon,
   LanguagesIcon,
+  LayoutGridIcon,
+  ListChecksIcon,
   LogInIcon,
   LogOutIcon,
   MailIcon,
@@ -76,7 +78,7 @@ export function Menu({
                       {L10N_COMMON.competenceBalance[lang]}
                     </span>
                     <span className="block xl:hidden">
-                      {L10N_COMMON.competences[lang]}
+                      <LayoutGridIcon className="w-5 h-5" />
                     </span>
                   </NavigationMenuLink>
                 </Link>
@@ -90,6 +92,21 @@ export function Menu({
                 >
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     <PlusIcon className="w-5 h-5" />
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link
+                  href={`/${lang}/checklist`}
+                  legacyBehavior
+                  passHref
+                  locale="false"
+                >
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <span className="hidden xl:block">Checklist</span>
+                    <span className="block xl:hidden">
+                      <ListChecksIcon className="w-5 h-5" />
+                    </span>
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
