@@ -278,8 +278,22 @@ export const BalanceListing = ({
                       : `border-l-8 border-l-teal-500`
                   )}
                 >
-                  <div className="flex flex-grow flex-col justify-between mr-24">
-                    <span className="uppercase leading-snug font-black text-xl flex flex-row gap-2">
+                  <div
+                    className={cn(
+                      "flex flex-grow flex-col justify-between",
+                      (nd.competence.l10nName as L10nText)[lang].length > 30
+                        ? ""
+                        : "mr-24"
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        "uppercase leading-snug font-black flex flex-row gap-2",
+                        (nd.competence.l10nName as L10nText)[lang].length > 30
+                          ? "text-md leading-tight"
+                          : "text-xl"
+                      )}
+                    >
                       {nd.completedBalanceId ? (
                         <CheckCircleIcon
                           className={cn(
@@ -291,7 +305,7 @@ export const BalanceListing = ({
                       {(nd.competence.l10nName as L10nText)[lang]}
                     </span>
                     {isPublic && (
-                      <div className="flex flex-row items-center gap-2 mb-4 text-sm">
+                      <div className="flex flex-row items-center gap-2 mb-4 mt-2 text-xs">
                         <BuildingIcon className="w-4 h-4 -mt-1" />
                         {L10N_COMMON.via[lang]} {isPublic.organizationName}
                       </div>
