@@ -149,11 +149,11 @@ export function UpsertOrganizationForm({
         />
       )}
       <Form {...form}>
-        <ArbeitButton
+        {/*<ArbeitButton
           className="absolute top-0 right-0 hidden lg:block"
           onClick={() => setAiAnalyzeActive(true)}
           lang={lang}
-        />
+        />*/}
         <HtmlForm onSubmit={form.handleSubmit(handleSubmit)}>
           <FormField
             control={form.control}

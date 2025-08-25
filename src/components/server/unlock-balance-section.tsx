@@ -11,6 +11,7 @@ import { checkSessionCookie } from "@/utils/session"
 import { Dialog, DialogTrigger } from "../ui/dialog"
 import { Button } from "../ui/button"
 import {
+  BuildingIcon,
   EyeIcon,
   LockOpenIcon,
   MailIcon,
@@ -31,7 +32,10 @@ export async function UnlockBalanceSection({
   lang,
   guest,
 }: {
-  balance: Pick<Prisma.Balance, "id" | "amount" | "organizationId"> & {
+  balance: Pick<
+    Prisma.Balance,
+    "id" | "amount" | "organizationId" | "public"
+  > & {
     completedBalance: Prisma.CompletedBalance | null
   }
   lang: Language
@@ -79,9 +83,19 @@ export async function UnlockBalanceSection({
               <PartyPopperIcon className="w-6 h-6 mb-2" />
               {L10N_SERVER.itsLive[lang]}
             </CardTitle>
-            <CardDescription>{L10N_SERVER.nowPublicText[lang]}</CardDescription>
+            {balance.public === false ? (
+              <CardDescription>
+                {L10N_SERVER.nowPublicText[lang]}
+              </CardDescription>
+            ) : (
+              <CardDescription>
+                Denna annons och era kontaktuppgifter är offentliga.
+              </CardDescription>
+            )}
           </CardHeader>
-          <CardContent>{L10N_SERVER.noOneUnlockedText[lang]}</CardContent>
+          {balance.public === false ? (
+            <CardContent>{L10N_SERVER.noOneUnlockedText[lang]}</CardContent>
+          ) : null}
         </Card>
       )
     } else {
@@ -140,49 +154,99 @@ export async function UnlockBalanceSection({
     return null
   }
 
-  const unlocked =
-    verifiedSession &&
-    (await prismaClient.balanceUnlock.findUnique({
-      where: {
-        userId_balanceId: {
-          userId: verifiedSession.userId,
-          balanceId: balance.id,
-        },
-      },
-      select: {
-        createdAt: true,
-        organization: {
-          select: {
-            name: true,
-          },
-        },
-        balance: {
-          select: {
-            organization: {
-              select: {
-                name: true,
-              },
+  const publicBalance = balance.public
+    ? await prismaClient.balance.findUnique({
+        where: { id: balance.id, public: true },
+        select: {
+          organization: {
+            select: {
+              name: true,
             },
-            createdByUser: {
-              select: {
-                firstName: true,
-                lastName: true,
-                email: true,
-                phoneNumber: true,
-              },
+          },
+          createdByUser: {
+            select: {
+              firstName: true,
+              lastName: true,
+              email: true,
+              phoneNumber: true,
             },
           },
         },
-      },
-    }))
+      })
+    : null
 
-  if (unlocked) {
+  if (publicBalance) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex flex-row gap-2 items-center">
+            <BuildingIcon className="w-6 h-6 mb-2" />
+            {publicBalance.organization.name}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex gap-2 items-center">
+            <UserIcon className="w-4 h-4" />
+            {publicBalance.createdByUser.firstName}{" "}
+            {publicBalance.createdByUser.lastName}
+          </div>
+          <div className="flex gap-2 items-center">
+            <MailIcon className="w-4 h-4" />
+            {publicBalance.createdByUser.email}
+          </div>
+          {publicBalance.createdByUser.phoneNumber && (
+            <div className="flex gap-2 items-center">
+              <PhoneIcon className="w-4 h-4" />
+              {publicBalance.createdByUser.phoneNumber}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    )
+  }
+  const balanceUnlock = verifiedSession
+    ? await prismaClient.balanceUnlock.findUnique({
+        where: {
+          userId_balanceId: {
+            userId: verifiedSession.userId,
+            balanceId: balance.id,
+          },
+        },
+        select: {
+          createdAt: true,
+          organization: {
+            select: {
+              name: true,
+            },
+          },
+          balance: {
+            select: {
+              organization: {
+                select: {
+                  name: true,
+                },
+              },
+              createdByUser: {
+                select: {
+                  firstName: true,
+                  lastName: true,
+                  email: true,
+                  phoneNumber: true,
+                },
+              },
+            },
+          },
+        },
+      })
+    : null
+
+  if (balanceUnlock && verifiedSession) {
     return (
       <Card>
         <CardHeader>
           <CardTitle className="flex flex-row gap-2 items-center">
             <LockOpenIcon className="w-6 h-6 mb-2" />
-            {unlocked.balance.organization.name}
+            {balanceUnlock.balance.organization.name}
           </CardTitle>
           <CardDescription>
             {L10N_SERVER.contactInformationUnlockedText[lang]}
@@ -191,25 +255,25 @@ export async function UnlockBalanceSection({
         <CardContent>
           <div className="flex gap-2 items-center">
             <UserIcon className="w-4 h-4" />
-            {unlocked.balance.createdByUser.firstName}{" "}
-            {unlocked.balance.createdByUser.lastName}
+            {balanceUnlock.balance.createdByUser.firstName}{" "}
+            {balanceUnlock.balance.createdByUser.lastName}
           </div>
           <div className="flex gap-2 items-center">
             <MailIcon className="w-4 h-4" />
-            {unlocked.balance.createdByUser.email}
+            {balanceUnlock.balance.createdByUser.email}
           </div>
-          {unlocked.balance.createdByUser.phoneNumber && (
+          {balanceUnlock.balance.createdByUser.phoneNumber && (
             <div className="flex gap-2 items-center">
               <PhoneIcon className="w-4 h-4" />
-              {unlocked.balance.createdByUser.phoneNumber}
+              {balanceUnlock.balance.createdByUser.phoneNumber}
             </div>
           )}
         </CardContent>
         <CardFooter>
           {L10N_SERVER.youUnlockedForText[lang][0]}{" "}
-          {unlocked.createdAt.toLocaleDateString("fi")}{" "}
+          {balanceUnlock.createdAt.toLocaleDateString("fi")}{" "}
           {L10N_SERVER.youUnlockedForText[lang][1]}{" "}
-          {unlocked.organization?.name ?? `${verifiedSession.firstName}`}
+          {balanceUnlock.organization?.name ?? `${verifiedSession.firstName}`}
           {L10N_SERVER.youUnlockedForText[lang][2]}
         </CardFooter>
       </Card>

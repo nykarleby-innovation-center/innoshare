@@ -51,6 +51,7 @@ import { Language } from "@/types/language"
 import { L10N_COMMON } from "@/l10n/l10n-common"
 import { CompetenceCombobox } from "./competence-combobox"
 import { useToast } from "@/hooks/use-toast"
+import { Checkbox } from "../ui/checkbox"
 
 export function UpsertBalancePage({
   lang,
@@ -75,6 +76,7 @@ export function UpsertBalancePage({
     | "competenceId"
     | "regionId"
     | "organizationId"
+    | "public"
   > | null
 }) {
   const { toast } = useToast()
@@ -99,10 +101,11 @@ export function UpsertBalancePage({
 
     defaultValues: {
       organizationId: editingBalance?.organizationId ?? organizations[0]?.id,
+      public: editingBalance?.public ?? false,
       regionId: editingBalance?.regionId,
       competenceId: editingBalance?.competenceId,
       amount: editingBalance ? editingBalance.amount : 1,
-      l10nDescription: (editingBalance?.l10nDescription as L10nText) ?? undefined,
+      l10nDescription: (editingBalance?.l10nDescription as L10nText) ?? null,
       dateRange: editingBalance
         ? [+editingBalance.startDate, +editingBalance.endDate]
         : undefined,
@@ -480,6 +483,37 @@ export function UpsertBalancePage({
                 </FormItem>
               )}
             />
+            <div className="rounded-md border">
+              <FormField
+                control={form.control}
+                name="public"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 p-4">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="space-y-2">
+                      <FormLabel>
+                        <div className="font-bold mb-2">
+                          {
+                            L10N_COMMON
+                              .makeMyPostingAndOrganizationsContactDetailsPublic[
+                              lang
+                            ]
+                          }
+                        </div>
+                        <div className="leading-tight">
+                          {L10N_COMMON.whenThisIsCheckedAnyoneCanViewText[lang]}
+                        </div>
+                      </FormLabel>
+                    </div>
+                  </FormItem>
+                )}
+              />
+            </div>
             <Button
               className={cn(
                 "self-start duration-300",

@@ -66,6 +66,16 @@ export const L10N_COMMON = {
     sv: "Behov först",
     fi: "Tarpeet ensin",
   },
+  allOrganizations: {
+    en: "All organizations",
+    sv: "Alla organisationer",
+    fi: "Kaikki organisaatiot",
+  },
+  via: {
+    en: "Via",
+    sv: "Via",
+    fi: "Via",
+  },
   byRegion: {
     en: "By region",
     sv: "Enligt kommun",
@@ -105,6 +115,16 @@ export const L10N_COMMON = {
     en: "Pick a date range",
     sv: "Välj ett datumintervall",
     fi: "Valitse päivämääräväli",
+  },
+  makeMyPostingAndOrganizationsContactDetailsPublic: {
+    en: "Make my posting and my organization's contact details public",
+    sv: "Gör min annons och mitt företags kontaktinfo offentlig",
+    fi: "Tee ilmoituksestani ja organisaationi yhteystiedoista julkisia",
+  },
+  whenThisIsCheckedAnyoneCanViewText: {
+    en: "When this is checked, anyone can view your posting and contact your organization via the email address and phone number associated with your account. Your organization will also be visible in the competence balance listing.",
+    sv: "När detta är ikryssat så kan vem som helst se din annons och ta kontakt med din organisation via den e-postadress och telefonnummer som är kopplad till ditt konto. Er organisation syns också i kompetensbalanslistan.",
+    fi: "Kun tämä on valittuna, kuka tahansa voi nähdä ilmoituksesi ja ottaa yhteyttä organisaatioosi tilisi sähköpostiosoitteen ja puhelinnumeron kautta. Organisaatiosi näkyy myös osaamistasapainon listauksessa.",
   },
   removeDescription: {
     en: "Remove description",
@@ -563,5 +583,5 @@ export const L10N_COMMON = {
     en: "Contact us",
     sv: "Kontakta oss",
     fi: "Ota yhteyttä",
-  }
+  },
 } satisfies L10nTranslationStrings

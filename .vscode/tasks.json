@@ -4,7 +4,7 @@
     {
       "label": "Run Postgres",
       "type": "shell",
-      "command": "docker run -itd -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v ${workspaceRoot}/.postgres:/var/lib/postgresql/data --name innoshare-db postgres"
+      "command": "docker run -itd -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v ${workspaceRoot}/.postgres:/var/lib/postgresql/data --name innoshare-db postgres:16-bookworm"
     },
     {
       "label": "Build Docker image",

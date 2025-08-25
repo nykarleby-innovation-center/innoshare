@@ -60,6 +60,7 @@ model Balance {
   updatedAt       DateTime @default(now()) @updatedAt
   createdByUser   User     @relation(name: "BalanceCreatedByUsers", fields: [createdByUserId], references: [id])
   createdByUserId String
+  public          Boolean  @default(false)
 
   organization    Organization    @relation(fields: [organizationId], references: [id])
   organizationId  String

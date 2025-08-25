@@ -8,6 +8,7 @@ export const createBalanceSchema = z.object({
   l10nDescription: l10nTextSchema.nullable(),
   dateRange: z.array(z.number()).length(2),
   organizationId: z.string(),
+  public: z.boolean(),
   competenceId: z.string(),
 })
 

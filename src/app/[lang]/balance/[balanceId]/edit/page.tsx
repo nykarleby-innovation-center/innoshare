@@ -50,6 +50,7 @@ export default async function EditBalancePage(props: {
       regionId: true,
       organizationId: true,
       competenceId: true,
+      public: true,
       competence: {
         select: {
           id: true,

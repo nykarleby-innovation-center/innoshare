@@ -49,7 +49,7 @@ export default async function BalanceListingPage(props: {
   const unverifiedSession = await decodeUnverifiedSessionCookie()
   const verifiedSession = unverifiedSession && (await checkSessionCookie())
 
-  const balances = await prismaClient.balance.findMany({
+  const allBalances = await prismaClient.balance.findMany({
     where: verifiedSession
       ? {
           OR: [
@@ -94,6 +94,18 @@ export default async function BalanceListingPage(props: {
       },
     },
   })
+  const publicBalances = await prismaClient.balance.findMany({
+    where: { public: true },
+    select: {
+      id: true,
+      organizationId: true,
+      organization: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  })
 
   return (
     <PageWrapper
@@ -124,7 +136,29 @@ export default async function BalanceListingPage(props: {
     >
       <BalanceListing
         lang={lang}
-        balances={balances.map((b) => ({
+        publicOrganizationBalances={publicBalances.reduce(
+          (acc, balance) => {
+            const org = acc.find(
+              (o) => o.organizationId === balance.organizationId
+            )
+            if (org) {
+              org.balanceIds.push(balance.id)
+            } else {
+              acc.push({
+                organizationId: balance.organizationId,
+                organizationName: balance.organization.name,
+                balanceIds: [balance.id],
+              })
+            }
+            return acc
+          },
+          [] as Array<{
+            organizationId: string
+            organizationName: string
+            balanceIds: string[]
+          }>
+        )}
+        balances={allBalances.map((b) => ({
           ...b,
           own:
             unverifiedSession?.organizations.some(

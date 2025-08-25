@@ -64,6 +64,7 @@ export default async function BalancePage(props: { params: Promise<Params> }) {
       startDate: true,
       endDate: true,
       organizationId: true,
+      public: true,
       competence: {
         select: {
           id: true,

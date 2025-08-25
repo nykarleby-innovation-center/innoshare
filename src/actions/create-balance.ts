@@ -36,6 +36,7 @@ export async function createBalance(data: z.infer<typeof createBalanceSchema>) {
       startDate: new Date(parsed.data.dateRange[0]),
       endDate: new Date(parsed.data.dateRange[1]),
       region: { connect: { id: parsed.data.regionId } },
+      public: parsed.data.public
     },
     include: {
       competence: {
