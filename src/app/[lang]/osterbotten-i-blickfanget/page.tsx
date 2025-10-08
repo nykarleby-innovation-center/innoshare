@@ -94,10 +94,7 @@ Intresse: ${data.get("Intresse")}
         `,
     })
 
-    redirect(
-      `/${(await props.params).lang}osterbotten-i-blickfanget?Namn=` +
-        data.get("Namn")
-    )
+    redirect(`/osterbotten-i-blickfanget?Namn=` + data.get("Namn"))
   }
 
   return (
