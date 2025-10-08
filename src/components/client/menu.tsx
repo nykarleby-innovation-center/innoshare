@@ -7,6 +7,7 @@ import { L10N_COMMON } from "@/l10n/l10n-common"
 import { Language } from "@/types/language"
 import {
   BuildingIcon,
+  CalendarCheck,
   LanguagesIcon,
   LayoutGridIcon,
   ListChecksIcon,
@@ -123,6 +124,23 @@ export function Menu({
                     </span>
                     <span className="block xl:hidden">
                       <MailIcon className="w-5 h-5" />
+                    </span>
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link
+                  href={`/${lang}/osterbotten-i-blickfanget`}
+                  legacyBehavior
+                  passHref
+                  locale="false"
+                >
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <span className="hidden xl:block">
+                      Event
+                    </span>
+                    <span className="block xl:hidden">
+                      <CalendarCheck className="w-5 h-5" />
                     </span>
                   </NavigationMenuLink>
                 </Link>
