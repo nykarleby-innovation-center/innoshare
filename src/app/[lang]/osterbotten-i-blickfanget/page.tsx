@@ -94,7 +94,7 @@ Intresse: ${data.get("Intresse")}
         `,
     })
 
-    redirect(`/osterbotten-i-blickfanget?Namn=` + data.get("Namn"))
+    redirect(`/sv/osterbotten-i-blickfanget?Namn=` + data.get("Namn"))
   }
 
   return (
@@ -154,42 +154,53 @@ Intresse: ${data.get("Intresse")}
               />
             </div>
             <p className="mb-4 max-w-xl">
-              Hur ser "outsiders" på näringslivet och hur vi jobbar i
-              Österbotten? Mer info kommer snart!
+              InnoShare ordnar inspirationsevenemang! Vi fokuserar på
+              Österbottens styrkor och hur man ser på Österbotten utifrån.
+              Välkomna med och lyssna då Ronny Eriksson berättar om hur
+              kreativitet och innovation kan användas som en motor för tillväxt.
+              Mike Bradshaw, grundare av Sampo Accelerator, pratar om hur
+              viktiga idéerna från landsbygden är ur ett storstadsperspektiv.
+              Tomas Knuts lyfter upp framtidens flexibla ledarskap med glimten i
+              ögat och vi från InnoShare tar upp erfarenheter gällande
+              kompetensdelning.
             </p>
             <div className="flex gap-4 mb-4">
               <MapPin /> Station 23, Jakobstad
             </div>
             <div className="flex gap-4 mb-8">
-              <CalendarIcon /> 5 November 14:30
+              <CalendarIcon /> 5 November 14:00 - 17:00
             </div>
-            <h3 className="text-2xl mb-4 uppercase font-black">
-              Preliminärt program
-            </h3>
-            <p className="mb-4 max-w-xl">
-              Helsingforsborna Ronny Eriksson, grundare av bl.a. Oddfest, och
-              Mike Bradshaw, grundaren av Sampo Accelerator intar scenen vid
-              Station23. Hela programmet kommer snart.
-            </p>
-
-            {/*<div className="grid grid-cols grid-cols-[30%_70%]">
+            <h3 className="text-2xl mb-4 uppercase font-black">Program</h3>
+            <div className="grid grid-cols grid-cols-[10%_70%]">
               <div>14.00</div>
-              <div>Kaffe och kaka</div>
-              <div>14.15</div>
+              <div>Mingel, dricka och tilltugg</div>
+              <div>14.17</div>
               <div>Välkommen</div>
-              <div>14.30</div>
-              <div>Företagscase</div>
-              <div>15.00</div>
-              <div>Matchmakingdiskussioner (15min x 2st)</div>
-              <div>15.30</div>
-              <div>Paus och fria diskussioner</div>
-              <div>15.45</div>
-              <div>Matchmakingdiskussioner (15min x 2st)</div>
+              <div>14.20</div>
+              <div>
+                Tomas Knuts: Framtidens flexibla ledarskap med glimten i ögat
+              </div>
+              <div>14.50</div>
+              <div>
+                Mike Bradshaw: Landsbygdsidéer ur ett storstadsperspektiv
+              </div>
+              <div>15.15</div>
+              <div>Paus</div>
+              <div>15.35</div>
+              <div>
+                Ronny Eriksson: Kreativitet och innovation som motor för
+                tillväxt
+              </div>
               <div>16.15</div>
-              <div>Avslutningsord</div>
+              <div>InnoShare: Erfarenheter från projektet</div>
               <div>16.30</div>
-              <div>Nachotallrik</div>
-            </div>*/}
+              <div>Skavlansoffan</div>
+              <div>17.00</div>
+              <div>Tack å adjö!</div>
+            </div>
+            <p className="mb-4 max-w-xl">
+              Talturerna är på svenska och engelska, evenemanget är trespråkigt.
+            </p>
           </div>
         </div>
         <Card className="sticky top-32">
