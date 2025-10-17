@@ -83,7 +83,7 @@ Tack för er anmälan till Österbotten i blickfånget.
 
 Välkommen!
 Plats: Station 23, Jakobstad
-Datum: 5 November 14:30
+Datum: 5 November 14:00
 
 Namn: ${data.get("Namn")}
 Företag: ${data.get("Företag")}
