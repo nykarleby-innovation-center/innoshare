@@ -52,51 +52,6 @@ export default async function EventPage(props: {
       },
     }))
 
-  const submitForm = async (data: FormData) => {
-    "use server"
-
-    const email = data.get("Email") as string
-
-    EmailService.sendEmail({
-      messageType: "text",
-      toType: "internal",
-      subject: "Anmälan till Österbotten i blickfånget",
-      to: ENVIRONMENT.INTERNAL_NOTIFICATION_TO,
-      message: `
-Anmälan till Österbotten i blickfånget
-
-Namn: ${data.get("Namn")}
-Företag: ${data.get("Företag")}
-E-post: ${email}
-Eventuella allergier: ${data.get("Allergier")}
-Drink: ${data.get("Drink")}
-Intresse: ${data.get("Intresse")}`,
-    })
-
-    EmailService.sendEmail({
-      messageType: "text",
-      toType: "user",
-      subject: "Anmälan till Österbotten i blickfånget",
-      to: email,
-      message: `
-Tack för er anmälan till Österbotten i blickfånget.
-
-Välkommen!
-Plats: Station 23, Jakobstad
-Datum: 5 November 14:00
-
-Namn: ${data.get("Namn")}
-Företag: ${data.get("Företag")}
-E-post: ${email}
-Eventuella allergier: ${data.get("Allergier")}
-Drink: ${data.get("Drink")}
-Intresse: ${data.get("Intresse")}
-        `,
-    })
-
-    redirect(`/sv/osterbotten-i-blickfanget?Namn=` + data.get("Namn"))
-  }
-
   return (
     <main className="max-w-6xl ml-auto mr-auto flex flex-col pt-16">
       <div className="flex flex-col gap-8 w-full p-8 lg:py-32 lg:flex-row lg:items-start">
@@ -205,91 +160,10 @@ Intresse: ${data.get("Intresse")}
         </div>
         <Card className="sticky top-32">
           <CardHeader>
-            <h3 className="text-2xl mb-4 uppercase font-black">Anmäl er här</h3>
+            <h3 className="text-2xl mb-4 uppercase font-black">
+              Anmälning stängd
+            </h3>
           </CardHeader>
-          <CardContent>
-            {searchParams.Namn ? (
-              <p>
-                Tack {searchParams.Namn}! Ni är anmäld. Kontrollera er inbox för
-                bekräftelse.
-              </p>
-            ) : (
-              <HtmlForm action={submitForm}>
-                <div>
-                  <Label>Namn</Label>
-                  <Input
-                    type="text"
-                    required
-                    name="Namn"
-                    defaultValue={
-                      user ? `${user.firstName} ${user.lastName}` : undefined
-                    }
-                  />
-                </div>
-                <div>
-                  <Label>Företag</Label>
-                  <Input
-                    type="text"
-                    required
-                    name="Företag"
-                    defaultValue={user?.organizations.at(0)?.name}
-                  />
-                </div>
-                <div>
-                  <Label>E-post</Label>
-                  <Input
-                    type="email"
-                    name="Email"
-                    required
-                    defaultValue={user?.email}
-                  />
-                </div>
-                <div>
-                  <Label>Eventuella allergier</Label>
-                  <Input name="Allergier" type="text" />
-                </div>
-                <div>
-                  <Label>Gratis drink</Label>
-                  <div className="mt-4">
-                    <RadioGroup name="Drink" required>
-                      <div className="flex gap-2">
-                        <RadioGroupItem required value="Öl / Cider" /> Öl /
-                        Cider
-                      </div>
-                      <div className="flex gap-2">
-                        <RadioGroupItem required value="Mocktail" /> Mocktail
-                      </div>
-                      <div className="flex gap-2">
-                        <RadioGroupItem required value="Ingen drink" /> Ingen
-                        drink
-                      </div>
-                    </RadioGroup>
-                  </div>
-                </div>
-                <div>
-                  <Label>
-                    Är ni behov av arbetskraft, eller har ni extra utbud, eller
-                    bara annars intressererad?
-                  </Label>
-                  <div className="mt-4">
-                    <RadioGroup name="Intresse" required>
-                      <div className="flex gap-2">
-                        <RadioGroupItem required value="Utbud" /> Utbud
-                      </div>
-                      <div className="flex gap-2">
-                        <RadioGroupItem required value="Behov" /> Behov
-                      </div>
-                      <div className="flex gap-2">
-                        <RadioGroupItem required value="Allmänt intresserad" />{" "}
-                        Allmänt intresserad
-                      </div>
-                    </RadioGroup>
-                  </div>
-                </div>
-                <Button>Skicka</Button>
-              </HtmlForm>
-            )}
-          </CardContent>
         </Card>
       </div>
     </main>
