@@ -128,23 +128,6 @@ export function Menu({
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link
-                  href={`/${lang}/osterbotten-i-blickfanget`}
-                  legacyBehavior
-                  passHref
-                  locale="false"
-                >
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    <span className="hidden xl:block">
-                      Event
-                    </span>
-                    <span className="block xl:hidden">
-                      <CalendarCheck className="w-5 h-5" />
-                    </span>
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
 

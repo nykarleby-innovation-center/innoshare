@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "standalone",
+  //output: "standalone",
   //outputFileTracingRoot: path.join(__dirname, './src//'),
   rewrites() {
     return [
@@ -20,7 +20,7 @@ const nextConfig = {
     ]
   },
   images: {
-    domains: ["innosharestorage.blob.core.windows.net"],
+    domains: ["innosharestorage.blob.core.windows.net", "r3v4sxoyn4vwvvvt.public.blob.vercel-storage.com"],
   },
 }
 

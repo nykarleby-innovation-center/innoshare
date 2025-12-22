@@ -1,6 +1,8 @@
 import { OpenAiAiServiceVariables } from "@/services/ai/openai-ai-service"
 import { AzureEmailServiceEnvironmentVariables } from "@/services/email/azure-email-service"
+import { MailJetEmailServiceEnvironmentVariables } from "@/services/email/mailjet-email-service"
 import { AzureStorageServiceEnvironmentVariables } from "@/services/storage/azure-storage-service"
+import { VercelBlobStorageServiceEnvironmentVariables } from "@/services/storage/vercel-blob-storage-service"
 
 type Environment = {
   HOST: string
@@ -15,7 +17,9 @@ type Environment = {
   SESSION_SECRET: string
   CRON_SECRET: string
 } & AzureEmailServiceEnvironmentVariables &
+  MailJetEmailServiceEnvironmentVariables &
   AzureStorageServiceEnvironmentVariables &
+  VercelBlobStorageServiceEnvironmentVariables &
   OpenAiAiServiceVariables
 
 export const ENVIRONMENT = process.env as any as Environment

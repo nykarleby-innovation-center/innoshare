@@ -54,14 +54,13 @@ export function DateRangePicker({
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
-            initialFocus
             mode="range"
             defaultMonth={dateRange?.from}
             selected={dateRange ?? undefined}
             onSelect={(v) => v && onPickDateRange(v)}
             numberOfMonths={2}
             showWeekNumber
-            fromDate={
+            startMonth={
               new Date(+new Date() - 1000 * 60 * 60 * 24 * 365)
             }
           />

@@ -1,4 +1,5 @@
 import { AzureEmailService } from "./azure-email-service"
+import { MailJetEmailService } from "./mailjet-email-service"
 
 export interface EmailService {
   sendEmail(args: {
@@ -18,4 +19,4 @@ export interface EmailService {
   }): Promise<void>
 }
 
-export const EmailService = AzureEmailService
+export const EmailService = MailJetEmailService

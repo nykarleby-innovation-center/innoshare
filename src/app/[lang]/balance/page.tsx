@@ -54,8 +54,9 @@ export default async function BalanceListingPage(props: {
       ? {
           OR: [
             {
-              completedBalanceId: null,
+              completedBalance: { public: true },
             },
+            { completedBalanceId: null },
             {
               organizationId: {
                 in: verifiedSession.organizations.map((o) => o.id) ?? [],

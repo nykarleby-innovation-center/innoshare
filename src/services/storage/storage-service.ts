@@ -1,4 +1,5 @@
 import { AzureStorageService } from "./azure-storage-service"
+import { VercelBlobStorageService } from "./vercel-blob-storage-service"
 
 export type FileAccessType = "public" | "private"
 
@@ -16,4 +17,4 @@ export interface StorageService {
   deleteFile(args: { path: string; access: FileAccessType }): Promise<void>
 }
 
-export const StorageService = AzureStorageService
+export const StorageService = VercelBlobStorageService
