@@ -19,13 +19,13 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 interface Params {
-  lang: Language
+  lang: string
 }
 
 export async function generateMetadata(props: {
   params: Promise<Params>
 }): Promise<Metadata> {
-  const { lang } = await props.params
+  const { lang } = (await props.params) as { lang: Language }
   return {
     title: `InnoShare | ${L10N_SERVER.heroSlogan[lang]}`,
     description: L10N_SERVER.heroText1[lang],
@@ -35,7 +35,9 @@ export async function generateMetadata(props: {
 export default async function OrganizationSettingsPage(props: {
   params: Promise<Params>
 }) {
-  const { lang } = await props.params
+  const { lang } = (await props.params) as Params & {
+    lang: Language
+  }
 
   const session = await checkSessionCookie()
   if (!session) {

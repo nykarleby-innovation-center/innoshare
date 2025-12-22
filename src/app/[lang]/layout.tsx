@@ -33,10 +33,10 @@ export async function generateStaticParams() {
 export default async function RootLayout(
   props: Readonly<{
     children: React.ReactNode
-    params: Promise<{ lang: Language }>
+    params: Promise<{ lang: string }>
   }>
 ) {
-  const params = await props.params
+  const params = (await props.params) as { lang: Language }
 
   const { lang } = params
   const { children } = props

@@ -8,13 +8,13 @@ import { L10N_COMMON } from "@/l10n/l10n-common"
 import Link from "next/link"
 
 interface Params {
-  lang: Language
+  lang: string
 }
 
 export async function generateMetadata(props: {
   params: Promise<Params>
 }): Promise<Metadata> {
-  const params = await props.params
+  const params = (await props.params) as { lang: Language }
   return {
     title: `InnoShare | ${L10N_COMMON.contactUs[params.lang]}`,
     description: L10N_SERVER.heroText1[params.lang],
@@ -26,7 +26,9 @@ export async function generateStaticParams() {
 }
 
 export default async function ContactPage(props: { params: Promise<Params> }) {
-  const { lang } = await props.params
+  const { lang } = (await props.params) as Params & {
+    lang: Language
+  }
 
   return (
     <main className="max-w-6xl ml-auto mr-auto flex flex-col pt-32">

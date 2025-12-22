@@ -16,13 +16,13 @@ import { UpsertInterestForm } from "@/components/client/upsert-interest-form"
 import { redirect } from "next/navigation"
 
 interface Params {
-  lang: Language
+  lang: string
 }
 
 export async function generateMetadata(props: {
   params: Promise<Params>
 }): Promise<Metadata> {
-  const { lang } = await props.params
+  const { lang } = (await props.params) as { lang: Language }
   return {
     title: `InnoShare | ${L10N_SERVER.heroSlogan[lang]}`,
     description: L10N_SERVER.heroText1[lang],
@@ -33,7 +33,9 @@ export default async function UserSettingsPage(props: {
   params: Promise<Params>
   searchParams: Promise<{ redirect?: string }>
 }) {
-  const { lang } = await props.params
+  const { lang } = (await props.params) as Params & {
+    lang: Language
+  }
 
   const session = await checkSessionCookie()
 

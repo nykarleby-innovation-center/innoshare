@@ -9,13 +9,13 @@ import Link from "next/link"
 import Markdown from "react-markdown"
 
 interface Params {
-  lang: Language
+  lang: string
 }
 
 export async function generateMetadata(props: {
   params: Promise<Params>
 }): Promise<Metadata> {
-  const params = await props.params
+  const params = (await props.params) as { lang: Language }
   return {
     title: `InnoShare | ${L10N_COMMON.contactUs[params.lang]}`,
     description: L10N_SERVER.heroText1[params.lang],
@@ -29,8 +29,6 @@ export async function generateStaticParams() {
 export default async function ChecklistPage(props: {
   params: Promise<Params>
 }) {
-  const { lang } = await props.params
-
   return (
     <main className="max-w-6xl ml-auto mr-auto flex flex-col pt-32">
       <div className="flex flex-row items-center">

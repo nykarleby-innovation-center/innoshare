@@ -32,7 +32,7 @@ interface Params {
 export async function generateMetadata(props: {
   params: Promise<Params>
 }): Promise<Metadata> {
-  const params = await props.params
+  const params = (await props.params) as { lang: Language }
   return {
     title: `InnoShare | ${L10N_SERVER.heroSlogan[params.lang]}`,
     description: L10N_SERVER.heroText1[params.lang],
@@ -44,7 +44,9 @@ export async function generateStaticParams() {
 }
 
 export default async function Home(props: { params: Promise<Params> }) {
-  const { lang } = await props.params
+  const { lang } = (await props.params) as Params & {
+    lang: Language
+  }
 
   const session = await decodeUnverifiedSessionCookie()
 

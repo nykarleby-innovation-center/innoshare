@@ -16,14 +16,16 @@ import { Button } from "@/components/ui/button"
 import { revalidatePath } from "next/cache"
 
 interface Params {
-  lang: Language
+  lang: string
   interestId: string
 }
 
 export default async function UnsubscribePage(props: {
   params: Promise<Params>
 }) {
-  const { lang } = await props.params
+  const { lang } = (await props.params) as Params & {
+    lang: Language
+  }
 
   const session = await checkSessionCookie()
 
